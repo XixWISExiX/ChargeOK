@@ -132,6 +132,9 @@ Then you repeat the process over again!
 
 # Log
 
+## 09 26 2024
+New git repo
+
 ## Aug 31 2024
 
 Added Google API
