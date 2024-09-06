@@ -2,9 +2,43 @@
 
 Navigation System For EV Vehicles in Oklahoma
 
-# How Work on ChargeOK
+# How work on ChargeOK
 
-run
+## Get Dependencies
+
+In the charge-ok folder in your terminal, run the following commands in order
+
+```
+npm install yarn
+```
+
+```
+yarn add axios firebase styled-components react-icons react-redux @reduxjs/toolkit react-router-dom
+```
+
+Then in the charge-ok/server folder run the following command
+
+```
+yarn add express dotenv
+```
+
+## Run App
+
+Open 2 terminal windows and run the commands in their respective directories in the same order
+
+On the charge-ok/server directory, you will run
+
+```
+node index.js
+```
+
+In the charge-ok directory, you will run
+
+```
+yarn start
+```
+
+To cancel running both of them, type ctrl+c
 
 # Objectives
 
