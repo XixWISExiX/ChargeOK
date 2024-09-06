@@ -133,27 +133,28 @@ Then you repeat the process over again!
 # Log
 
 ## 09 26 2024
-New git repo
+New git repo to let Josh handle merge conflicts.
+We all must create a pull request to push to the main branch now.
+The old repo was a mess.
+
+Need to work on font-end
+
 
 ## Aug 31 2024
-
-Added Google API
+Added Google API, planning on handing routing on our own though.
 
 ## Aug 29 2024
-
-Built 2 React apps and a svelt app for Ticket 2
+Built 2 React apps, 1 svelt app, and .NET app for Ticket 2
+simple HTML embedded apps.
 
 ## Aug 28 2024
-
 Decided on using afdc API for station info
 for Ticket2, we'll compare React, .Net, and Svelt for frontend
 
 ## Aug 23 2024
-
 Ticket 1 Domain Understanding Presentation
 
 ## Aug 21 2024
-
 Our priorities right now are
 
 1. Getting ready for the presentation
@@ -161,7 +162,6 @@ Our priorities right now are
 3. Finish UI design
 
 ## Aug 19 2024
-
 Discussed General plan for the project.
 Might use React Native for frontend.
 Not sure about backend.
