@@ -1,0 +1,78 @@
+/* Mainpage.css */
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    position: relative; /* Allows absolute positioning for dropdown */
+    padding-top: 40px; /* Add padding at the top to avoid overlap with menu */
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .map-container {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+  }
+  
+  .map-container > * {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Dropdown Styles */
+  .dropdown-container {
+    position: absolute;
+    top: 10px;  /* Align the button 10px from the top */
+    left: 10px; /* Align the button 10px from the left */
+    z-index: 1000; /* Ensure the button stays on top of other elements */
+  }
+  
+  .dropdown-toggle {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .dropdown-toggle:hover {
+    background-color: #0056b3;
+  }
+  
+  .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .dropdown-item {
+    background-color: white;
+    color: #007bff;
+    padding: 10px 20px;
+    border: none;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f1f1f1;
+  }
+  
