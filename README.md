@@ -106,6 +106,20 @@ After you publish some changes your code will not be immediatly pushed through, 
 
 After your Pull Request is Submitted Joshua Wiseman will look at the code and merge it into the main branch of the repo. After this is done all main branches should then do a git pull to get all new changes.
 
+This is done through
+
+```
+git checkout main
+```
+
+and
+
+```
+git pull
+```
+
+Then you repeat the process over again!
+
 # Objectives
 
 - Design an app that is user friendly for both tech and non-tech EV owners
