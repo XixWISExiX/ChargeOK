@@ -133,15 +133,16 @@ Then you repeat the process over again!
 # Log
 
 ## 09 26 2024
-New git repo
+New git repo to let Josh manage conflicts and do code reviews.
 
 ## Aug 31 2024
 
-Added Google API
+Added Google API for routing, but planning to optimize on our own.
 
 ## Aug 29 2024
 
-Built 2 React apps and a svelt app for Ticket 2
+Built 2 React apps, 1 svelt app, 1 .NET app for Ticket 2
+simple apps with HTML code embedded
 
 ## Aug 28 2024
 
@@ -151,6 +152,7 @@ for Ticket2, we'll compare React, .Net, and Svelt for frontend
 ## Aug 23 2024
 
 Ticket 1 Domain Understanding Presentation
+about what we are getting into
 
 ## Aug 21 2024
 
