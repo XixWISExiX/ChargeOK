@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 const axios = require("axios");
 const charger_api_key = process.env.CHARGER_API_KEY;
 
@@ -23,6 +23,7 @@ axios
     console.log("Data:", ev_data);
     console.log(Object.keys(ev_data.fuel_stations).length);
     //TODO now we have fuel stations, now get map
+    //TODO If car is Tesla, then you need to only look at Tesla Super Chargers
   })
   .catch((error) => {
     // Handle any errors

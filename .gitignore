@@ -10,6 +10,7 @@
 /coverage
 
 # production
+/charge-ok/build
 /build
 
 # misc
