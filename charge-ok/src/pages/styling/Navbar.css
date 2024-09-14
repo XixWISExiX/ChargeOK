@@ -1,14 +1,15 @@
-/* Navbar starts transparent */
 .transparent-navbar {
-    background-color: transparent;
-    transition: background-color 0.3s ease;
-}
-
-/* Opaque navbar after scrolling */
-.opaque-navbar {
-    background-color: black; /* Set the background color to black */
-    transition: background-color 0.3s ease;
-}
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: none;
+    transition: background-color 0.5s ease-in-out, backdrop-filter 0.5s, box-shadow 0.5s ease-in-out;
+  }
+  
+  .opaque-navbar {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    transition: background-color 0.5s ease-in-out, backdrop-filter 0.5s, box-shadow 0.5s ease-in-out;
+  }
+  
 
 /* Sticky navbar that stays at the top */
 .sticky-navbar {

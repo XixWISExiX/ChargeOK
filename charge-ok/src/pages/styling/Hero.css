@@ -155,20 +155,24 @@
         max-width: 900px; /* Adjust content width for tablets */
     }
     .lottie-container {
-        height: 70%;
-        width: 70%;
+        margin-left: 100px;
+        height: 80%;
+        width: 80%;
     }
 }
 
-/* Mobile Devices (up to 767px) */
 @media (max-width: 767px) {
+    h2 {
+        font-size: 15px !important;
+    }
+
     .lottie-container {
-        margin-top: -400px;
-        height: 75%;
-        width: 75%;
+        margin-top: -350px;
+        height: 55%;
+        width: 55%;
     }
     .hero-text {
-
+        
         margin-left: 9px;
     }
     .hero-section {
@@ -198,12 +202,60 @@
         
     }
 
-    .hero-animation {
-        width: 25%;
-        height: 25%;
-        margin-top: 20px; /* Add top margin */
-       
+  
+
+    .scroll-arrow {
+        bottom: 10px; /* Adjust arrow position for smaller screens */
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        
     }
+}
+/* Mobile Devices (up to 767px) */
+@media (max-width: 420px) {
+    
+    h2 {
+        font-size: 15px !important;
+    }
+
+    .lottie-container {
+        margin-top: -400px;
+        height: 75%;
+        width: 75%;
+    }
+    .hero-text {
+        
+        margin-left: 9px;
+    }
+    .hero-section {
+        height: auto; /* Auto height to fit content */
+        padding-top: 20px; /* Reduce padding for mobile */
+        text-align: center; /* Center text for mobile */
+    }
+
+    .kanit-extrabold {
+        margin-top: -100px !important;
+        font-size: 40px; /* Smaller text for mobile */
+    }
+
+    .playpen-sans {
+        font-size: 50px; /* Adjust font size for mobile */
+    }
+
+    .hero-section-content {
+        padding: 0 10px; /* More padding for mobile */
+        max-width: 100%; /* Full width for mobile */
+    }
+
+    .hero-text {
+        text-align: center; /* Center-align for mobile */
+        margin-top: 300px !important;
+        margin-bottom: 320px; /* Add spacing */
+        
+    }
+
+  
 
     .scroll-arrow {
         bottom: 10px; /* Adjust arrow position for smaller screens */

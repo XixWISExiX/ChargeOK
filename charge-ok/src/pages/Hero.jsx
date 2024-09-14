@@ -28,7 +28,8 @@ const Hero = () => {
         <Row className="align-items-center w-100">
           <Col md={6} className="hero-text">
             <h1 className='kanit-extrabold'>Charge<span className='playpen-sans'>OK</span></h1>
-            <p>Empowering Oklahomans. Map Your Journey with Confidence!</p>
+            <h2 style={{marginBottom: '2px', fontSize:'25px'}}>Empowering Oklahomans. </h2>
+            <h2 style={{fontSize:'25px'}}>Map Your Journey with Confidence!</h2>
           </Col>
           <Col md={6} className="hero-animation">
             <div className="lottie-container">
