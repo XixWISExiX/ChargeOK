@@ -10,7 +10,7 @@
 /coverage
 
 # production
-/build
+/charge-ok/build
 
 # misc
 .env

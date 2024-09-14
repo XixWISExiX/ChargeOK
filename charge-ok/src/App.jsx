@@ -4,7 +4,7 @@ import Signup from "./pages/signup";
 import Mainpage from "./pages/mainpage";
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/ChargeOK">
       <Routes>
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
