@@ -2,7 +2,7 @@
 .hero-section {
     background: 
       linear-gradient(to bottom, transparent 40%, black 100%), 
-      url('/src/pages/Media/EV.jpg'); /* Background image */
+      url('/src/pages/Media/Green.jpg'); /* Background image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -14,7 +14,28 @@
     position: relative;
     padding-top: 56px; /* Ensure the hero section doesn't overlap with a fixed navbar */
 }
-
+.hero-animation {
+    position: relative;
+  }
+  
+  .lottie-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .lottie-container .top-right-lottie {
+    position: absolute;
+    top: -10%; /* Adjust as needed */
+    right: -10%; /* Adjust as needed */
+  }
+  
+  .lottie-container .bottom-right-lottie {
+    position: absolute;
+    bottom: -20%; /* Adjust as needed */
+    right: -30%; /* Adjust as needed */
+  }
+  
 /* Scroll Arrow Styles */
 .scroll-arrow {
     position: absolute;
@@ -106,8 +127,9 @@
         font-size: 60px; /* Adjust font size for tablets */
     }
 
-    .hero-animation {
-        display: none;
+    .lottie-container {
+        height: 95%;
+        width: 95%;
     }
     .playpen-sans {
         font-size: 60px; /* Adjust font size for tablets */
@@ -132,11 +154,21 @@
     .hero-section-content {
         max-width: 900px; /* Adjust content width for tablets */
     }
+    .lottie-container {
+        height: 70%;
+        width: 70%;
+    }
 }
 
 /* Mobile Devices (up to 767px) */
 @media (max-width: 767px) {
+    .lottie-container {
+        margin-top: -400px;
+        height: 75%;
+        width: 75%;
+    }
     .hero-text {
+
         margin-left: 9px;
     }
     .hero-section {
@@ -146,6 +178,7 @@
     }
 
     .kanit-extrabold {
+        margin-top: -100px !important;
         font-size: 40px; /* Smaller text for mobile */
     }
 
@@ -169,7 +202,7 @@
         width: 25%;
         height: 25%;
         margin-top: 20px; /* Add top margin */
-        display: none;
+       
     }
 
     .scroll-arrow {

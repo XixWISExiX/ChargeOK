@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { firebaseAuth } from "./utils/firebase-config";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { Dropdown, DropdownButton, Modal, Button } from 'react-bootstrap';
+import { useAuth } from './Auth'; // Adjust the path as necessary
 import './pages/styling/GoogleMap.css';
 
 const MyMap = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const {isLoggedIn, setIsLoggedIn} = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
   const [email, setEmail] = useState("");
@@ -97,7 +98,7 @@ const MyMap = () => {
   return (
     <div className="map-wrapper" id='target-section'>
       <div className="island">
-        <h2>Start your journey</h2>
+        <h2>Route your trip</h2>
         <div className="search-bar-container">
           <input
             type="text"

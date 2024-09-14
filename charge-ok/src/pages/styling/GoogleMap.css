@@ -1,5 +1,6 @@
 .map-wrapper {
     display: flex;
+    margin-top: 200px;
     flex-direction: column; /* Stack items vertically */
     justify-content: center;
     align-items: center;
@@ -9,10 +10,7 @@
 }
 
 .map-container {
-    max-width: 1600px;     /* Set the width of the map container */
-    height: 800px;    /* Set the height of the map container */
-    border-radius: 15px;  /* Add rounded corners */
-    overflow: hidden;     /* Ensure the map content doesn't overflow */
+    max-width: 1600px;     /* Set the width of the map container */   /* Set the height of the map container */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a better visual effect */
     margin: 0 auto;      /* Center the map container horizontally */
     width: 100%;
@@ -21,6 +19,7 @@
         max-width: 1600px;     /* Set the width of the map container */
     height: 800px;    /* Set the height of the map container */
     width: 100%;
+    border-radius: 15px;
 }
 .btn-success {
     --bs-btn-bg: #00CC66 !important;
@@ -32,6 +31,7 @@
     color: black;
     border-radius: 15px;
     padding: 20px;
+
     margin-bottom: 20px; /* Add some space between the island and the map */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a better visual effect */
     text-align: center; /* Center the text inside the island */
@@ -78,10 +78,13 @@
 /* Responsive adjustments for map and island */
 @media (max-width: 1199px) {
     .map-container {
+
         width: 1200px;
         height: 600px;
     }
-
+    .map-wrapper{
+        margin-top: 0px;
+    }
     .island {
         max-width: 1200px;
     }
@@ -92,13 +95,19 @@
         width: 1000px;
         height: 500px;
     }
-
+    .map-wrapper{
+        margin-top: 0px;
+    }
     .island {
         max-width: 1000px;
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px) { /* Mobile View */
+
+    .map-wrapper {
+        margin-top: 100px;
+    }
     .map-container {
         width: 100%;
         height: 400px;

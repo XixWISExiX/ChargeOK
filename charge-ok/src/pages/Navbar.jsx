@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, NavDropdown, Modal, Button } from 'react-bootstrap';
 import { firebaseAuth } from "../utils/firebase-config";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { useAuth } from '../Auth'; // Adjust the path as necessary
 import './styling/Navbar.css'; // Import your custom CSS
 
 const TopNavbar = () => {
@@ -14,7 +15,7 @@ const TopNavbar = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const {isLoggedIn, setIsLoggedIn} = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -106,7 +107,7 @@ const TopNavbar = () => {
         onToggle={(expanded) => setNavbarExpanded(expanded)}
       >
         <Container className="size-nav">
-          <Navbar.Brand href="#home" className={linkColor}>
+          <Navbar.Brand href="/" className={linkColor}>
             <span className="branding">Charge<span className='playpen-sans2'>OK</span></span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
