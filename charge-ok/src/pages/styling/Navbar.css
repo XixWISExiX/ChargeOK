@@ -1,0 +1,179 @@
+/* Navbar starts transparent */
+.transparent-navbar {
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+/* Opaque navbar after scrolling */
+.opaque-navbar {
+    background-color: black; /* Set the background color to black */
+    transition: background-color 0.3s ease;
+}
+
+/* Sticky navbar that stays at the top */
+.sticky-navbar {
+    position: fixed; /* Position the navbar at the top */
+    top: 0;
+    left: 0;
+    width: 100%; /* Make the navbar stretch across the full width */
+    z-index: 1000; /* Ensure the navbar stays on top of other content */
+}
+
+/* Branding styles */
+.branding {
+    font-size: 30px;
+    font-family: "Kanit", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.playpen-sans2 {
+    font-size: 30px;
+    font-family: "Playpen Sans", cursive; /* Adjust font size for tablets */
+}
+
+/* Nav link button styles */
+.nav-link {
+    padding: 8px 16px; /* Adjust padding for desired spacing */
+    border: 2px solid #00CC66; /* Define the border color and thickness */
+    border-radius: 25px; /* Adjust for desired roundness */
+    color: #00CC66; /* Text color */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+    margin-right: 10px; /* Space between buttons */
+    width: 100px; /* Set a fixed width for all buttons */
+    height: 50px; /* Set a fixed height for all buttons */
+    text-align: center;
+}
+
+/* Hover effect for nav links */
+.nav-link:hover {
+    background-color: #00CC66; /* Change background color on hover */
+    color: white; /* Change text color on hover */
+}
+
+/* Link colors based on navbar state */
+.link-white {
+    color: white !important; /* Ensure non-dropdown links are white initially */
+}
+
+.link-black {
+    color: white !important; /* Ensure dropdown and all links are black after scroll */
+}
+
+/* Dropdown menu styles */
+.transparent-navbar .dropdown-menu {
+    background-color: transparent !important; /* Transparent background for dropdown menu initially */
+    color: white !important; /* White text for dropdown items */
+    border-color: transparent;
+}
+
+.opaque-navbar .dropdown-menu,
+.sticky-navbar .dropdown-menu.show { /* Ensure dropdown menu has a black background when opened */
+    background-color: black !important; /* Black background for dropdown menu on scroll or open */
+    color: white !important; /* White text for dropdown items */
+}
+
+/* Dropdown item styles */
+.dropdown-item {
+    color: inherit !important;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect on dark background */
+}
+
+/* Navbar height adjustment */
+.size-nav {
+    max-height: fit-content;
+    height: 100%;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+
+/* Adjust nav link button size for mobile devices */
+@media (max-width: 767px) {
+    .branding {
+        font-size: 14px; /* Adjust branding size for tablets */
+    }
+    .navbar-toggler-icon {
+
+        width: 20px;
+        height: 20px;
+
+    }
+    .playpen-sans2 {
+        font-size: 20px;
+    }
+  
+    .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center the nav links horizontally */
+    }
+
+    .nav-link {
+        padding: 8px 10px; /* Reduce padding for mobile */
+        width: 300px; /* Allow buttons to be auto-width based on content */
+         /* Set a maximum width for the buttons */
+        margin-right: 0; /* Remove right margin */
+        margin-bottom: 10px; /* Space between links */
+        text-align: center; /* Center text */
+        font-size: 14px; /* Smaller font size for mobile */
+        height: auto; /* Let height adjust based on content */
+        border-radius: 20px; /* Slightly less rounded for better fit */
+    }
+  
+    
+    
+}
+
+/* Medium devices (tablets, 768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .branding {
+        font-size: 24px; /* Adjust branding size for tablets */
+    }
+
+    .nav-link {
+        font-size: 14px; /* Adjust font size for tablets */
+        padding: 10px; /* Adjust padding for spacing */
+        text-align: center; /* Ensure text is centered within each link */
+    }
+    .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center the nav links horizontally */
+    }
+
+    .nav-link {
+        padding: 8px 10px; /* Reduce padding for mobile */
+        width: 500px; /* Allow buttons to be auto-width based on content */
+        ; /* Set a maximum width for the buttons */
+        margin-right: 0; /* Remove right margin */
+        margin-bottom: 10px; /* Space between links */
+        text-align: center; /* Center text */
+        font-size: 14px; /* Smaller font size for mobile */
+        height: auto; /* Let height adjust based on content */
+        border-radius: 20px; /* Slightly less rounded for better fit */
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .branding {
+        font-size: 28px; /* Keep branding size slightly smaller for consistency */
+    }
+
+    .nav-link {
+        font-size: 16px; /* Slightly reduce font size for desktops */
+        height: 45px; /* Slightly reduce height for desktops */
+        width: 120px; /* Slightly reduce width for desktops */
+    }
+
+    .navbar-toggler-icon {
+        width: 30px;
+        height: 30px;
+    }
+}
