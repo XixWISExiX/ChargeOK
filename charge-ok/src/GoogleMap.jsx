@@ -22,10 +22,10 @@ const MyMap = () => {
 
   useEffect(() => {
     // Fetch the URL for the iframe from the backend
-    // fetch("http://localhost:9000/.netlify/functions/api/generate-iframe-url") // Development only
-    fetch(
-      "https://66e76d94bc17b47389f08ad4--chargeokserver.netlify.app/.netlify/functions/api/generate-iframe-url"
-    ) // Deployment only
+    // fetch(
+    // "https://66e76d94bc17b47389f08ad4--chargeokserver.netlify.app/.netlify/functions/api/generate-iframe-url"
+    // ) // Deployment only
+    fetch("http://localhost:9000/.netlify/functions/api/generate-iframe-url") // Development only
       .then((response) => response.json())
       .then((data) => setIframeUrl(data.url))
       .catch((error) => console.error("Error fetching iframe URL:", error));
