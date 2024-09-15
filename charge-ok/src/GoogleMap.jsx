@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { firebaseAuth } from "./utils/firebase-config";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { Dropdown, DropdownButton, Modal, Button } from 'react-bootstrap';
-import { useAuth } from './Auth'; // Adjust the path as necessary
-import './pages/styling/GoogleMap.css';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { Dropdown, DropdownButton, Modal, Button } from "react-bootstrap";
+import { useAuth } from "./Auth"; // Adjust the path as necessary
+import "./pages/styling/GoogleMap.css";
 
 const MyMap = () => {
-  const {isLoggedIn, setIsLoggedIn} = useAuth();
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState('');
+  const [modalType, setModalType] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,7 +22,10 @@ const MyMap = () => {
 
   useEffect(() => {
     // Fetch the URL for the iframe from the backend
-    fetch("http://localhost:5000/generate-iframe-url")
+    // fetch("http://localhost:9000/.netlify/functions/api/generate-iframe-url") // Development only
+    fetch(
+      "https://66e76d94bc17b47389f08ad4--chargeokserver.netlify.app/.netlify/functions/api/generate-iframe-url"
+    ) // Deployment only
       .then((response) => response.json())
       .then((data) => setIframeUrl(data.url))
       .catch((error) => console.error("Error fetching iframe URL:", error));
@@ -40,7 +46,7 @@ const MyMap = () => {
   };
 
   const handleLoginPrompt = () => {
-    handleShowModal('login');
+    handleShowModal("login");
   };
 
   const handleLoginSubmit = async (event) => {
@@ -71,7 +77,7 @@ const MyMap = () => {
       // Firebase sign-up with email and password
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
       alert("Sign-up successful!");
-      handleSwitchModal('login'); // Switch to login modal after successful sign-up
+      handleSwitchModal("login"); // Switch to login modal after successful sign-up
     } catch (err) {
       setError(err.message);
     }
@@ -96,7 +102,7 @@ const MyMap = () => {
   };
 
   return (
-    <div className="map-wrapper" id='target-section'>
+    <div className="map-wrapper" id="target-section">
       <div className="island">
         <h2>Route your trip</h2>
         <div className="search-bar-container">
@@ -126,7 +132,7 @@ const MyMap = () => {
       <div className="map-container">
         <iframe
           title="Google Map"
-          className='map'
+          className="map"
           frameBorder="0"
           style={{ border: 0 }}
           referrerPolicy="no-referrer-when-downgrade"
@@ -137,15 +143,22 @@ const MyMap = () => {
 
       {/* Modal for Login/Sign-Up */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
-        <Modal.Header style={{ backgroundColor: 'black', color: 'white' }} closeButton>
-          <Modal.Title>{modalType === 'login' ? 'Login' : 'Sign-Up'}</Modal.Title>
+        <Modal.Header
+          style={{ backgroundColor: "black", color: "white" }}
+          closeButton
+        >
+          <Modal.Title>
+            {modalType === "login" ? "Login" : "Sign-Up"}
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ backgroundColor: 'black', color: 'white' }}>
-          {modalType === 'login' ? (
+        <Modal.Body style={{ backgroundColor: "black", color: "white" }}>
+          {modalType === "login" ? (
             <form onSubmit={handleLoginSubmit}>
               {error && <p className="error">{error}</p>}
               <div className="mb-3">
-                <label htmlFor="loginEmail" className="form-label">Email address</label>
+                <label htmlFor="loginEmail" className="form-label">
+                  Email address
+                </label>
                 <input
                   type="email"
                   className="form-control"
@@ -156,7 +169,9 @@ const MyMap = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="loginPassword" className="form-label">Password</label>
+                <label htmlFor="loginPassword" className="form-label">
+                  Password
+                </label>
                 <input
                   type="password"
                   className="form-control"
@@ -168,8 +183,8 @@ const MyMap = () => {
               </div>
               <Button
                 variant="link"
-                style={{ color: '#00CC66', padding: '0', marginTop: '10px' }}
-                onClick={() => handleSwitchModal('signup')}
+                style={{ color: "#00CC66", padding: "0", marginTop: "10px" }}
+                onClick={() => handleSwitchModal("signup")}
               >
                 Don't have an account? Sign Up
               </Button>
@@ -178,7 +193,9 @@ const MyMap = () => {
             <form onSubmit={handleSignupSubmit}>
               {error && <p className="error">{error}</p>}
               <div className="mb-3">
-                <label htmlFor="signupEmail" className="form-label">Email address</label>
+                <label htmlFor="signupEmail" className="form-label">
+                  Email address
+                </label>
                 <input
                   type="email"
                   className="form-control"
@@ -189,7 +206,9 @@ const MyMap = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="signupPassword" className="form-label">Password</label>
+                <label htmlFor="signupPassword" className="form-label">
+                  Password
+                </label>
                 <input
                   type="password"
                   className="form-control"
@@ -200,7 +219,9 @@ const MyMap = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="signupConfirmPassword" className="form-label">Confirm Password</label>
+                <label htmlFor="signupConfirmPassword" className="form-label">
+                  Confirm Password
+                </label>
                 <input
                   type="password"
                   className="form-control"
@@ -212,8 +233,8 @@ const MyMap = () => {
               </div>
               <Button
                 variant="link"
-                style={{ color: '#00CC66', padding: '0', marginTop: '10px' }}
-                onClick={() => handleSwitchModal('login')}
+                style={{ color: "#00CC66", padding: "0", marginTop: "10px" }}
+                onClick={() => handleSwitchModal("login")}
               >
                 Already have an account? Log In
               </Button>
@@ -221,18 +242,33 @@ const MyMap = () => {
           )}
         </Modal.Body>
 
-        <Modal.Footer style={{ backgroundColor: 'black', color: 'white' }}>
-          <Button variant="secondary" onClick={handleCloseModal} style={{ backgroundColor: 'grey', color: 'white', borderRadius: '5px' }}>
+        <Modal.Footer style={{ backgroundColor: "black", color: "white" }}>
+          <Button
+            variant="secondary"
+            onClick={handleCloseModal}
+            style={{
+              backgroundColor: "grey",
+              color: "white",
+              borderRadius: "5px",
+            }}
+          >
             Close
           </Button>
           <Button
             variant="primary"
             type="submit"
-            form={modalType === 'login' ? "login-form" : "signup-form"}
-            onClick={modalType === 'login' ? handleLoginSubmit : handleSignupSubmit} // Submit the appropriate form when clicking the button
-            style={{ backgroundColor: '#00CC66', color: 'white', borderRadius: '5px', border: 'none' }}
+            form={modalType === "login" ? "login-form" : "signup-form"}
+            onClick={
+              modalType === "login" ? handleLoginSubmit : handleSignupSubmit
+            } // Submit the appropriate form when clicking the button
+            style={{
+              backgroundColor: "#00CC66",
+              color: "white",
+              borderRadius: "5px",
+              border: "none",
+            }}
           >
-            {modalType === 'login' ? 'Login' : 'Sign-Up'}
+            {modalType === "login" ? "Login" : "Sign-Up"}
           </Button>
         </Modal.Footer>
       </Modal>

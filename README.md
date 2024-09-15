@@ -2,6 +2,10 @@
 
 Navigation System For EV Vehicles in Oklahoma
 
+# Where is ChargeOK?
+
+https://xixwisexix.github.io/ChargeOK/
+
 # How work on ChargeOK
 
 Before anything else you want to clone the repo from git, that is done through the following command
@@ -24,16 +28,8 @@ yarn add axios firebase styled-components react-icons react-redux @reduxjs/toolk
 
 ```
 yarn add react-bootstrap bootstrap
-```
-
-```
 yarn add @lottiefiles/react-lottie-player
-```
-
-Then in the charge-ok/server folder run the following command
-
-```
-yarn add express dotenv
+yarn add netlify-lambda express serverless-http
 ```
 
 Next you want to have a .env file in the charge-ok folder so that you have access to the API KEYS (without this the app won't run) for more detail about the keys, please message "Joshua Wiseman".
@@ -42,10 +38,10 @@ Next you want to have a .env file in the charge-ok folder so that you have acces
 
 Open 2 terminal windows and run the commands in their respective directories in the same order
 
-On the charge-ok/server directory, you will run
+On the charge-ok/netlify-express directory, you will run
 
 ```
-node index.js
+npm start
 ```
 
 In the charge-ok directory, you will run

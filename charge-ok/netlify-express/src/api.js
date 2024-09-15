@@ -1,14 +1,14 @@
 const express = require("express");
-const app = express();
-
+const cors = require("cors");
+const serverless = require("serverless-http");
 require("dotenv").config({ path: "../.env" });
 
-const cors = require("cors");
+const app = express();
+const router = express.Router();
+
 app.use(cors());
 
-app.use(express.json());
-
-app.get("/api/users", (req, res) => {
+router.get("/api/users", (req, res) => {
   const users = [
     { id: 1, name: "Alice" },
     { id: 2, name: "Bob" },
@@ -17,7 +17,7 @@ app.get("/api/users", (req, res) => {
   res.json(users);
 });
 
-app.get("/generate-iframe-url", (req, res) => {
+router.get("/generate-iframe-url", (req, res) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
   // const mapType = "directions";
@@ -35,7 +35,6 @@ app.get("/generate-iframe-url", (req, res) => {
   res.json({ url: searchLink });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.use("/.netlify/functions/api", router);
+
+module.exports.handler = serverless(app);

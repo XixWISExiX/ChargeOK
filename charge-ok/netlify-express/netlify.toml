@@ -1,0 +1,16 @@
+[build]
+  functions = "functions"
+  command = "npm run build"
+  base = "charge-ok"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/netlify-express/:splat"
+  status = 200
+  force = true
+
+[functions]
+  directory = "netlify-express/functions"
+
+[build.environment]
+  NODE_VERSION = "18"  # Set this to the version of Node.js you're using
