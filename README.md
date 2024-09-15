@@ -22,6 +22,14 @@ npm install yarn
 yarn add axios firebase styled-components react-icons react-redux @reduxjs/toolkit react-router-dom
 ```
 
+```
+yarn add react-bootstrap bootstrap
+```
+
+```
+yarn add @lottiefiles/react-lottie-player
+```
+
 Then in the charge-ok/server folder run the following command
 
 ```
@@ -133,6 +141,7 @@ Then you repeat the process over again!
 # Log
 
 ## 09 26 2024
+
 New git repo to let Josh manage conflicts and do code reviews.
 
 ## Aug 31 2024
