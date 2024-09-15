@@ -1,0 +1,138 @@
+.map-wrapper {
+    display: flex;
+    margin-top: 200px;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
+    align-items: center;
+    width: 100%;      /* Full width of the parent container */
+    height: 100vh;    /* Full height of the viewport */
+    padding-bottom: 100px; /* Bottom padding */
+}
+
+.map-container {
+    max-width: 1600px;     /* Set the width of the map container */   /* Set the height of the map container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a better visual effect */
+    margin: 0 auto;      /* Center the map container horizontally */
+    width: 100%;
+}
+.map {
+        max-width: 1600px;     /* Set the width of the map container */
+    height: 800px;    /* Set the height of the map container */
+    width: 100%;
+    border-radius: 15px;
+}
+.btn-success {
+    --bs-btn-bg: #00CC66 !important;
+    --bs-btn-border-color: none;
+    margin-left: 10px;
+}
+.island {
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    padding: 20px;
+
+    margin-bottom: 20px; /* Add some space between the island and the map */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a better visual effect */
+    text-align: center; /* Center the text inside the island */
+    max-width: 1600px; /* Optional: Limit the width of the island */
+    width: 100%; /* Make sure it resizes responsively */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all child elements */
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px; /* Add some space between the title and the search bar */
+    width: 100%;
+    max-width: 600px; /* Limit the width of the search bar */
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    margin-right: 10px; /* Space between search input and filter button */
+    width: 100%;
+    max-width: 800px;
+}
+
+.filter-button {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    background-color: #00CC66; /* Customize the color */
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-button:hover {
+    background-color: #009944; /* Darken the color on hover */
+}
+
+/* Responsive adjustments for map and island */
+@media (max-width: 1199px) {
+    .map-container {
+
+        width: 1200px;
+        height: 600px;
+    }
+    .map-wrapper{
+        margin-top: 0px;
+    }
+    .island {
+        max-width: 1200px;
+    }
+}
+
+@media (max-width: 991px) {
+    .map-container {
+        width: 1000px;
+        height: 500px;
+    }
+    .map-wrapper{
+        margin-top: 0px;
+    }
+    .island {
+        max-width: 1000px;
+    }
+}
+
+@media (max-width: 767px) { /* Mobile View */
+
+    .map-wrapper {
+        margin-top: 100px;
+    }
+    .map-container {
+        width: 100%;
+        height: 400px;
+    }
+
+    .island {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .search-bar-container {
+        flex-direction: column;
+        width: 100%;
+    }
+    .search-bar-container #dropdown {
+        margin-top: 10px;
+    }
+
+    .search-input {
+        margin-right: 0;
+        margin-bottom: 10px; /* Add spacing between input and button */
+        width: 100%;
+    }
+
+    .filter-button {
+        width: 100%; /* Make the button take the full width */
+    }
+}

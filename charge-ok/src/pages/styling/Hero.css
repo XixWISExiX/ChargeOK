@@ -1,0 +1,268 @@
+/* Base Hero Section Styles */
+.hero-section {
+    background: 
+      linear-gradient(to bottom, transparent 40%, black 100%), 
+      url('/src/pages/Media/Green.jpg'); /* Background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full viewport height */
+    color: white; /* White text */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+    position: relative;
+    padding-top: 56px; /* Ensure the hero section doesn't overlap with a fixed navbar */
+}
+.hero-animation {
+    position: relative;
+  }
+  
+  .lottie-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .lottie-container .top-right-lottie {
+    position: absolute;
+    top: -10%; /* Adjust as needed */
+    right: -10%; /* Adjust as needed */
+  }
+  
+  .lottie-container .bottom-right-lottie {
+    position: absolute;
+    bottom: -20%; /* Adjust as needed */
+    right: -30%; /* Adjust as needed */
+  }
+  
+/* Scroll Arrow Styles */
+.scroll-arrow {
+    position: absolute;
+    bottom: 20px; /* Position from the bottom */
+    right: 20px;  /* Position from the right */
+    width: 30px;
+    height: 30px;
+    border-left: 4px solid white;  /* Left border to create the arrow effect */
+    border-bottom: 4px solid white; /* Bottom border to create the arrow effect */
+    transform: rotate(-45deg); /* Rotate to make it point downwards */
+    cursor: pointer;
+    animation: bounce 2s infinite; /* Optional: Add a bouncing animation */
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) rotate(-45deg);
+    }
+    40% {
+        transform: translateY(-10px) rotate(-45deg);
+    }
+    60% {
+        transform: translateY(-5px) rotate(-45deg);
+    }
+}
+
+/* Typography */
+.kanit-extrabold {
+    font-family: "Kanit", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.h1 {
+    font-size: 200px;
+}
+
+.playpen-sans {
+    font-family: "Playpen Sans", cursive;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Hero Content */
+.hero-section-content {
+    max-width: 1300px; /* Adjust this value as needed */
+    width: 100%;
+    padding: 0 20px; /* Add padding for small screens */
+}
+
+.hero-text {
+    z-index: 2;
+    text-align: left;
+}
+
+.hero-animation {
+    z-index: 2;
+    text-align: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Media Queries */
+
+/* Large Desktops and Laptops (1200px and above) */
+@media (min-width: 1200px) {
+    .hero-section {
+        height: 100vh; /* Full height for large screens */
+    }
+
+    .kanit-extrabold {
+        font-size: 80px; /* Slightly smaller text for large screens */
+    }
+
+    .playpen-sans {
+        font-size: 90px; /* Adjust font size for large screens */
+    }
+
+    .hero-section-content {
+        max-width: 1200px; /* Adjust the width for large screens */
+    }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  
+
+    .kanit-extrabold {
+        font-size: 60px; /* Adjust font size for tablets */
+    }
+
+    .lottie-container {
+        height: 95%;
+        width: 95%;
+    }
+    .playpen-sans {
+        font-size: 60px; /* Adjust font size for tablets */
+    }
+
+}
+/* Tablets and Small Desktops (768px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .hero-section {
+        margin-bottom: 220px; /* Add spacing */
+        height: 80vh; /* Slightly reduce height for tablets */
+    }
+
+    .kanit-extrabold {
+        font-size: 90px; /* Adjust font size for tablets */
+    }
+
+    .playpen-sans {
+        font-size: 90px; /* Adjust font size for tablets */
+    }
+
+    .hero-section-content {
+        max-width: 900px; /* Adjust content width for tablets */
+    }
+    .lottie-container {
+        margin-left: 100px;
+        height: 80%;
+        width: 80%;
+    }
+}
+
+@media (max-width: 767px) {
+    h2 {
+        font-size: 15px !important;
+    }
+
+    .lottie-container {
+        margin-top: -350px;
+        height: 55%;
+        width: 55%;
+    }
+    .hero-text {
+        
+        margin-left: 9px;
+    }
+    .hero-section {
+        height: auto; /* Auto height to fit content */
+        padding-top: 20px; /* Reduce padding for mobile */
+        text-align: center; /* Center text for mobile */
+    }
+
+    .kanit-extrabold {
+        margin-top: -100px !important;
+        font-size: 40px; /* Smaller text for mobile */
+    }
+
+    .playpen-sans {
+        font-size: 50px; /* Adjust font size for mobile */
+    }
+
+    .hero-section-content {
+        padding: 0 10px; /* More padding for mobile */
+        max-width: 100%; /* Full width for mobile */
+    }
+
+    .hero-text {
+        text-align: center; /* Center-align for mobile */
+        margin-top: 300px !important;
+        margin-bottom: 320px; /* Add spacing */
+        
+    }
+
+  
+
+    .scroll-arrow {
+        bottom: 10px; /* Adjust arrow position for smaller screens */
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        
+    }
+}
+/* Mobile Devices (up to 767px) */
+@media (max-width: 420px) {
+    
+    h2 {
+        font-size: 15px !important;
+    }
+
+    .lottie-container {
+        margin-top: -400px;
+        height: 75%;
+        width: 75%;
+    }
+    .hero-text {
+        
+        margin-left: 9px;
+    }
+    .hero-section {
+        height: auto; /* Auto height to fit content */
+        padding-top: 20px; /* Reduce padding for mobile */
+        text-align: center; /* Center text for mobile */
+    }
+
+    .kanit-extrabold {
+        margin-top: -100px !important;
+        font-size: 40px; /* Smaller text for mobile */
+    }
+
+    .playpen-sans {
+        font-size: 50px; /* Adjust font size for mobile */
+    }
+
+    .hero-section-content {
+        padding: 0 10px; /* More padding for mobile */
+        max-width: 100%; /* Full width for mobile */
+    }
+
+    .hero-text {
+        text-align: center; /* Center-align for mobile */
+        margin-top: 300px !important;
+        margin-bottom: 320px; /* Add spacing */
+        
+    }
+
+  
+
+    .scroll-arrow {
+        bottom: 10px; /* Adjust arrow position for smaller screens */
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        
+    }
+
+}
