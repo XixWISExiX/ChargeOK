@@ -16,6 +16,18 @@ git clone https://github.com/XixWISExiX/ChargeOK.git
 
 ## Get Dependencies
 
+### Application Dependencies
+
+- Leaflet (display map) https://www.liedman.net/leaflet-routing-machine/#getting-started
+- Mapbox (map logic with ev stations)
+- NREL (ev station location api) https://developer.nrel.gov/docs/transportation/alt-fuel-stations-v1/all/
+
+### Technologies
+
+- React.js (Frontend)
+- Node.js (Backend)
+- Firebase (Database)
+
 In the charge-ok folder in your terminal, run the following commands in order
 
 ```
