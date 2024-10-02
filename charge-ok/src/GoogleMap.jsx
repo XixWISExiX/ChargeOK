@@ -8,6 +8,54 @@ import {
 import { Dropdown, DropdownButton, Modal, Button } from "react-bootstrap";
 import { useAuth } from "./Auth"; // Adjust the path as necessary
 import "./pages/styling/GoogleMap.css";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Tooltip,
+  useMap,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+let blueIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconAnchor: [12, 41], // Anchor the icon properly
+});
+
+L.Marker.prototype.options.icon = blueIcon;
+
+const createTextIcon = (text) => {
+  return L.divIcon({
+    html: `<div style="position: relative; text-align: center;">
+                  <img src="${icon}"/>
+                  <span style="color: black; font-weight: bold; font-size: 0.75rem; white-space: nowrap;">${text}</span>
+               </div>`,
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41], // Adjust size
+    iconAnchor: [12, 41], // Anchor it properly (centered at the bottom)
+    className: "", // Clear any default styles
+  });
+};
+
+const MapCenterUpdater = ({ point }) => {
+  const map = useMap(); // Access the map instance
+
+  useEffect(() => {
+    if (point) {
+      // If the point is defined, update the map center
+      map.setView([point.lat, point.lng], 13); // You can adjust the zoom as needed
+    }
+  }, [point, map]);
+
+  return null;
+};
 
 const MyMap = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
@@ -17,7 +65,8 @@ const MyMap = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [iframeUrl, setIframeUrl] = useState(""); // Track the URL for the iframe
+  const [point, setPoint] = useState(null);
+  const [center, setCenter] = useState([37.7749, -122.4194]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,10 +74,22 @@ const MyMap = () => {
     // fetch(
     // "https://66e76d94bc17b47389f08ad4--chargeokserver.netlify.app/.netlify/functions/api/generate-iframe-url"
     // ) // Deployment only
-    fetch("http://localhost:9000/.netlify/functions/api/generate-iframe-url") // Development only
+
+    // fetch("http://localhost:9000/.netlify/functions/api/generate-iframe-url") // Development only
+    // .then((response) => response.json())
+    // .then((data) => setIframeUrl(data.url))
+    // .catch((error) => console.error("Error fetching iframe URL:", error));
+
+    fetch("http://localhost:9000/.netlify/functions/api/get-point") // Development only
       .then((response) => response.json())
-      .then((data) => setIframeUrl(data.url))
-      .catch((error) => console.error("Error fetching iframe URL:", error));
+      .then((data) => {
+        setPoint(data);
+        setCenter([data.lat, data.lng]);
+        // setCenter(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching point:", error);
+      });
   }, []);
 
   const handleShowModal = (type) => {
@@ -130,7 +191,33 @@ const MyMap = () => {
         </div>
       </div>
       <div className="map-container">
-        <iframe
+        <MapContainer
+          center={center} // Default center
+          zoom={13}
+          style={{ height: "100vh", width: "100%" }}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; OpenStreetMap contributors"
+          />
+          {point && (
+            <>
+              <Marker
+                position={[point.lat, point.lng]}
+                icon={createTextIcon(point.name)}
+                // icon={blueIcon}
+              >
+                <Popup>Point location</Popup>
+                <Tooltip>{point.name}</Tooltip>{" "}
+                {/* Add this line for the tooltip */}
+                {/* icon={createTextIcon(point.name)} */}
+              </Marker>
+
+              <MapCenterUpdater point={point} />
+            </>
+          )}
+        </MapContainer>
+        {/* <iframe
           title="Google Map"
           className="map"
           frameBorder="0"
@@ -138,7 +225,7 @@ const MyMap = () => {
           referrerPolicy="no-referrer-when-downgrade"
           src={iframeUrl}
           allowFullScreen
-        ></iframe>
+        ></iframe> */}
       </div>
 
       {/* Modal for Login/Sign-Up */}

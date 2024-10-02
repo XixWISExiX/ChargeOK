@@ -30,6 +30,13 @@ yarn add axios firebase styled-components react-icons react-redux @reduxjs/toolk
 yarn add react-bootstrap bootstrap
 yarn add @lottiefiles/react-lottie-player
 yarn add netlify-lambda express serverless-http
+yarn add leaflet react-leaflet
+```
+
+In the netlify-express folder, run the following commands in order
+
+```
+npm install cors
 ```
 
 Next you want to have a .env file in the charge-ok folder so that you have access to the API KEYS (without this the app won't run) for more detail about the keys, please message "Joshua Wiseman".
