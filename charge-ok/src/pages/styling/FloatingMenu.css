@@ -1,0 +1,169 @@
+/* FloatingMenu.css */
+
+/* Main container for the floating menu */
+.floating-menu-container {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  width: 350px; /* Set the width to match the width of the hamburger and search bar */
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+/* Header containing the hamburger and search bar */
+.menu-header {
+  display: flex; /* Flexbox for horizontal alignment */
+  align-items: center; /* Vertically align hamburger and search bar */
+  padding: 10px;
+  width: 100%; /* Ensure the header takes the full width of the container */
+  position: relative; /* Ensure search results are positioned relative to this container */
+}
+
+/* Hamburger button styling */
+.hamburger-button {
+  background-color: transparent;
+  border: none;
+  margin-right: 10px; /* Add space between hamburger and search bar */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Hamburger bars */
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 3px 0;
+  transition: 0.3s;
+}
+
+/* Transform hamburger into a cross when open */
+.bar.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.bar.open:nth-child(2) {
+  opacity: 0;
+}
+
+.bar.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Search input styling */
+.search-input {
+  flex-grow: 1; /* Allow search input to grow and fill the remaining space */
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+/* Dropdown menu and accordion styling */
+.dropdown-menu {
+  width: 100%; /* Full width of the container */
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 999;
+  padding: 10px 0;
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+/* Accordion items inside the dropdown */
+.accordion-item {
+  width: 100%; /* Make sure the accordion items take the full width */
+  box-sizing: border-box;
+}
+
+/* Full-width dropdown items (non-accordion items) */
+.dropdown-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: #333;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item a {
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-item a:hover {
+  color: #007bff;
+}
+
+/* Accordion content */
+.accordion-body {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  width: 100%; /* Full width of the container */
+}
+
+/* Styling for the search results list */
+.search-results-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%; /* Full width of the container */
+  z-index: 1000;
+}
+
+/* Each search result item */
+.search-result-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.search-result-item:hover {
+  background-color: #e0e0e0;
+}
+
+/* No results message */
+.no-results {
+  padding: 10px;
+  font-size: 14px;
+  color: #999;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%; /* Full width of the container */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  z-index: 1000;
+}

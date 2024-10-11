@@ -69,9 +69,7 @@ export default function Mainpage() {
 
       <div>test</div>
 
-      <div className="map-container">
-        <GoogleMap />
-      </div>
+     
     </div>
   );
 }

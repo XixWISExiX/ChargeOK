@@ -14,8 +14,6 @@ export default function Layout()  {
         <div>
     <TopNavbar></TopNavbar>
     <Hero></Hero>
-    <Map></Map>
-
      </div>
     </body>
 
