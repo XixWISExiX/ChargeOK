@@ -13,13 +13,19 @@
 
 /* Sticky navbar that stays at the top */
 .sticky-navbar {
-    position: fixed; /* Position the navbar at the top */
+  /* Position the navbar at the top */
     top: 0;
     left: 0;
     width: 100%; /* Make the navbar stretch across the full width */
     z-index: 1000; /* Ensure the navbar stays on top of other content */
 }
 
+  
+  /* Fixed positioning applied only when .fixed-navbar class is present */
+  .fixed-navbar {
+    position: fixed;
+    top: 0;
+  }
 /* Branding styles */
 .branding {
     font-size: 30px;

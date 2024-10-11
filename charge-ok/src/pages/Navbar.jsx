@@ -4,10 +4,15 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { useAuth } from '../Auth'; // Adjust the path as necessary
 import './styling/Navbar.css'; // Import your custom CSS
+import { useLocation } from 'react-router-dom'; // Import useLocation
 
 const TopNavbar = () => {
-  const [navBackground, setNavBackground] = useState('transparent-navbar');
-  const [linkColor, setLinkColor] = useState('link-white'); // Manage the link color state
+  const location = useLocation(); // Get the current location
+  const isMapPage = location.pathname === '/map'; // Check if we're on the map page
+
+  // Initialize state based on whether it's the map page
+  const [navBackground, setNavBackground] = useState(isMapPage ? 'opaque-navbar' : 'transparent-navbar');
+  const [linkColor, setLinkColor] = useState(isMapPage ? 'link-black' : 'link-white');
   const [navbarExpanded, setNavbarExpanded] = useState(false); // Track if the navbar is expanded
   const [showModal, setShowModal] = useState(false); // Manage modal visibility
   const [modalType, setModalType] = useState(''); // Track whether to show login or sign-up
@@ -18,31 +23,37 @@ const TopNavbar = () => {
   const {isLoggedIn, setIsLoggedIn} = useAuth();
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setNavBackground('opaque-navbar');
-        setLinkColor('link-black');
-      } else if (!navbarExpanded) {
-        setNavBackground('transparent-navbar');
-        setLinkColor('link-white');
-      }
-    };
+    if (!isMapPage) {
+      const handleScroll = () => {
+        if (window.scrollY > 50) {
+          setNavBackground('opaque-navbar');
+          setLinkColor('link-black');
+        } else if (!navbarExpanded) {
+          setNavBackground('transparent-navbar');
+          setLinkColor('link-white');
+        }
+      };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [navbarExpanded]);
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    } else {
+      // For the map page, ensure navbar is opaque
+      setNavBackground('opaque-navbar');
+      setLinkColor('link-black');
+    }
+  }, [navbarExpanded, isMapPage]);
 
   useEffect(() => {
     if (navbarExpanded) {
       setNavBackground('opaque-navbar');
       setLinkColor('link-black');
-    } else if (window.scrollY <= 50) {
+    } else if (window.scrollY <= 50 && !isMapPage) {
       setNavBackground('transparent-navbar');
       setLinkColor('link-white');
     }
-  }, [navbarExpanded]);
+  }, [navbarExpanded, isMapPage]);
 
   const handleShowModal = (type) => {
     setModalType(type);
@@ -101,13 +112,13 @@ const TopNavbar = () => {
     <>
       <Navbar
         expand="lg"
-        className={`sticky-navbar ${navBackground}`}
-        fixed="top"
+        className={`sticky-navbar ${navBackground} ${isMapPage ? '' : 'fixed-navbar'}`}
+        fixed={isMapPage ? false : "top"}
         expanded={navbarExpanded}
         onToggle={(expanded) => setNavbarExpanded(expanded)}
       >
         <Container className="size-nav">
-          <Navbar.Brand href="/" className={linkColor}>
+          <Navbar.Brand href="/ChargeOK" className={linkColor}>
             <span className="branding">Charge<span className='playpen-sans2'>OK</span></span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -162,7 +173,6 @@ const TopNavbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
       {/* Modal for Login/Sign-Up */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header style={{ backgroundColor: 'black', color: 'white' }} closeButton>
