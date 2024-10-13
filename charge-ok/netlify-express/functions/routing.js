@@ -10,10 +10,15 @@ const mapping_params = {
   access_token: mapbox_api_key,
 };
 
-const route = async function (start, dest) {
+const route = async function (waypoints) {
   try {
-    let url =
-      baseurl + start[0] + "%2C" + start[1] + "%3B" + dest[0] + "%2C" + dest[1];
+    let url = baseurl;
+    for(let i = 0; i < waypoints.length; ++i) {
+      url += waypoints[i][0];
+      url += "%2C";
+      url += waypoints[i][1];
+      url += "%3B";
+    }
     return await axios.get(url, { mapping_params });
   } catch (error) {
     console.log("Error occcured getting route:", error);
@@ -68,4 +73,20 @@ function get_closest_station(point) {
   }
 
   return closest;
+}
+
+function getRouteWithChargers(start, dest, maxDist) {
+  let path = route([start, dest])['geometry']['coordinates'];
+  let chargers = [];
+  let idx = point_along_route_sums_distance(path, maxDist);
+  while(path[idx] != dest) {
+    let charger = get_closest_station(path[idx]);
+    chargers.push(charger);
+    let chargerPoint = [charger['latitude'], charger['longitude']];
+    path = route([chargerPoint, dest]);
+  }
+  
+  let finalPath = [];
+  finalPath.push(path[0], ...chargers, path[1]);
+  return route(finalPath);
 }
