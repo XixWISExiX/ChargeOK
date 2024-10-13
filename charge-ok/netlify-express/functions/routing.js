@@ -4,7 +4,6 @@ const s = require('../data/ev_chargers.json');
 require("dotenv").config({ path: "../.env" });
 
 const mapbox_api_key = process.env.MAPBOX_API_KEY;
-console.log(mapbox_api_key);
 const baseurl = "https://api.mapbox.com/directions/v5/mapbox/driving/";
 const params = {
   alternatives: "false",
@@ -100,9 +99,6 @@ async function getRouteWithChargers(start, dest, maxDist) {
   let chargers = [];
   let idx = pointAlongRouteSumsDistance(path, maxDist);
   while(idx != path.length) {
-    console.log(idx);
-    console.log(path);
-    console.log(path[idx]);
     let charger = await getClosestStation(path[idx]);
     let chargerPoint = [charger.longitude, charger.latitude];
     chargers.push(chargerPoint);
@@ -113,7 +109,6 @@ async function getRouteWithChargers(start, dest, maxDist) {
   
   let finalPath = [];
   finalPath.push(path[0], ...chargers, path[1]);
-  console.log(finalPath);
   return await route(finalPath);
 }
 
