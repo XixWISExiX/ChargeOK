@@ -10,6 +10,7 @@
   force = true
 
 [functions]
+  node_bundler = "none"  # This line disables the default bundler
   directory = "netlify-express/functions"
 
 [build.environment]
