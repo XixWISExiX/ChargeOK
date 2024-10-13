@@ -45,7 +45,7 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
 
-function point_along_route_sums_distance(line, cutoff) {
+function pointAlongRouteSumsDistance(line, cutoff) {
   sum = 0;
   idx = 1;
   while (sum < cutoff && idx < a.length) {
@@ -55,7 +55,7 @@ function point_along_route_sums_distance(line, cutoff) {
   return idx;
 }
 
-function get_closest_station(point) {
+function getClosestStation(point) {
   // development only
   const stations = axios.get('http://localhost:9000/.netlify/functions/api/get-ev-chargers');
   let closest = stations[0];
@@ -78,9 +78,9 @@ function get_closest_station(point) {
 function getRouteWithChargers(start, dest, maxDist) {
   let path = route([start, dest])['geometry']['coordinates'];
   let chargers = [];
-  let idx = point_along_route_sums_distance(path, maxDist);
+  let idx = pointAlongRouteSumsDistance(path, maxDist);
   while(path[idx] != dest) {
-    let charger = get_closest_station(path[idx]);
+    let charger = getClosestStation(path[idx]);
     chargers.push(charger);
     let chargerPoint = [charger['latitude'], charger['longitude']];
     path = route([chargerPoint, dest]);
