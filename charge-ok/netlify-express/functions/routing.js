@@ -49,3 +49,23 @@ function point_along_route_sums_distance(line, cutoff) {
 
   return idx;
 }
+
+function get_closest_station(point) {
+  // development only
+  const stations = axios.get('http://localhost:9000/.netlify/functions/api/get-ev-chargers');
+  let closest = stations[0];
+  let closestPoint = [closest['latitude'], closest['longitude']];
+  let closestDist = getDistanceFromLatLonInKm(point, closestPoint);
+  for(let i = 1; i < stations.length; ++i) {
+    let testStation = stations[i];
+    let testPoint = [testStation['latitude'], testStation['longitude']];
+    let testDist = getDistanceFromLatLonInKm(point, testPoint);
+    if(testDist < closestDist) {
+      closest = testStation;
+      closestPoint = testPoint;
+      closestDist = testDist;
+    }
+  }
+
+  return closest;
+}
