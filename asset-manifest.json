@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/ChargeOK/static/css/main.9952c874.css",
-    "main.js": "/ChargeOK/static/js/main.7d421d8e.js",
+    "main.js": "/ChargeOK/static/js/main.89b97331.js",
     "index.html": "/ChargeOK/index.html",
     "main.9952c874.css.map": "/ChargeOK/static/css/main.9952c874.css.map",
-    "main.7d421d8e.js.map": "/ChargeOK/static/js/main.7d421d8e.js.map"
+    "main.89b97331.js.map": "/ChargeOK/static/js/main.89b97331.js.map"
   },
   "entrypoints": [
     "static/css/main.9952c874.css",
-    "static/js/main.7d421d8e.js"
+    "static/js/main.89b97331.js"
   ]
 }
