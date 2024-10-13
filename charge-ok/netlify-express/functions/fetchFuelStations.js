@@ -1,4 +1,5 @@
-require("dotenv").config({ path: "../.env" });
+// require("dotenv").config({ path: "../../.env" }); // Test individual file with "node fetchFuelStations.js"
+require("dotenv").config({ path: "../.env" }); // Test backend with "npm start"
 const axios = require("axios");
 const charger_api_key = process.env.CHARGER_API_KEY;
 const charger_doc_id = process.env.FIREBASE_EV_CHARGER_COLLECTION_DOCUMENT_ID;
@@ -6,7 +7,20 @@ const path = require("path");
 
 //---------------------------------------------------------------------------------
 const admin = require("firebase-admin");
-const serviceAccount = require("./firebaseServiceAccountKey.json"); // Replace with your service account key path
+
+const serviceAccount = {
+  projectId: process.env.FIREBASE_BACKEND_PROJECT_ID,
+  privateKeyId: process.env.FIREBASE_BACKEND_PRIVATE_KEY_ID,
+  privateKey: process.env.FIREBASE_BACKEND_PRIVATE_KEY,
+  clientEmail: process.env.FIREBASE_BACKEND_CLIENT_EMAIL,
+  clientId: process.env.FIREBASE_BACKEND_CLIENT_ID,
+  authUri: process.env.FIREBASE_BACKEND_AUTH_URI,
+  tokenUri: process.env.FIREBASE_BACKEND_TOKEN_URI,
+  authProviderX509CertUrl:
+    process.env.FIREBASE_BACKEND_AUTH_PROVIDER_X509_CERT_URL,
+  clientX509CertUrl: process.env.FIREBASE_BACKEND_CLIENT_X509_CERT_URL,
+};
+
 const firebase_project_id = process.env.REACT_APP_FIREBASE_PROJECT_ID;
 
 admin.initializeApp({
@@ -15,6 +29,7 @@ admin.initializeApp({
 });
 
 const db = admin.firestore(); // Use Firestore; for Realtime Database, use admin.database()
+
 //---------------------------------------------------------------------------------
 
 // Define the base URL for the API
@@ -103,7 +118,7 @@ const getAllDocuments = async (collectionName) => {
       documents.push({ id: doc.id, ...doc.data() });
     });
 
-    console.log("Documents retrieved:", documents);
+    // console.log("Documents retrieved:", documents);
     return documents;
   } catch (error) {
     console.error("Error retrieving documents:", error);
@@ -122,7 +137,7 @@ const getAllDocuments = async (collectionName) => {
 //     const ev_data = response.data;
 //     console.log("Data:", ev_data);
 //     console.log(Object.keys(ev_data.fuel_stations).length);
-//     // downloadJSONFile(ev_data, "data/ev_chargers.json");
+//     // downloadJSONFile(ev_data, "../data/ev_chargers.json");
 //   })
 //   .catch((error) => {
 //     // Handle any errors
@@ -132,4 +147,12 @@ const getAllDocuments = async (collectionName) => {
 
 // uploadJsonToFirebase("data/ev_chargers.json");
 // deleteAllDocuments("ev_chargers");
-console.log(getAllDocuments("ev_chargers"));
+
+// getAllDocuments("ev_chargers").then((result) => {
+//   console.log(result); // Output: document result
+//   console.log(result.length);
+// });
+
+module.exports = {
+  getAllDocuments,
+};

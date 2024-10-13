@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import TopNavbar from "./Navbar"; 
-import FloatingMenu from "./FloatingMenu"; 
+import TopNavbar from "./Navbar";
+import FloatingMenu from "./FloatingMenu";
 
 // Set up the custom icon for Leaflet markers
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -42,7 +42,7 @@ const FullScreenMap = () => {
     setCenter([point.lat, point.lng]); // Update map center
 
     // Find the corresponding marker and open its popup
-    const index = points.findIndex(p => p.name === point.name);
+    const index = points.findIndex((p) => p.name === point.name);
     if (index !== -1 && markerRefs.current[index]) {
       markerRefs.current[index].openPopup(); // Open the marker's popup programmatically
     }
@@ -50,25 +50,23 @@ const FullScreenMap = () => {
 
   // Fetch charging locations from Overpass API (OpenStreetMap)
   useEffect(() => {
-    // Example Overpass API query for EV charging stations within a 50km radius of given lat/lng
-    const overpassApiUrl = `
-      https://overpass-api.de/api/interpreter?data=[out:json];node[amenity=charging_station](around:250000,35.463418,-97.513828);out;
-    `;
-
-    fetch(overpassApiUrl)
-      .then(response => response.json())
-      .then(data => {
-        // Map the API data to the format { lat, lng, name }
-        const chargingLocations = data.elements.map(location => ({
-          lat: location.lat,
-          lng: location.lon,
-          name: location.tags.name || "Charging Station"
+    console.log("connecting to backend...");
+    // fetch(
+    //   "https://66e76d94bc17b47389f08ad4--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers"
+    // ) // Deployment only
+    fetch("http://localhost:9000/.netlify/functions/api/get-ev-chargers") // Development only
+      .then((response) => response.json())
+      .then((data) => {
+        const chargingLocations = data.map((location) => ({
+          lat: location.latitude,
+          lng: location.longitude,
+          name: location.station_name || "Charging Station",
         }));
-
-        // Set the charging points
         setPoints(chargingLocations);
       })
-      .catch(error => console.error("Error fetching charging locations:", error));
+      .catch((error) => {
+        console.error("Error fetching point:", error);
+      });
   }, []); // Run only once when the component mounts
 
   return (
@@ -97,11 +95,9 @@ const FullScreenMap = () => {
               key={index}
               position={[point.lat, point.lng]}
               icon={blueIcon}
-              ref={(ref) => markerRefs.current[index] = ref} // Store marker references
+              ref={(ref) => (markerRefs.current[index] = ref)} // Store marker references
             >
-              <Popup>
-                {point.name}
-              </Popup>
+              <Popup>{point.name}</Popup>
             </Marker>
           ))}
 
