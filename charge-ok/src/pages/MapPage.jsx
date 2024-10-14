@@ -9,7 +9,7 @@ import FloatingMenu from "./FloatingMenu";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
-import jsonData from "./front-side-data/ev_chargers.json";
+// import jsonData from "./front-side-data/ev_chargers.json";
 
 // Create a blue icon for markers
 let blueIcon = L.icon({
@@ -57,35 +57,32 @@ const FullScreenMap = () => {
     // const jsonData = JSON.parse(
     //   fs.readFileSync("../../netlify-express/data/ev_chargers.json", "utf-8")
     // );
-    const data = jsonData.fuel_stations;
-    const chargingLocations = data.map((location) => ({
-      lat: location.latitude,
-      lng: location.longitude,
-      name: location.station_name || "Charging Station",
-    }));
-    setPoints(chargingLocations);
-    // fetch(
-    //   // "https://chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // deployment
-    //   "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
-    //   // "https://4--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
-    //   // "http://localhost:8888/.netlify/functions/api/get-ev-chargers" // development (netlify dev)
-    //   // "http://localhost:9000/.netlify/functions/api/get-ev-chargers" // development
-    // )
-    //   // "https://670c2f24e05446e592c30dd5--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers"
-    //   // "https://chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // Deployment only
-    //   // fetch("http://localhost:9000/.netlify/functions/api/get-ev-chargers") // Development only
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const chargingLocations = data.map((location) => ({
-    //       lat: location.latitude,
-    //       lng: location.longitude,
-    //       name: location.station_name || "Charging Station",
-    //     }));
-    //     setPoints(chargingLocations);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching point:", error);
-    //   });
+    // const data = jsonData.fuel_stations;
+    // const chargingLocations = data.map((location) => ({
+    //   lat: location.latitude,
+    //   lng: location.longitude,
+    //   name: location.station_name || "Charging Station",
+    // }));
+    // setPoints(chargingLocations);
+    fetch(
+      "https://chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // deployment
+      // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
+      // "https://4--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
+      // "http://localhost:8888/.netlify/functions/api/get-ev-chargers" // development (netlify dev)
+      // "http://localhost:9000/.netlify/functions/api/get-ev-chargers" // development
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const chargingLocations = data.map((location) => ({
+          lat: location.latitude,
+          lng: location.longitude,
+          name: location.station_name || "Charging Station",
+        }));
+        setPoints(chargingLocations);
+      })
+      .catch((error) => {
+        console.error("Error fetching point:", error);
+      });
   }, []); // Run only once when the component mounts
 
   return (

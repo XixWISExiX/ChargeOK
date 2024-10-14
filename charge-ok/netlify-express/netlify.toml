@@ -1,5 +1,5 @@
 [build]
-  functions = "functions-build"
+  functions = "functions"
   command = "npm run build"
   base = "charge-ok"
 
@@ -11,7 +11,8 @@
 
 [functions]
   node_bundler = "none"  # This line disables the default bundler
-  directory = "netlify-express/functions-build"
+  directory = "netlify-express/functions"
+  included_files = ["netlify-express/data/*.json"]
 
 [build.environment]
   NODE_VERSION = "18"  # Set this to the version of Node.js you're using

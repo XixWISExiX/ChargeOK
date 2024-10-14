@@ -1,8 +1,3 @@
-// const path = require("path");
-// const { getAllDocuments } = require(path.join(
-//   __dirname,
-//   "fetchFuelStations.js"
-// ));
 // const { getAllDocuments } = require("./fetchFuelStations.js");
 const fs = require("fs");
 
@@ -10,11 +5,10 @@ const express = require("express");
 const cors = require("cors");
 const serverless = require("serverless-http");
 require("dotenv").config({ path: "../.env" });
+const chargersJSON = require("../data/ev_chargers.json");
 
 const app = express();
 const router = express.Router();
-
-// const path = require("path");
 
 // // Inside your existing function, before your main logic
 // const dataDir = path.join(__dirname, "./data"); // Adjust this path if needed
@@ -48,9 +42,12 @@ router.get("/get-ev-chargers", (req, res) => {
       fs.readFileSync("./data/ev_chargers.json", "utf-8")
     );
     const evFuelStations = jsonData.fuel_stations;
-    res.json(evFuelStations);
+    res.status(200).json(evFuelStations); // Ensure you return a success status
   } catch (err) {
     console.error("Error reading or parsing file:", err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: err.message }); // Return an error response
   }
 
   // getAllDocuments("ev_chargers")
