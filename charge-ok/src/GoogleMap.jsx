@@ -71,16 +71,11 @@ const MyMap = () => {
 
   useEffect(() => {
     // Fetch the URL for the iframe from the backend
-    // fetch(
-    // "https://66e76d94bc17b47389f08ad4--chargeokserver.netlify.app/.netlify/functions/api/generate-iframe-url"
-    // ) // Deployment only
-
-    // fetch("http://localhost:9000/.netlify/functions/api/generate-iframe-url") // Development only
-    // .then((response) => response.json())
-    // .then((data) => setIframeUrl(data.url))
-    // .catch((error) => console.error("Error fetching iframe URL:", error));
-
-    fetch("http://localhost:9000/.netlify/functions/api/get-point") // Development only
+    fetch(
+      // "https://chargeokserver.netlify.app/.netlify/functions/api/get-point" // deployment
+      "https://670c5c169539340a97313e94--chargeokserver.netlify.app/.netlify/functions/api/get-point" // draft deployment
+      // "http://localhost:9000/.netlify/functions/api/get-point" // development
+    )
       .then((response) => response.json())
       .then((data) => {
         setPoint(data);
