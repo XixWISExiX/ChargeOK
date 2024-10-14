@@ -9,6 +9,8 @@ import FloatingMenu from "./FloatingMenu";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
+// import jsonData from "./front-side-data/ev_chargers.json";
+
 // Create a blue icon for markers
 let blueIcon = L.icon({
   iconUrl: icon,
@@ -51,10 +53,24 @@ const FullScreenMap = () => {
   // Fetch charging locations from Overpass API (OpenStreetMap)
   useEffect(() => {
     console.log("connecting to backend...");
-    // fetch(
-    //   "https://66e76d94bc17b47389f08ad4--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers"
-    // ) // Deployment only
-    fetch("http://localhost:9000/.netlify/functions/api/get-ev-chargers") // Development only
+
+    // const jsonData = JSON.parse(
+    //   fs.readFileSync("../../netlify-express/data/ev_chargers.json", "utf-8")
+    // );
+    // const data = jsonData.fuel_stations;
+    // const chargingLocations = data.map((location) => ({
+    //   lat: location.latitude,
+    //   lng: location.longitude,
+    //   name: location.station_name || "Charging Station",
+    // }));
+    // setPoints(chargingLocations);
+    fetch(
+      "https://chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // deployment
+      // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
+      // "https://4--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
+      // "http://localhost:8888/.netlify/functions/api/get-ev-chargers" // development (netlify dev)
+      // "http://localhost:9000/.netlify/functions/api/get-ev-chargers" // development
+    )
       .then((response) => response.json())
       .then((data) => {
         const chargingLocations = data.map((location) => ({

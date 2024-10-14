@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { getAllDocuments } = require("./fetchFuelStations.js");
-const s = require('../data/ev_chargers.json');
+const s = require("./data/ev_chargers.json");
 require("dotenv").config({ path: "../.env" });
 
 const mapbox_api_key = process.env.MAPBOX_API_KEY;
@@ -20,15 +20,14 @@ axios.interceptors.request.use(request => {
 })
 */
 
-
 async function route(waypoints) {
   try {
     let url = baseurl;
-    for(let i = 0; i < waypoints.length; ++i) {
+    for (let i = 0; i < waypoints.length; ++i) {
       url += waypoints[i][0];
       url += "%2C";
       url += waypoints[i][1];
-      if(i != waypoints.length-1) {
+      if (i != waypoints.length - 1) {
         url += "%3B";
       }
     }
@@ -66,24 +65,23 @@ function pointAlongRouteSumsDistance(line, cutoff) {
     ++idx;
   }
 
-  if(idx > line.length)
-	return idx-1;
+  if (idx > line.length) return idx - 1;
 
   return idx;
 }
 
 async function getClosestStation(point) {
   //const s = await getAllDocuments('ev_chargers');
-  
+
   const stations = s.fuel_stations;
   let closest = stations[0];
   let closestPoint = [closest.longitude, closest.latitude];
   let closestDist = getDistanceFromLatLonInKm(point, closestPoint);
-  for(let i = 1; i < stations.length; ++i) {
+  for (let i = 1; i < stations.length; ++i) {
     let testStation = stations[i];
     let testPoint = [testStation.longitude, testStation.latitude];
     let testDist = getDistanceFromLatLonInKm(point, testPoint);
-    if(testDist < closestDist) {
+    if (testDist < closestDist) {
       closest = testStation;
       closestPoint = testPoint;
       closestDist = testDist;
@@ -98,7 +96,7 @@ async function getRouteWithChargers(start, dest, maxDist) {
   path = path.data.routes[0].geometry.coordinates;
   let chargers = [];
   let idx = pointAlongRouteSumsDistance(path, maxDist);
-  while(idx != path.length) {
+  while (idx != path.length) {
     let charger = await getClosestStation(path[idx]);
     let chargerPoint = [charger.longitude, charger.latitude];
     chargers.push(chargerPoint);
@@ -106,7 +104,7 @@ async function getRouteWithChargers(start, dest, maxDist) {
     path = path.data.routes[0].geometry.coordinates;
     idx = pointAlongRouteSumsDistance(path, maxDist);
   }
-  
+
   let finalPath = [];
   finalPath.push(path[0], ...chargers, path[1]);
   return await route(finalPath);
