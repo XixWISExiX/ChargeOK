@@ -5,27 +5,31 @@
   position: fixed;
   top: 100px;
   left: 100px;
-  width: 350px; /* Set the width to match the width of the hamburger and search bar */
+  width: 90%;
+  max-width: 350px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  transition: width 0.3s ease, left 0.3s ease;
+  margin-left: 30px; /* Added left margin */
+
 }
 
 /* Header containing the hamburger and search bar */
 .menu-header {
-  display: flex; /* Flexbox for horizontal alignment */
-  align-items: center; /* Vertically align hamburger and search bar */
+  display: flex;
+  align-items: center;
   padding: 10px;
-  width: 100%; /* Ensure the header takes the full width of the container */
-  position: relative; /* Ensure search results are positioned relative to this container */
+  width: 100%;
+  position: relative;
 }
 
 /* Hamburger button styling */
 .hamburger-button {
   background-color: transparent;
   border: none;
-  margin-right: 10px; /* Add space between hamburger and search bar */
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,28 +61,28 @@
 
 /* Search input styling */
 .search-input {
-  flex-grow: 1; /* Allow search input to grow and fill the remaining space */
+  flex-grow: 1;
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ddd;
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box; /* Ensure padding is included in the width */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Dropdown menu and accordion styling */
 .dropdown-menu {
-  width: 100%; /* Full width of the container */
+  width: 100%;
   background-color: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   z-index: 999;
   padding: 10px 0;
-  box-sizing: border-box; /* Ensure padding is included in the width */
+  box-sizing: border-box;
 }
 
 /* Accordion items inside the dropdown */
 .accordion-item {
-  width: 100%; /* Make sure the accordion items take the full width */
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -90,7 +94,7 @@
   color: #333;
   font-size: 16px;
   transition: background-color 0.3s;
-  width: 100%; /* Full width of the container */
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -119,7 +123,7 @@
   margin-top: 5px;
   border: 1px solid #ddd;
   box-sizing: border-box;
-  width: 100%; /* Full width of the container */
+  width: 100%;
 }
 
 /* Styling for the search results list */
@@ -136,7 +140,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%; /* Full width of the container */
+  width: 100%;
   z-index: 1000;
 }
 
@@ -161,9 +165,24 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%; /* Full width of the container */
+  width: 100%;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 5px;
   z-index: 1000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .floating-menu-container {
+    left: 50px;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-menu-container {
+    left: 20px;
+    max-width: 250px;
+  }
 }

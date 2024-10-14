@@ -54,7 +54,7 @@ const FloatingMenu = ({ points, onPointSelect }) => {
         <input 
           type="text" 
           className="form-control search-input" 
-          placeholder="Search for a Charging Location" 
+          placeholder="Search" 
           value={searchTerm}
           onChange={handleSearch}
         />
