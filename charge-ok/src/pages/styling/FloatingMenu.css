@@ -5,11 +5,14 @@
   position: fixed;
   top: 100px;
   left: 100px;
-  width: 350px; /* Set the width to match the width of the hamburger and search bar */
+  width: 90%;
+  max-width: 350px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  transition: width 0.3s ease, left 0.3s ease;
+  margin-left: 30px; /* Added left margin */
 }
 
 /* Header containing the hamburger and search bar */
@@ -166,4 +169,19 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   z-index: 1000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .floating-menu-container {
+    left: 50px;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-menu-container {
+    left: 20px;
+    max-width: 250px;
+  }
 }

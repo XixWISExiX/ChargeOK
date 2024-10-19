@@ -43,6 +43,8 @@ yarn add react-bootstrap bootstrap
 yarn add @lottiefiles/react-lottie-player
 yarn add netlify-lambda express serverless-http
 yarn add leaflet react-leaflet
+yard add leaflet-routing-machine
+yarn add leaflet.locatecontrol
 ```
 
 In the netlify-express folder, run the following commands in order
