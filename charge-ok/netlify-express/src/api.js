@@ -6,6 +6,7 @@ const cors = require("cors");
 const serverless = require("serverless-http");
 require("dotenv").config({ path: "../.env" });
 const chargersJSON = require("../data/ev_chargers.json");
+const adminListJSON = require("../data/admin_list.json");
 
 const app = express();
 const router = express.Router();
@@ -33,6 +34,23 @@ router.get("/get-point", (req, res) => {
   console.log("Returning point:", point);
 
   res.json(point); // Return point directly
+});
+
+// Returns if the id is an admin or not
+router.post("/is-admin", (req, res) => {
+  const id = JSON.parse(req.body.toString()).id; // Get id from frontend
+  try {
+    const checkIdInJson = (id) => {
+      return adminListJSON.includes(id);
+    };
+    if (checkIdInJson(id)) res.status(200).json(true); // user is admin
+    else res.status(200).json(false); // user isn't admin
+  } catch (err) {
+    console.error("Error reading or parsing file:", err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: err.message }); // Return an error response
+  }
 });
 
 router.get("/get-ev-chargers", (req, res) => {

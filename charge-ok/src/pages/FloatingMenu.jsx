@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Accordion } from 'react-bootstrap'; 
-import './styling/FloatingMenu.css'; 
+import React, { useState } from "react";
+import { Accordion } from "react-bootstrap";
+import "./styling/FloatingMenu.css";
+import { useAuth } from "../Auth";
 
 const FloatingMenu = ({ points, onPointSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredPoints, setFilteredPoints] = useState([]);
+  const { isAdmin } = useAuth();
 
   // Toggle main menu visibility
   const toggleMenu = () => {
@@ -19,7 +21,7 @@ const FloatingMenu = ({ points, onPointSelect }) => {
 
     // Filter points based on the search term
     if (searchValue) {
-      const filtered = points.filter(point =>
+      const filtered = points.filter((point) =>
         point.name.toLowerCase().includes(searchValue)
       );
       setFilteredPoints(filtered);
@@ -31,7 +33,7 @@ const FloatingMenu = ({ points, onPointSelect }) => {
   // Handle point selection
   const handlePointSelect = (point) => {
     onPointSelect(point); // Notify parent component
-    setSearchTerm(''); // Clear search after selection
+    setSearchTerm(""); // Clear search after selection
     setFilteredPoints([]); // Clear search results after selection
   };
 
@@ -46,15 +48,15 @@ const FloatingMenu = ({ points, onPointSelect }) => {
           onClick={toggleMenu}
         >
           {/* Hamburger icon */}
-          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
-          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
-          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
+          <div className={`bar ${isOpen ? "open" : ""}`}></div>
+          <div className={`bar ${isOpen ? "open" : ""}`}></div>
+          <div className={`bar ${isOpen ? "open" : ""}`}></div>
         </button>
 
-        <input 
-          type="text" 
-          className="form-control search-input" 
-          placeholder="Search for a Charging Location" 
+        <input
+          type="text"
+          className="form-control search-input"
+          placeholder="Search for a Charging Location"
           value={searchTerm}
           onChange={handleSearch}
         />
@@ -86,40 +88,43 @@ const FloatingMenu = ({ points, onPointSelect }) => {
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
               <Accordion.Header>Legend</Accordion.Header>
-              <Accordion.Body>
-                Filler content for Legend.
-              </Accordion.Body>
+              <Accordion.Body>Filler content for Legend.</Accordion.Body>
             </Accordion.Item>
 
             <Accordion.Item eventKey="1">
               <Accordion.Header>Filters</Accordion.Header>
-              <Accordion.Body>
-                Filler content for Filters.
-              </Accordion.Body>
+              <Accordion.Body>Filler content for Filters.</Accordion.Body>
             </Accordion.Item>
 
             <Accordion.Item eventKey="2">
               <Accordion.Header>Add Station</Accordion.Header>
-              <Accordion.Body>
-                Filler content for Add Station.
-              </Accordion.Body>
+              {isAdmin && <Accordion.Body>Your An Admin</Accordion.Body>}
+              <Accordion.Body>Filler content for Add Station.</Accordion.Body>
             </Accordion.Item>
 
             <Accordion.Item eventKey="3">
               <Accordion.Header>Trip Planner</Accordion.Header>
-              <Accordion.Body>
-                Filler content for Trip Planner.
-              </Accordion.Body>
+              <Accordion.Body>Filler content for Trip Planner.</Accordion.Body>
             </Accordion.Item>
           </Accordion>
 
           {/* Other non-accordion items */}
           <ul className="list-unstyled mb-0">
-            <li className="dropdown-item"><a href="#">Plan a New Trip</a></li>
-            <li className="dropdown-item"><a href="#">Recent Activity</a></li>
-            <li className="dropdown-item"><a href="#">Settings</a></li>
-            <li className="dropdown-item"><a href="#">Help</a></li>
-            <li className="dropdown-item"><a href="#">Submit Feedback</a></li>
+            <li className="dropdown-item">
+              <a href="#">Plan a New Trip</a>
+            </li>
+            <li className="dropdown-item">
+              <a href="#">Recent Activity</a>
+            </li>
+            <li className="dropdown-item">
+              <a href="#">Settings</a>
+            </li>
+            <li className="dropdown-item">
+              <a href="#">Help</a>
+            </li>
+            <li className="dropdown-item">
+              <a href="#">Submit Feedback</a>
+            </li>
           </ul>
         </div>
       )}
