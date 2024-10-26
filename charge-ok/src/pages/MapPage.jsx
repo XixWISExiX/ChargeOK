@@ -9,6 +9,7 @@ import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 import getRouteWithChargers from "./functions/routing.js";
 import RoutingMachine from "./RoutingMachine";
 import GetUserLocation from "./GetUserLocation";
+import { useAuth } from "../Auth";
 
 // Set up the custom icon for Leaflet markers
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -43,7 +44,10 @@ const FullScreenMap = () => {
   const [selectedPoint, setSelectedPoint] = useState(null); // Track selected point for popup
   const [userCoordinates, setUserCoordinates] = useState(null); // State to store user coordinates
   const [route, setRoute] = useState([]); // Array of coordinates for the route
+  // const [isAdmin, setIsAdmin] = useState(false);
+  const { isAdmin, setIsAdmin } = useAuth();
   const markerRefs = useRef([]); // Store references to the markers
+  const { userId } = useAuth();
 
   // Function to handle point selection from FloatingMenu
   const handlePointSelect = (point) => {
@@ -109,7 +113,7 @@ const FullScreenMap = () => {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // const start = userCoordinates || [-97.444273, 35.205785]; // Use userCoordinates or fallback to default
     const start = [-97.444273, 35.205785];
-    console.log("you location", userCoordinates);
+    console.log("Your location", userCoordinates);
     // const start = userCoordinates;
     // console.log("you location", start);
     const end = [-97.513828, 35.463418];
@@ -162,7 +166,8 @@ const FullScreenMap = () => {
     //   [-97.444267, 35.203878],
     //   [-97.444273, 35.205785],
     // ]);
-  }, []); // Run only once when the component mounts
+  }, [userId, userCoordinates]); // Run only once when the userId Is obtained
+  // }, []); // Run only once when the component mounts
   // }, [userCoordinates]); // This effect runs every time userCoordinates changes
 
   return (

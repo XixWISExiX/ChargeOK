@@ -13,6 +13,7 @@
 /charge-ok/build
 # /charge-ok/server/netlify-express
 /charge-ok/netlify-express/node_modules
+admin_list.json
 
 # misc
 .env
