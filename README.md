@@ -53,7 +53,9 @@ In the netlify-express folder, run the following commands in order
 npm install cors
 ```
 
-Next you want to have a .env file in the charge-ok folder so that you have access to the API KEYS (without this the app won't run) for more detail about the keys, please message "Joshua Wiseman".
+Next you want to have a **.env** file in the charge-ok folder so that you have access to the API KEYS (without this the app won't run) for more detail about the keys, please message "Joshua Wiseman".
+
+Along with this you want to have **admin_list.json** in charge-ok/netlify-express/data you can get generate this list on your own (Example: ["id1", "id2"]) however if you want the real json file, please message "Joshua Wiseman".
 
 ## Run App
 
