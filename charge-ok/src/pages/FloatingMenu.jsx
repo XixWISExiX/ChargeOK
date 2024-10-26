@@ -7,7 +7,54 @@ const FloatingMenu = ({ points, onPointSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPoints, setFilteredPoints] = useState([]);
+  const [stationName, setStationName] = useState("");
+  const [address, setAddress] = useState("");
   const { isAdmin } = useAuth();
+
+  const sendFormToBackend = async (data) => {
+    try {
+      const response = await fetch(
+        // "https://chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // deployment
+        // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // draft deployment
+        "http://localhost:9000/.netlify/functions/api/update-charger-queue", // development
+        {
+          method: "POST", // Specify the HTTP method
+          headers: {
+            "Content-Type": "application/json", // Tell server to expect JSON data
+          },
+          body: JSON.stringify(data), // Convert JavaScript object to JSON string
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Success:", result);
+      } else {
+        console.error("Error:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // Get database from backend
+  const getChargerQueue = async () => {
+    console.log("connecting to backend...");
+    fetch(
+      // "https://chargeokserver.netlify.app/.netlify/functions/api/get-charger-queue" // deployment
+      // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
+      // "https://4--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
+      // "http://localhost:8888/.netlify/functions/api/get-ev-chargers" // development (netlify dev)
+      "http://localhost:9000/.netlify/functions/api/get-charger-queue" // development
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Frontend", data);
+      })
+      .catch((error) => {
+        console.error("Error fetching point:", error);
+      });
+  };
 
   // Toggle main menu visibility
   const toggleMenu = () => {
@@ -35,6 +82,17 @@ const FloatingMenu = ({ points, onPointSelect }) => {
     onPointSelect(point); // Notify parent component
     setSearchTerm(""); // Clear search after selection
     setFilteredPoints([]); // Clear search results after selection
+  };
+
+  const handleStationSubmit = async (event) => {
+    event.preventDefault(); // Prevents page refresh or default form action
+    try {
+      await sendFormToBackend({ name: stationName, address: address }); // stores stations in backend
+      // TODO: CHANGE THE BELOW LINE TO ONLY ENVOKE VIA ADMIN AND UPDATE DISPLAY
+      await getChargerQueue(); // Get stations from backend
+    } catch (error) {
+      console.error("Error in submission or fetching charger queue:", error);
+    }
   };
 
   return (
@@ -99,6 +157,27 @@ const FloatingMenu = ({ points, onPointSelect }) => {
             <Accordion.Item eventKey="2">
               <Accordion.Header>Add Station</Accordion.Header>
               {isAdmin && <Accordion.Body>Your An Admin</Accordion.Body>}
+              <Accordion.Body>
+                <form onSubmit={handleStationSubmit}>
+                  <input
+                    name="name"
+                    type="text"
+                    value={stationName}
+                    onChange={(e) => setStationName(e.target.value)}
+                    placeholder="Station Name"
+                    required
+                  />
+                  <input
+                    name="address"
+                    type="text"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="address"
+                    required
+                  />
+                  <button type="submit">Submit</button>
+                </form>
+              </Accordion.Body>
               <Accordion.Body>Filler content for Add Station.</Accordion.Body>
             </Accordion.Item>
 

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
       const response = await fetch(
         // "https://chargeokserver.netlify.app/.netlify/functions/api/is-admin", // deployment
         // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/is-admin", // draft deployment
-        "http://localhost:9000/.netlify/functions/api/is-admin", //
+        "http://localhost:9000/.netlify/functions/api/is-admin", // development
         {
           method: "POST", // Specify the HTTP method
           headers: {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Success:", result);
+        console.log("Is Admin:", result);
         setIsAdmin(result);
       } else {
         console.error("Error:", response.statusText);
