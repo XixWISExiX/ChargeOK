@@ -14,9 +14,9 @@ const FloatingMenu = ({ points, onPointSelect }) => {
   const sendFormToBackend = async (data) => {
     try {
       const response = await fetch(
-        // "https://chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // deployment
+        "https://chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // deployment
         // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // draft deployment
-        "http://localhost:9000/.netlify/functions/api/update-charger-queue", // development
+        // "http://localhost:9000/.netlify/functions/api/update-charger-queue", // development
         {
           method: "POST", // Specify the HTTP method
           headers: {
@@ -41,11 +41,9 @@ const FloatingMenu = ({ points, onPointSelect }) => {
   const getChargerQueue = async () => {
     console.log("connecting to backend...");
     fetch(
-      // "https://chargeokserver.netlify.app/.netlify/functions/api/get-charger-queue" // deployment
-      // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
-      // "https://4--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
-      // "http://localhost:8888/.netlify/functions/api/get-ev-chargers" // development (netlify dev)
-      "http://localhost:9000/.netlify/functions/api/get-charger-queue" // development
+      "https://chargeokserver.netlify.app/.netlify/functions/api/get-charger-queue" // deployment
+      // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get--charger-queue" // draft deployment
+      // "http://localhost:9000/.netlify/functions/api/get-charger-queue" // development
     )
       .then((response) => response.json())
       .then((data) => {
