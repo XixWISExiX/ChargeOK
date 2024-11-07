@@ -20,6 +20,11 @@
     z-index: 1000; /* Ensure the navbar stays on top of other content */
 }
 
+.admin-modal .modal-dialog {
+  max-width: 800px !important; 
+  width: 80% !important;
+}
+
   
   /* Fixed positioning applied only when .fixed-navbar class is present */
   .fixed-navbar {

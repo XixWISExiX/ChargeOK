@@ -3,6 +3,10 @@ import { Accordion } from "react-bootstrap";
 import "./styling/FloatingMenu.css";
 import { useAuth } from "../Auth";
 
+// Import your icons or images here
+import ChargingStationIcon from "./Media/charging_location_icon.png"; // Example of a custom icon image
+import UserLocationIcon from "./Media/circle-solid.svg"; // Example of another icon image
+
 const FloatingMenu = ({ points, onPointSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,18 +15,24 @@ const FloatingMenu = ({ points, onPointSelect }) => {
   const [address, setAddress] = useState("");
   const { isAdmin } = useAuth();
 
+  // Define legend items
+  const legendItems = [
+    
+    { icon: UserLocationIcon, label: "You Are Here" },
+    { icon: ChargingStationIcon, label: "EV Charging Station" },
+    // Add more items as needed
+  ];
+
   const sendFormToBackend = async (data) => {
     try {
       const response = await fetch(
-        "https://chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // deployment
-        // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // draft deployment
-        // "http://localhost:9000/.netlify/functions/api/update-charger-queue", // development
+        "https://chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue",
         {
-          method: "POST", // Specify the HTTP method
+          method: "POST",
           headers: {
-            "Content-Type": "application/json", // Tell server to expect JSON data
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data), // Convert JavaScript object to JSON string
+          body: JSON.stringify(data),
         }
       );
 
@@ -37,14 +47,9 @@ const FloatingMenu = ({ points, onPointSelect }) => {
     }
   };
 
-  // Get database from backend
   const getChargerQueue = async () => {
     console.log("connecting to backend...");
-    fetch(
-      "https://chargeokserver.netlify.app/.netlify/functions/api/get-charger-queue" // deployment
-      // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get--charger-queue" // draft deployment
-      // "http://localhost:9000/.netlify/functions/api/get-charger-queue" // development
-    )
+    fetch("https://chargeokserver.netlify.app/.netlify/functions/api/get-charger-queue")
       .then((response) => response.json())
       .then((data) => {
         console.log("Frontend", data);
@@ -54,40 +59,35 @@ const FloatingMenu = ({ points, onPointSelect }) => {
       });
   };
 
-  // Toggle main menu visibility
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Handle search input changes
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
     setSearchTerm(searchValue);
 
-    // Filter points based on the search term
     if (searchValue) {
       const filtered = points.filter((point) =>
         point.name.toLowerCase().includes(searchValue)
       );
       setFilteredPoints(filtered);
     } else {
-      setFilteredPoints([]); // Clear the filtered points when search term is empty
+      setFilteredPoints([]);
     }
   };
 
-  // Handle point selection
   const handlePointSelect = (point) => {
-    onPointSelect(point); // Notify parent component
-    setSearchTerm(""); // Clear search after selection
-    setFilteredPoints([]); // Clear search results after selection
+    onPointSelect(point);
+    setSearchTerm("");
+    setFilteredPoints([]);
   };
 
   const handleStationSubmit = async (event) => {
-    event.preventDefault(); // Prevents page refresh or default form action
+    event.preventDefault();
     try {
-      await sendFormToBackend({ name: stationName, address: address }); // stores stations in backend
-      // TODO: CHANGE THE BELOW LINE TO ONLY ENVOKE VIA ADMIN AND UPDATE DISPLAY
-      await getChargerQueue(); // Get stations from backend
+      await sendFormToBackend({ name: stationName, address: address });
+      await getChargerQueue();
     } catch (error) {
       console.error("Error in submission or fetching charger queue:", error);
     }
@@ -95,7 +95,6 @@ const FloatingMenu = ({ points, onPointSelect }) => {
 
   return (
     <div className="floating-menu-container">
-      {/* Floating search bar with hamburger menu */}
       <div className="menu-header">
         <button
           className="btn hamburger-button"
@@ -103,7 +102,6 @@ const FloatingMenu = ({ points, onPointSelect }) => {
           aria-expanded={isOpen}
           onClick={toggleMenu}
         >
-          {/* Hamburger icon */}
           <div className={`bar ${isOpen ? "open" : ""}`}></div>
           <div className={`bar ${isOpen ? "open" : ""}`}></div>
           <div className={`bar ${isOpen ? "open" : ""}`}></div>
@@ -118,7 +116,6 @@ const FloatingMenu = ({ points, onPointSelect }) => {
         />
       </div>
 
-      {/* Show filtered points only when there's a search term */}
       {searchTerm && filteredPoints.length > 0 && (
         <ul className="search-results-list">
           {filteredPoints.map((point, index) => (
@@ -133,18 +130,23 @@ const FloatingMenu = ({ points, onPointSelect }) => {
         </ul>
       )}
 
-      {/* Show 'No results found' message if there are no matches */}
       {searchTerm && filteredPoints.length === 0 && (
         <p className="no-results">No results found</p>
       )}
 
-      {/* Dropdown menu under the search bar (Accordion section) */}
       {isOpen && (
         <div className="dropdown-menu show">
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
               <Accordion.Header>Legend</Accordion.Header>
-              <Accordion.Body>Filler content for Legend.</Accordion.Body>
+              <Accordion.Body>
+                {legendItems.map((item, index) => (
+                  <div key={index} className="legend-item">
+                    <img src={item.icon} alt={item.label} className="legend-icon" />
+                    <span className="legend-label">{item.label}</span>
+                  </div>
+                ))}
+              </Accordion.Body>
             </Accordion.Item>
 
             <Accordion.Item eventKey="1">
@@ -185,7 +187,6 @@ const FloatingMenu = ({ points, onPointSelect }) => {
             </Accordion.Item>
           </Accordion>
 
-          {/* Other non-accordion items */}
           <ul className="list-unstyled mb-0">
             <li className="dropdown-item">
               <a href="#">Plan a New Trip</a>

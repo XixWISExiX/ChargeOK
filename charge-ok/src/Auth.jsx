@@ -1,39 +1,38 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import axios from "axios";
 
 // Create the AuthContext
 const AuthContext = createContext();
 
 // AuthProvider component to wrap the app
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track if user is logged in
   const [userId, setUserId] = useState(null); // Store the user's UID
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // Track if user has admin privileges
 
-  const sendUserIdToBackend = async (data) => {
+  // Function to check if the user is an admin
+  const checkAdminStatus = async (userId) => {
     try {
-      const response = await fetch(
-        "https://chargeokserver.netlify.app/.netlify/functions/api/is-admin", // deployment
-        // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/is-admin", // draft deployment
-        // "http://localhost:9000/.netlify/functions/api/is-admin", // development
+      console.log("Checking admin status for:", userId);
+
+      const response = await axios.post(
+        "http://localhost:8888/.netlify/functions/api/is-admin",
+        { id: userId },
         {
-          method: "POST", // Specify the HTTP method
           headers: {
-            "Content-Type": "application/json", // Tell server to expect JSON data
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data), // Convert JavaScript object to JSON string
         }
       );
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Is Admin:", result);
-        setIsAdmin(result);
-      } else {
-        console.error("Error:", response.statusText);
-      }
+      // Set isAdmin based on response.data.isAdmin, assuming backend returns { isAdmin: true } or { isAdmin: false }
+      const isAdminStatus = response.data.isAdmin === true;
+      setIsAdmin(isAdminStatus);
+      console.log("Admin check result (isAdmin):", isAdminStatus);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error checking admin status:", error);
+      setIsAdmin(false);
     }
   };
 
@@ -42,23 +41,26 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(true);
-        setUserId(user.uid); // Set the UID when the user is logged in
-        sendUserIdToBackend({ id: user.uid }); // Check if user is admin
+        setUserId(user.uid);
+        console.log("User logged in with UID:", user.uid);
+
+        // Check if the logged-in user is an admin
+        checkAdminStatus(user.uid);
       } else {
+        // Clear authentication state on logout
         setIsLoggedIn(false);
-        setUserId(null); // Clear UID when logged out
+        setUserId(null);
         setIsAdmin(false);
+        console.log("User logged out, isAdmin set to false");
       }
     });
 
-    // Cleanup the listener on unmount
+    // Clean up the listener on component unmount
     return unsubscribe;
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, userId, isAdmin }}
-    >
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userId, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

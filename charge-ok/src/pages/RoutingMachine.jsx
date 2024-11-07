@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "leaflet-routing-machine";
+import 'leaflet.locatecontrol';
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 

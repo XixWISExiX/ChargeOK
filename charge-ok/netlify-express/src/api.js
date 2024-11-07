@@ -24,6 +24,8 @@ const router = express.Router();
 // );
 
 app.use(cors());
+app.use(express.json());
+
 
 // This is mainly a test function
 router.get("/get-point", (req, res) => {
@@ -37,22 +39,28 @@ router.get("/get-point", (req, res) => {
   res.json(point); // Return point directly
 });
 
-// Returns if the id is an admin or not
 router.post("/is-admin", (req, res) => {
   try {
-    const id = JSON.parse(req.body.toString()).id; // Get id from frontend
-    const checkIdInJson = (id) => {
-      return adminListJSON.includes(id);
-    };
-    if (checkIdInJson(id)) res.status(200).json(true); // user is admin
-    else res.status(200).json(false); // user isn't admin
+    const id = req.body.id;
+    console.log("Received ID in API:", id);  // Log the received UID from the request
+    console.log("Admin List in API:", adminListJSON);  // Log the admin list as it appears in the route
+
+    // Testing comparison
+    const isAdmin = adminListJSON.admins.some((admin) => {
+      console.log(`Comparing admin ID ${admin.id} with received ID ${id}`);
+      return String(admin.id) === String(id);
+    });
+
+    console.log("Is Admin Result in API:", isAdmin);
+    res.status(200).json({ isAdmin });
   } catch (err) {
-    console.error("Error reading or parsing file:", err);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", details: err.message }); // Return an error response
+    console.error("Error in /is-admin route:", err);
+    res.status(500).json({ error: "Internal Server Error", details: err.message });
   }
 });
+
+
+
 
 router.get("/get-ev-chargers", (req, res) => {
   console.log("backend activated");
