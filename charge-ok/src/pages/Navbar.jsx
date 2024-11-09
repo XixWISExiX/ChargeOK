@@ -6,6 +6,9 @@ import {
   NavDropdown,
   Modal,
   Button,
+  Tab,
+  Tabs,
+  ListGroup,
 } from "react-bootstrap";
 import { firebaseAuth } from "../utils/firebase-config";
 import {
@@ -13,29 +16,32 @@ import {
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { useAuth } from "../Auth"; // Adjust the path as necessary
-import "./styling/Navbar.css"; // Import your custom CSS
-import { useLocation } from "react-router-dom"; // Import useLocation
+import { useAuth } from "../Auth";
+import axios from "axios";
+import "./styling/Navbar.css";
+import { useLocation } from "react-router-dom";
 
 const TopNavbar = () => {
-  const location = useLocation(); // Get the current location
-  const isMapPage = location.pathname === "/map"; // Check if we're on the map page
+  const location = useLocation();
+  const isMapPage = location.pathname === "/map";
 
-  // Initialize state based on whether it's the map page
   const [navBackground, setNavBackground] = useState(
     isMapPage ? "opaque-navbar" : "transparent-navbar"
   );
   const [linkColor, setLinkColor] = useState(
     isMapPage ? "link-black" : "link-white"
   );
-  const [navbarExpanded, setNavbarExpanded] = useState(false); // Track if the navbar is expanded
-  const [showModal, setShowModal] = useState(false); // Manage modal visibility
-  const [modalType, setModalType] = useState(""); // Track whether to show login or sign-up
+  const [navbarExpanded, setNavbarExpanded] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showAdminModal, setShowAdminModal] = useState(false); // New state for Admin modal
+  const [modalType, setModalType] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const { isLoggedIn, setIsLoggedIn, setUserId } = useAuth();
+  const [inbox, setInbox] = useState([]); // New state to store inbox requests
+
+  const { isLoggedIn, setIsLoggedIn, isAdmin } = useAuth();
 
   useEffect(() => {
     if (!isMapPage) {
@@ -54,7 +60,6 @@ const TopNavbar = () => {
         window.removeEventListener("scroll", handleScroll);
       };
     } else {
-      // For the map page, ensure navbar is opaque
       setNavBackground("opaque-navbar");
       setLinkColor("link-black");
     }
@@ -70,6 +75,11 @@ const TopNavbar = () => {
     }
   }, [navbarExpanded, isMapPage]);
 
+  const handleSwitchModal = (type) => {
+    setModalType(type);
+    setError(""); // Clear any existing errors when switching modal types
+  };
+
   const handleShowModal = (type) => {
     setModalType(type);
     setShowModal(true);
@@ -79,9 +89,13 @@ const TopNavbar = () => {
     setShowModal(false);
   };
 
-  const handleSwitchModal = (type) => {
-    setModalType(type);
-    setError(""); // Reset error state when switching between modals
+  const handleAdminButtonClick = () => {
+    setShowAdminModal(true); // Open the admin panel modal
+    fetchInbox(); // Fetch inbox requests when opening the modal
+  };
+
+  const handleCloseAdminModal = () => {
+    setShowAdminModal(false); // Close the admin panel modal
   };
 
   const handleLoginSubmit = async (event) => {
@@ -89,7 +103,11 @@ const TopNavbar = () => {
     setError("");
 
     try {
-      await signInWithEmailAndPassword(firebaseAuth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
       setIsLoggedIn(true);
       setShowModal(false);
     } catch (err) {
@@ -120,6 +138,18 @@ const TopNavbar = () => {
       setIsLoggedIn(false);
     } catch (err) {
       console.error("Error logging out:", err);
+    }
+  };
+
+  // Fetch inbox data from the server
+  const fetchInbox = async () => {
+    try {
+      const response = await axios.get(
+        "https://chargeokserver.netlify.app/.netlify/functions/api/get-charger-queue"
+      );
+      setInbox(response.data); // Assume response.data is an array of requests
+    } catch (error) {
+      console.error("Error fetching inbox requests:", error);
     }
   };
 
@@ -161,13 +191,24 @@ const TopNavbar = () => {
                   </Nav.Link>
                 </>
               ) : (
-                <Nav.Link
-                  href="#logout"
-                  className={linkColor}
-                  onClick={handleLogout}
-                >
-                  Logout
-                </Nav.Link>
+                <>
+                  <Nav.Link
+                    href="#logout"
+                    className={linkColor}
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Nav.Link>
+                  {isAdmin && (
+                    <Nav.Link
+                      href="#admin"
+                      className={linkColor}
+                      onClick={handleAdminButtonClick}
+                    >
+                      Admin Panel
+                    </Nav.Link>
+                  )}
+                </>
               )}
               <NavDropdown
                 title={<span className={linkColor}>More</span>}
@@ -192,6 +233,7 @@ const TopNavbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
       {/* Modal for Login/Sign-Up */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header
@@ -290,7 +332,6 @@ const TopNavbar = () => {
               ? "Don't have an account? Sign Up"
               : "Already have an account? Log In"}
           </Button>
-
           <Button
             variant="secondary"
             onClick={handleCloseModal}
@@ -314,6 +355,92 @@ const TopNavbar = () => {
             }}
           >
             {modalType === "login" ? "Login" : "Sign Up"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Admin Panel */}
+      <Modal
+        show={showAdminModal}
+        onHide={handleCloseAdminModal}
+        centered
+        dialogClassName="admin-modal"
+      >
+        <Modal.Header
+          style={{ backgroundColor: "black", color: "white" }}
+          closeButton
+        >
+          <Modal.Title>Admin Panel</Modal.Title>
+        </Modal.Header>
+        <Modal.Body
+          style={{ backgroundColor: "black", color: "white", padding: "20px" }}
+        >
+          <Tabs
+            defaultActiveKey="inbox"
+            id="admin-panel-tabs"
+            className="mb-3"
+            style={{ borderBottom: "1px solid white" }}
+          >
+            <Tab eventKey="inbox" title="Inbox">
+              <ListGroup variant="flush" style={{ backgroundColor: "black" }}>
+                {inbox.length > 0 ? (
+                  inbox.map((request, index) => (
+                    <ListGroup
+                      variant="flush"
+                      style={{ backgroundColor: "black" }}
+                    >
+                      {inbox.length > 0 ? (
+                        inbox.map((request, index) => (
+                          <ListGroup.Item
+                            key={index}
+                            style={{
+                              backgroundColor: "black",
+                              color: "white",
+                              border: "1px solid gray",
+                              marginBottom: "5px",
+                            }}
+                          >
+                            <strong>Station Name:</strong> {request.name} <br />
+                            <strong>Address:</strong> {request.address} <br />
+                            <Button
+                              variant="success"
+                              size="sm"
+                              className="mt-2 me-2"
+                            >
+                              Approve
+                            </Button>
+                            <Button variant="danger" size="sm" className="mt-2">
+                              Reject
+                            </Button>
+                          </ListGroup.Item>
+                        ))
+                      ) : (
+                        <p style={{ color: "white", padding: "10px" }}>
+                          No new requests.
+                        </p>
+                      )}
+                    </ListGroup>
+                  ))
+                ) : (
+                  <p style={{ color: "white", padding: "10px" }}>
+                    No new requests.
+                  </p>
+                )}
+              </ListGroup>
+            </Tab>
+          </Tabs>
+        </Modal.Body>
+        <Modal.Footer style={{ backgroundColor: "black", color: "white" }}>
+          <Button
+            variant="secondary"
+            onClick={handleCloseAdminModal}
+            style={{
+              backgroundColor: "grey",
+              color: "white",
+              borderRadius: "5px",
+            }}
+          >
+            Close
           </Button>
         </Modal.Footer>
       </Modal>

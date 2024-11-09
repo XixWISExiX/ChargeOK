@@ -3,6 +3,10 @@ import { Accordion } from "react-bootstrap";
 import "./styling/FloatingMenu.css";
 import { useAuth } from "../Auth";
 
+// Import your icons or images here
+import ChargingStationIcon from "./Media/charging_location_icon.png"; // Example of a custom icon image
+import UserLocationIcon from "./Media/circle-solid.svg"; // Example of another icon image
+
 const FloatingMenu = ({ points, onPointSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");

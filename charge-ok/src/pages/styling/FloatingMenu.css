@@ -143,6 +143,29 @@
   z-index: 1000;
 }
 
+.legend-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px; /* Add padding to each item */
+  margin-bottom: 5px; /* Space between legend items */
+  border-radius: 5px; /* Optional: slight rounding for a softer look */
+}
+
+.legend-item:hover {
+  background-color: #f1f1f1; /* Optional: highlight on hover */
+}
+
+.legend-icon {
+  width: 24px; /* Increase icon size for clarity */
+  height: 24px;
+  margin-right: 10px;
+}
+
+.legend-label {
+  font-size: 15px;
+  color: #333;
+}
+
 /* Each search result item */
 .search-result-item {
   padding: 10px;
