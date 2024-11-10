@@ -26,7 +26,7 @@ async function route(waypoints) {
       url += waypoints[i][0];
       url += "%2C";
       url += waypoints[i][1];
-      if (i != waypoints.length - 1) {
+      if (i !== waypoints.length - 1) {
         url += "%3B";
       }
     }
@@ -111,20 +111,18 @@ async function getRouteWithChargers(start, dest, maxDist) {
   let chargers = [];
   let idx = pointAlongRouteSumsDistance(path, maxDist);
 
-  let startOfIteration = start;
-  while (idx != path.length) {
+  while (idx !== path.length) {
     let charger = await getClosestStation(path[idx]);
     let chargerPoint = [charger.longitude, charger.latitude];
     chargers.push(chargerPoint);
 
-    let startHalfPath = await route([startOfIteration, chargerPoint]);
     path = await route([chargerPoint, dest]);
     path = path.data.routes[0].geometry.coordinates;
     idx = pointAlongRouteSumsDistance(path, maxDist);
   }
 
   let finalPath = [];
-  finalPath.push(path[0], ...chargers, path[1]);
+  finalPath.push(start, ...chargers, dest);
   return await route(finalPath);
 }
 
