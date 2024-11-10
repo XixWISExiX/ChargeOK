@@ -3,6 +3,10 @@ import { Accordion } from "react-bootstrap";
 import "./styling/FloatingMenu.css";
 import { useAuth } from "../Auth";
 
+// Import your icons or images here
+import ChargingStationIcon from "./Media/charging_location_icon.png"; // Example of a custom icon image
+import UserLocationIcon from "./Media/circle-solid.svg"; // Example of another icon image
+
 const FloatingMenu = ({ points, onPointSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,12 +15,17 @@ const FloatingMenu = ({ points, onPointSelect }) => {
   const [address, setAddress] = useState("");
   const { isAdmin } = useAuth();
 
+  // Define legend items
+  const legendItems = [
+    { icon: UserLocationIcon, label: "You Are Here" },
+    { icon: ChargingStationIcon, label: "EV Charging Station" },
+    // Add more items as needed
+  ];
+
   const sendFormToBackend = async (data) => {
     try {
       const response = await fetch(
-        "https://chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // deployment
-        // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/update-charger-queue", // draft deployment
-        // "http://localhost:9000/.netlify/functions/api/update-charger-queue", // development
+        "http://localhost:9000/.netlify/functions/api/add-to-charger-queue", // development
         {
           method: "POST", // Specify the HTTP method
           headers: {
@@ -35,23 +44,6 @@ const FloatingMenu = ({ points, onPointSelect }) => {
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-
-  // Get database from backend
-  const getChargerQueue = async () => {
-    console.log("connecting to backend...");
-    fetch(
-      "https://chargeokserver.netlify.app/.netlify/functions/api/get-charger-queue" // deployment
-      // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get--charger-queue" // draft deployment
-      // "http://localhost:9000/.netlify/functions/api/get-charger-queue" // development
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Frontend", data);
-      })
-      .catch((error) => {
-        console.error("Error fetching point:", error);
-      });
   };
 
   // Toggle main menu visibility
@@ -84,10 +76,10 @@ const FloatingMenu = ({ points, onPointSelect }) => {
 
   const handleStationSubmit = async (event) => {
     event.preventDefault(); // Prevents page refresh or default form action
+    setStationName("");
+    setAddress("");
     try {
       await sendFormToBackend({ name: stationName, address: address }); // stores stations in backend
-      // TODO: CHANGE THE BELOW LINE TO ONLY ENVOKE VIA ADMIN AND UPDATE DISPLAY
-      await getChargerQueue(); // Get stations from backend
     } catch (error) {
       console.error("Error in submission or fetching charger queue:", error);
     }
@@ -144,7 +136,18 @@ const FloatingMenu = ({ points, onPointSelect }) => {
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
               <Accordion.Header>Legend</Accordion.Header>
-              <Accordion.Body>Filler content for Legend.</Accordion.Body>
+              <Accordion.Body>
+                {legendItems.map((item, index) => (
+                  <div key={index} className="legend-item">
+                    <img
+                      src={item.icon}
+                      alt={item.label}
+                      className="legend-icon"
+                    />
+                    <span className="legend-label">{item.label}</span>
+                  </div>
+                ))}
+              </Accordion.Body>
             </Accordion.Item>
 
             <Accordion.Item eventKey="1">
@@ -172,6 +175,8 @@ const FloatingMenu = ({ points, onPointSelect }) => {
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder="address"
                     required
+                    pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
+                    title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
                   />
                   <button type="submit">Submit</button>
                 </form>
