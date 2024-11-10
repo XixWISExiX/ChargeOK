@@ -20,6 +20,7 @@ import { useAuth } from "../Auth";
 import axios from "axios";
 import "./styling/Navbar.css";
 import { useLocation } from "react-router-dom";
+import getCoord from "./functions/getCoord.js";
 
 const TopNavbar = () => {
   const location = useLocation();
@@ -145,9 +146,72 @@ const TopNavbar = () => {
   const fetchInbox = async () => {
     try {
       const response = await axios.get(
-        "https://chargeokserver.netlify.app/.netlify/functions/api/get-charger-queue"
+        "http://localhost:9000/.netlify/functions/api/get-charger-queue" // development
       );
+      console.log("Charging Station Additions Requesed JSON:", response.data);
       setInbox(response.data); // Assume response.data is an array of requests
+    } catch (error) {
+      console.error("Error fetching inbox requests:", error);
+    }
+  };
+
+  const handleApproveRequest = async (name, address) => {
+    console.log("Approve Request:", name, address);
+
+    try {
+      // Make sure address is valid
+      const addressPattern =
+        /(\d+)\s+([A-Za-z]+(?:\s[A-Za-z]+)*)(?:\s(Street|Ave|Blvd|Drive|Lane|Road|St|Rd))?/;
+      if (addressPattern.test(address) === false) {
+        console.log("Address is not Recognizable");
+        const e = 1 / 0;
+      }
+      const coordinates = await getCoord(address);
+      console.log("GPS Coords", coordinates);
+
+      const response = await axios.post(
+        "http://localhost:9000/.netlify/functions/api/add-ev-charger", // development
+        {
+          method: "POST", // Specify the HTTP method
+          headers: {
+            "Content-Type": "application/json", // Tell server to expect JSON data
+          },
+          body: JSON.stringify({ name, coordinates }), // Convert JavaScript object to JSON string
+        }
+      );
+      if (response.ok) {
+        console.log("Request processed");
+      } else {
+        console.error("Error:", response.statusText);
+      }
+      fetchInbox();
+    } catch (error) {
+      console.error("Error fetching inbox requests:", error);
+    }
+
+    // Gets rid of the request after it's processed
+    await handleRejectRequest(name, address);
+  };
+
+  const handleRejectRequest = async (name, address) => {
+    console.log("Rejected Request:", name, address);
+    try {
+      const response = await axios.post(
+        "http://localhost:9000/.netlify/functions/api/remove-from-charger-queue", // development
+        {
+          method: "POST", // Specify the HTTP method
+          headers: {
+            "Content-Type": "application/json", // Tell server to expect JSON data
+          },
+          body: JSON.stringify({ name, address }), // Convert JavaScript object to JSON string
+        }
+      );
+      if (response.ok) {
+        console.log("Request processed");
+      } else {
+        console.error("Error:", response.statusText);
+      }
+      fetchInbox();
     } catch (error) {
       console.error("Error fetching inbox requests:", error);
     }
@@ -385,41 +449,38 @@ const TopNavbar = () => {
               <ListGroup variant="flush" style={{ backgroundColor: "black" }}>
                 {inbox.length > 0 ? (
                   inbox.map((request, index) => (
-                    <ListGroup
-                      variant="flush"
-                      style={{ backgroundColor: "black" }}
+                    <ListGroup.Item
+                      key={index}
+                      style={{
+                        backgroundColor: "black",
+                        color: "white",
+                        border: "1px solid gray",
+                        marginBottom: "5px",
+                      }}
                     >
-                      {inbox.length > 0 ? (
-                        inbox.map((request, index) => (
-                          <ListGroup.Item
-                            key={index}
-                            style={{
-                              backgroundColor: "black",
-                              color: "white",
-                              border: "1px solid gray",
-                              marginBottom: "5px",
-                            }}
-                          >
-                            <strong>Station Name:</strong> {request.name} <br />
-                            <strong>Address:</strong> {request.address} <br />
-                            <Button
-                              variant="success"
-                              size="sm"
-                              className="mt-2 me-2"
-                            >
-                              Approve
-                            </Button>
-                            <Button variant="danger" size="sm" className="mt-2">
-                              Reject
-                            </Button>
-                          </ListGroup.Item>
-                        ))
-                      ) : (
-                        <p style={{ color: "white", padding: "10px" }}>
-                          No new requests.
-                        </p>
-                      )}
-                    </ListGroup>
+                      <strong>Station Name:</strong> {request.name} <br />
+                      <strong>Address:</strong> {request.address} <br />
+                      <Button
+                        variant="success"
+                        size="sm"
+                        className="mt-2 me-2"
+                        onClick={() =>
+                          handleApproveRequest(request.name, request.address)
+                        }
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        className="mt-2"
+                        onClick={() =>
+                          handleRejectRequest(request.name, request.address)
+                        }
+                      >
+                        Reject
+                      </Button>
+                    </ListGroup.Item>
                   ))
                 ) : (
                   <p style={{ color: "white", padding: "10px" }}>

@@ -1,23 +1,6 @@
 import axios from "axios";
-import dotenv from "dotenv";
-import path from "path";
-import { fileURLToPath } from "url";
 
-// Get current directory
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Configure dotenv to look for .env file in project root
-dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
-
-// Debug logs
-console.log("Current directory:", __dirname);
-console.log(
-  "Environment variables loaded:",
-  process.env.MAPBOX_API_KEY ? "Yes" : "No"
-);
-
-const mapbox_api_key = process.env.MAPBOX_API_KEY;
+const mapbox_api_key = process.env.REACT_APP_MAPBOX_API_KEY;
 const geocode_baseurl = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 
 if (!mapbox_api_key) {

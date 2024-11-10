@@ -4,33 +4,14 @@
   "station_counts": {
     "total": 1377,
     "fuels": {
-      "BD": {
-        "total": 0
-      },
-      "E85": {
-        "total": 0
-      },
-      "ELEC": {
-        "total": 1377,
-        "stations": {
-          "total": 362
-        }
-      },
-      "HY": {
-        "total": 0
-      },
-      "LNG": {
-        "total": 0
-      },
-      "CNG": {
-        "total": 0
-      },
-      "LPG": {
-        "total": 0
-      },
-      "RD": {
-        "total": 0
-      }
+      "BD": { "total": 0 },
+      "E85": { "total": 0 },
+      "ELEC": { "total": 1377, "stations": { "total": 362 } },
+      "HY": { "total": 0 },
+      "LNG": { "total": 0 },
+      "CNG": { "total": 0 },
+      "LPG": { "total": 0 },
+      "RD": { "total": 0 }
     }
   },
   "fuel_stations": [
@@ -107,10 +88,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "TEMPORAIREMENT SUSPENDU (Public)",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL7574"],
-        "posts": ["3493", "3503"]
-      }
+      "ev_network_ids": { "station": ["USCPIL7574"], "posts": ["3493", "3503"] }
     },
     {
       "access_code": "public",
@@ -1607,9 +1585,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["2446"]
-      }
+      "ev_network_ids": { "station": ["2446"] }
     },
     {
       "access_code": "public",
@@ -1684,9 +1660,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["2449"]
-      }
+      "ev_network_ids": { "station": ["2449"] }
     },
     {
       "access_code": "public",
@@ -1761,9 +1735,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["2448"]
-      }
+      "ev_network_ids": { "station": ["2448"] }
     },
     {
       "access_code": "public",
@@ -1838,9 +1810,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["2450"]
-      }
+      "ev_network_ids": { "station": ["2450"] }
     },
     {
       "access_code": "public",
@@ -1915,10 +1885,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "TEMPORAIREMENT SUSPENDU (Public)",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL710081"],
-        "posts": ["944181"]
-      }
+      "ev_network_ids": { "station": ["USCPIL710081"], "posts": ["944181"] }
     },
     {
       "access_code": "public",
@@ -1993,9 +1960,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["500963"]
-      }
+      "ev_network_ids": { "station": ["500963"] }
     },
     {
       "access_code": "public",
@@ -2070,9 +2035,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["509074"]
-      }
+      "ev_network_ids": { "station": ["509074"] }
     },
     {
       "access_code": "public",
@@ -2147,9 +2110,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["501556"]
-      }
+      "ev_network_ids": { "station": ["501556"] }
     },
     {
       "access_code": "public",
@@ -2224,9 +2185,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["506258"]
-      }
+      "ev_network_ids": { "station": ["506258"] }
     },
     {
       "access_code": "public",
@@ -2301,9 +2260,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["505807"]
-      }
+      "ev_network_ids": { "station": ["505807"] }
     },
     {
       "access_code": "public",
@@ -2378,9 +2335,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["507680"]
-      }
+      "ev_network_ids": { "station": ["507680"] }
     },
     {
       "access_code": "public",
@@ -2455,9 +2410,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["512608"]
-      }
+      "ev_network_ids": { "station": ["512608"] }
     },
     {
       "access_code": "public",
@@ -2532,9 +2485,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["508628"]
-      }
+      "ev_network_ids": { "station": ["508628"] }
     },
     {
       "access_code": "public",
@@ -2609,9 +2560,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["501315"]
-      }
+      "ev_network_ids": { "station": ["501315"] }
     },
     {
       "access_code": "public",
@@ -2686,9 +2635,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["509365"]
-      }
+      "ev_network_ids": { "station": ["509365"] }
     },
     {
       "access_code": "public",
@@ -2763,9 +2710,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["508483"]
-      }
+      "ev_network_ids": { "station": ["508483"] }
     },
     {
       "access_code": "public",
@@ -2840,9 +2785,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["503708"]
-      }
+      "ev_network_ids": { "station": ["503708"] }
     },
     {
       "access_code": "public",
@@ -2917,9 +2860,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["505161"]
-      }
+      "ev_network_ids": { "station": ["505161"] }
     },
     {
       "access_code": "public",
@@ -2994,9 +2935,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["507071"]
-      }
+      "ev_network_ids": { "station": ["507071"] }
     },
     {
       "access_code": "public",
@@ -3071,9 +3010,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["508556"]
-      }
+      "ev_network_ids": { "station": ["508556"] }
     },
     {
       "access_code": "public",
@@ -3456,9 +3393,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["2447"]
-      }
+      "ev_network_ids": { "station": ["2447"] }
     },
     {
       "access_code": "public",
@@ -3533,9 +3468,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["513379"]
-      }
+      "ev_network_ids": { "station": ["513379"] }
     },
     {
       "access_code": "public",
@@ -3610,9 +3543,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["513464"]
-      }
+      "ev_network_ids": { "station": ["513464"] }
     },
     {
       "access_code": "public",
@@ -5212,9 +5143,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["508000"]
-      }
+      "ev_network_ids": { "station": ["508000"] }
     },
     {
       "access_code": "public",
@@ -5289,9 +5218,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["505284"]
-      }
+      "ev_network_ids": { "station": ["505284"] }
     },
     {
       "access_code": "public",
@@ -6442,10 +6369,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL4399281"],
-        "posts": ["7045731"]
-      }
+      "ev_network_ids": { "station": ["USCPIL4399281"], "posts": ["7045731"] }
     },
     {
       "access_code": "public",
@@ -7690,10 +7614,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["84"],
-        "posts": ["221", "222"]
-      }
+      "ev_network_ids": { "station": ["84"], "posts": ["221", "222"] }
     },
     {
       "access_code": "public",
@@ -9063,10 +8984,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["101"],
-        "posts": ["323", "324"]
-      }
+      "ev_network_ids": { "station": ["101"], "posts": ["323", "324"] }
     },
     {
       "access_code": "public",
@@ -11336,10 +11254,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["34"],
-        "posts": ["699", "700"]
-      }
+      "ev_network_ids": { "station": ["34"], "posts": ["699", "700"] }
     },
     {
       "access_code": "public",
@@ -12194,10 +12109,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "TEMPORAIREMENT SUSPENDU (Public)",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["96"],
-        "posts": ["289", "290"]
-      }
+      "ev_network_ids": { "station": ["96"], "posts": ["289", "290"] }
     },
     {
       "access_code": "public",
@@ -14916,10 +14828,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL2078371"],
-        "posts": ["2474111"]
-      }
+      "ev_network_ids": { "station": ["USCPIL2078371"], "posts": ["2474111"] }
     },
     {
       "access_code": "public",
@@ -14994,9 +14903,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["512260"]
-      }
+      "ev_network_ids": { "station": ["512260"] }
     },
     {
       "access_code": "public",
@@ -15071,10 +14978,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL5470471"],
-        "posts": ["9084311"]
-      }
+      "ev_network_ids": { "station": ["USCPIL5470471"], "posts": ["9084311"] }
     },
     {
       "access_code": "public",
@@ -15149,10 +15053,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL5554571"],
-        "posts": ["9191831"]
-      }
+      "ev_network_ids": { "station": ["USCPIL5554571"], "posts": ["9191831"] }
     },
     {
       "access_code": "public",
@@ -15695,10 +15596,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL4398681"],
-        "posts": ["7044541"]
-      }
+      "ev_network_ids": { "station": ["USCPIL4398681"], "posts": ["7044541"] }
     },
     {
       "access_code": "public",
@@ -15851,10 +15749,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL5493151"],
-        "posts": ["9112851"]
-      }
+      "ev_network_ids": { "station": ["USCPIL5493151"], "posts": ["9112851"] }
     },
     {
       "access_code": "public",
@@ -15929,10 +15824,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL5470231"],
-        "posts": ["9084091"]
-      }
+      "ev_network_ids": { "station": ["USCPIL5470231"], "posts": ["9084091"] }
     },
     {
       "access_code": "public",
@@ -16163,10 +16055,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["94"],
-        "posts": ["33", "34", "39", "40"]
-      }
+      "ev_network_ids": { "station": ["94"], "posts": ["33", "34", "39", "40"] }
     },
     {
       "access_code": "public",
@@ -16397,10 +16286,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL5630651"],
-        "posts": ["9287291"]
-      }
+      "ev_network_ids": { "station": ["USCPIL5630651"], "posts": ["9287291"] }
     },
     {
       "access_code": "public",
@@ -16475,10 +16361,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL714951"],
-        "posts": ["950161"]
-      }
+      "ev_network_ids": { "station": ["USCPIL714951"], "posts": ["950161"] }
     },
     {
       "access_code": "public",
@@ -17255,10 +17138,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL8174831"],
-        "posts": ["14256321"]
-      }
+      "ev_network_ids": { "station": ["USCPIL8174831"], "posts": ["14256321"] }
     },
     {
       "access_code": "public",
@@ -17333,10 +17213,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL8174791"],
-        "posts": ["14256251"]
-      }
+      "ev_network_ids": { "station": ["USCPIL8174791"], "posts": ["14256251"] }
     },
     {
       "access_code": "public",
@@ -17559,10 +17436,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL5545091"],
-        "posts": ["9179291"]
-      }
+      "ev_network_ids": { "station": ["USCPIL5545091"], "posts": ["9179291"] }
     },
     {
       "access_code": "public",
@@ -17637,10 +17511,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL9193671"],
-        "posts": ["16234011"]
-      }
+      "ev_network_ids": { "station": ["USCPIL9193671"], "posts": ["16234011"] }
     },
     {
       "access_code": "public",
@@ -18089,10 +17960,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL10104051"],
-        "posts": ["17992311"]
-      }
+      "ev_network_ids": { "station": ["USCPIL10104051"], "posts": ["17992311"] }
     },
     {
       "access_code": "public",
@@ -18167,10 +18035,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL10104201"],
-        "posts": ["17992581"]
-      }
+      "ev_network_ids": { "station": ["USCPIL10104201"], "posts": ["17992581"] }
     },
     {
       "access_code": "public",
@@ -18402,10 +18267,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL12463661"],
-        "posts": ["21594321"]
-      }
+      "ev_network_ids": { "station": ["USCPIL12463661"], "posts": ["21594321"] }
     },
     {
       "access_code": "public",
@@ -18480,10 +18342,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "TEMPORAIREMENT SUSPENDU (Public)",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL12468171"],
-        "posts": ["21768311"]
-      }
+      "ev_network_ids": { "station": ["USCPIL12468171"], "posts": ["21768311"] }
     },
     {
       "access_code": "public",
@@ -18714,10 +18573,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL12481221"],
-        "posts": ["21614371"]
-      }
+      "ev_network_ids": { "station": ["USCPIL12481221"], "posts": ["21614371"] }
     },
     {
       "access_code": "public",
@@ -18866,10 +18722,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL12716671"],
-        "posts": ["21972541"]
-      }
+      "ev_network_ids": { "station": ["USCPIL12716671"], "posts": ["21972541"] }
     },
     {
       "access_code": "public",
@@ -20520,10 +20373,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL12683871"],
-        "posts": ["21934751"]
-      }
+      "ev_network_ids": { "station": ["USCPIL12683871"], "posts": ["21934751"] }
     },
     {
       "access_code": "public",
@@ -20598,10 +20448,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL12972791"],
-        "posts": ["22267581"]
-      }
+      "ev_network_ids": { "station": ["USCPIL12972791"], "posts": ["22267581"] }
     },
     {
       "access_code": "public",
@@ -21762,10 +21609,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL12962711"],
-        "posts": ["22256411"]
-      }
+      "ev_network_ids": { "station": ["USCPIL12962711"], "posts": ["22256411"] }
     },
     {
       "access_code": "public",
@@ -21840,10 +21684,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["151"],
-        "posts": ["877", "878"]
-      }
+      "ev_network_ids": { "station": ["151"], "posts": ["877", "878"] }
     },
     {
       "access_code": "public",
@@ -22155,9 +21996,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["19218"]
-      }
+      "ev_network_ids": { "station": ["19218"] }
     },
     {
       "access_code": "public",
@@ -22310,10 +22149,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL13629271"],
-        "posts": ["23019601"]
-      }
+      "ev_network_ids": { "station": ["USCPIL13629271"], "posts": ["23019601"] }
     },
     {
       "access_code": "public",
@@ -22713,10 +22549,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL13114441"],
-        "posts": ["22432041"]
-      }
+      "ev_network_ids": { "station": ["USCPIL13114441"], "posts": ["22432041"] }
     },
     {
       "access_code": "public",
@@ -23181,10 +23014,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL13774241"],
-        "posts": ["23191401"]
-      }
+      "ev_network_ids": { "station": ["USCPIL13774241"], "posts": ["23191401"] }
     },
     {
       "access_code": "public",
@@ -23259,10 +23089,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL13822541"],
-        "posts": ["23249691"]
-      }
+      "ev_network_ids": { "station": ["USCPIL13822541"], "posts": ["23249691"] }
     },
     {
       "access_code": "public",
@@ -24130,10 +23957,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["59"],
-        "posts": ["61"]
-      }
+      "ev_network_ids": { "station": ["59"], "posts": ["61"] }
     },
     {
       "access_code": "public",
@@ -24286,10 +24110,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["182"],
-        "posts": ["1113", "1114"]
-      }
+      "ev_network_ids": { "station": ["182"], "posts": ["1113", "1114"] }
     },
     {
       "access_code": "public",
@@ -24598,10 +24419,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL14146861"],
-        "posts": ["23627241"]
-      }
+      "ev_network_ids": { "station": ["USCPIL14146861"], "posts": ["23627241"] }
     },
     {
       "access_code": "public",
@@ -24676,9 +24494,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["58895"]
-      }
+      "ev_network_ids": { "station": ["58895"] }
     },
     {
       "access_code": "public",
@@ -25762,10 +25578,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15529431"],
-        "posts": ["25097401"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15529431"], "posts": ["25097401"] }
     },
     {
       "access_code": "public",
@@ -26534,10 +26347,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15835331"],
-        "posts": ["25460431"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15835331"], "posts": ["25460431"] }
     },
     {
       "access_code": "public",
@@ -26612,10 +26422,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15843121"],
-        "posts": ["25469451"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15843121"], "posts": ["25469451"] }
     },
     {
       "access_code": "public",
@@ -26690,10 +26497,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15843171"],
-        "posts": ["25469501"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15843171"], "posts": ["25469501"] }
     },
     {
       "access_code": "public",
@@ -26768,10 +26572,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15843231"],
-        "posts": ["25469551"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15843231"], "posts": ["25469551"] }
     },
     {
       "access_code": "public",
@@ -26846,10 +26647,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15843251"],
-        "posts": ["25469581"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15843251"], "posts": ["25469581"] }
     },
     {
       "access_code": "public",
@@ -26924,10 +26722,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15846551"],
-        "posts": ["25473851"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15846551"], "posts": ["25473851"] }
     },
     {
       "access_code": "public",
@@ -27076,10 +26871,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15896101"],
-        "posts": ["25533831"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15896101"], "posts": ["25533831"] }
     },
     {
       "access_code": "public",
@@ -27306,10 +27098,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15964371"],
-        "posts": ["25613971"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15964371"], "posts": ["25613971"] }
     },
     {
       "access_code": "public",
@@ -27384,10 +27173,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15973021"],
-        "posts": ["25624801"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15973021"], "posts": ["25624801"] }
     },
     {
       "access_code": "public",
@@ -27462,10 +27248,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15973041"],
-        "posts": ["25624821"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15973041"], "posts": ["25624821"] }
     },
     {
       "access_code": "public",
@@ -27692,10 +27475,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "TEMPORAIREMENT SUSPENDU (Public)",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL13688111"],
-        "posts": ["23088521"]
-      }
+      "ev_network_ids": { "station": ["USCPIL13688111"], "posts": ["23088521"] }
     },
     {
       "access_code": "public",
@@ -27770,10 +27550,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL15612811"],
-        "posts": ["25196461"]
-      }
+      "ev_network_ids": { "station": ["USCPIL15612811"], "posts": ["25196461"] }
     },
     {
       "access_code": "public",
@@ -28252,10 +28029,7 @@
       "bd_blends_fr": null,
       "groups_with_access_code_fr": "Public",
       "ev_pricing_fr": null,
-      "ev_network_ids": {
-        "station": ["USCPIL16398111"],
-        "posts": ["26134821"]
-      }
+      "ev_network_ids": { "station": ["USCPIL16398111"], "posts": ["26134821"] }
     }
   ]
 }
