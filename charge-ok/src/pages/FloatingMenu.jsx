@@ -8,6 +8,10 @@ import ChargingStationIcon from "./Media/charging_location_icon.png"; // Example
 import UserLocationIcon from "./Media/circle-solid.svg"; // Example of another icon image
 
 const FloatingMenu = ({
+  mileage,
+  setMileage,
+  startAddress,
+  setStartAddress,
   points,
   onPointSelect,
   handleRouting,
@@ -22,9 +26,7 @@ const FloatingMenu = ({
   const [stationName, setStationName] = useState("");
   const [address, setAddress] = useState("");
   const { isAdmin } = useAuth();
-  const [startAddress, setStartAddress] = useState("");
   const [endAddress, setEndAddress] = useState("");
-  const [mileage, setMileage] = useState("");
 
   // Define legend items
   const legendItems = [
@@ -98,14 +100,34 @@ const FloatingMenu = ({
 
   const handleRouteSubmit = async (event) => {
     event.preventDefault(); // Prevents page refresh or default form action
-    handleRouting(startAddress, endAddress, mileage); // Notify parent component
-    setStartAddress("");
+    // handleRouting(startAddress, endAddress, mileage); // Notify parent component
+    handleRouting(endAddress); // Notify parent component
+    // setStartAddress("");
     setEndAddress("");
-    setMileage("");
+    // setMileage("");
   };
+
   const handleChargerToggle = async (event) => {
     event.preventDefault(); // Prevents page refresh or default form action
     handleToggle(); // Notify parent component
+  };
+
+  // const handleUserTravelInfo = async (event) => {
+  //   event.preventDefault(); // Prevents page refresh or default form action
+  //   localStorage.setItem("mileage", mileage);
+  //   localStorage.setItem("startAddress", startAddress);
+  // };
+
+  const handleStartAddressChange = (e) => {
+    const newValue = e.target.value;
+    setStartAddress(newValue);
+    localStorage.setItem("startAddress", newValue);
+  };
+
+  const handleMileageChange = (e) => {
+    const newValue = e.target.value;
+    setMileage(newValue);
+    localStorage.setItem("mileage", newValue);
   };
 
   return (
@@ -211,13 +233,54 @@ const FloatingMenu = ({
             </Accordion.Item>
 
             <Accordion.Item eventKey="3">
-              <Accordion.Header>Trip Planner</Accordion.Header>
+              <Accordion.Header>Set Travel Information</Accordion.Header>
               <Accordion.Body>
                 For Start Address, enter in "s" to use current location.
               </Accordion.Body>
               <Accordion.Body>
-                <form onSubmit={handleRouteSubmit}>
+                <form>
                   <input
+                    name="name"
+                    type="text"
+                    value={startAddress}
+                    onChange={handleStartAddressChange}
+                    placeholder="Start Address"
+                    required
+                    pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
+                    title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens. Or enter in 's' to use current location."
+                  />
+                  <input
+                    name="address"
+                    type="number"
+                    value={mileage}
+                    onChange={handleMileageChange}
+                    placeholder="Mileage"
+                    required
+                  />
+                </form>
+              </Accordion.Body>
+              <Accordion.Body>
+                <p>Content of Saved Values</p>
+                <div className="add-down-padding">
+                  Starting Address: <b>{startAddress}</b>
+                </div>
+                <div>
+                  Maxed Miles Allowed to Travel Before Charging:{" "}
+                  <b>{mileage}</b>
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+
+            <Accordion.Item eventKey="4">
+              <Accordion.Header>Trip Planner</Accordion.Header>
+              <Accordion.Body>
+                Make sure that you have entered in information into{" "}
+                <b>Set Travel Information</b> Category before using this
+                feature.
+              </Accordion.Body>
+              <Accordion.Body>
+                <form onSubmit={handleRouteSubmit}>
+                  {/* <input
                     name="name"
                     type="text"
                     value={startAddress}
@@ -226,7 +289,7 @@ const FloatingMenu = ({
                     required
                     pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
                     title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
-                  />
+                  /> */}
                   <input
                     name="address"
                     type="text"
@@ -237,14 +300,14 @@ const FloatingMenu = ({
                     pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
                     title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
                   />
-                  <input
+                  {/* <input
                     name="name"
                     type="number"
                     value={mileage}
                     onChange={(e) => setMileage(e.target.value)}
                     placeholder="Mileage of Car"
                     required
-                  />
+                  /> */}
                   <button type="submit">Submit</button>
                 </form>
               </Accordion.Body>
