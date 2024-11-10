@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
+import "leaflet.locatecontrol";
 
 // Component to add user location
 const GetUserLocation = ({ onLocationFound }) => {

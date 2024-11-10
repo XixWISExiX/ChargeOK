@@ -68,7 +68,10 @@ const FullScreenMap = () => {
   // Fetch charging locations from Overpass API (OpenStreetMap)
   useEffect(() => {
     // Accesses json file in the frontend for the charging station locations.
-    fetch("./ev_chargers.json") // Fetch from public directory
+    // fetch("./ev_chargers.json") // Fetch from public directory
+    fetch(
+      "http://localhost:9000/.netlify/functions/api/get-ev-chargers" // development
+    ) // Fetch from public directory
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -76,6 +79,7 @@ const FullScreenMap = () => {
         return response.json();
       })
       .then((jsonData) => {
+        console.log("EV Charging Station JSON:", jsonData);
         const data = jsonData.fuel_stations;
         const chargingLocations = data.map((location) => ({
           lat: location.latitude,
@@ -87,28 +91,6 @@ const FullScreenMap = () => {
       .catch((error) => {
         console.error("Error fetching JSON data:", error);
       });
-
-    // Get database from backend
-    // console.log("connecting to backend...");
-    // fetch(
-    //   "https://chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // deployment
-    //   // "https://670c6904a6fd21139c29567c--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
-    //   // "https://4--chargeokserver.netlify.app/.netlify/functions/api/get-ev-chargers" // draft deployment
-    //   // "http://localhost:8888/.netlify/functions/api/get-ev-chargers" // development (netlify dev)
-    //   // "http://localhost:9000/.netlify/functions/api/get-ev-chargers" // development
-    // )
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const chargingLocations = data.map((location) => ({
-    //       lat: location.latitude,
-    //       lng: location.longitude,
-    //       name: location.station_name || "Charging Station",
-    //     }));
-    //     setPoints(chargingLocations);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching point:", error);
-    //   });
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // const start = userCoordinates || [-97.444273, 35.205785]; // Use userCoordinates or fallback to default
