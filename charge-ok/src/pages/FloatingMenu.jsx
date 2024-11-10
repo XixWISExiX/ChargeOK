@@ -7,13 +7,24 @@ import { useAuth } from "../Auth";
 import ChargingStationIcon from "./Media/charging_location_icon.png"; // Example of a custom icon image
 import UserLocationIcon from "./Media/circle-solid.svg"; // Example of another icon image
 
-const FloatingMenu = ({ points, onPointSelect }) => {
+const FloatingMenu = ({
+  points,
+  onPointSelect,
+  handleRouting,
+  handleToggle,
+  // startAddressPipe,
+  // endAddressPipe,
+  // mileagePipe,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPoints, setFilteredPoints] = useState([]);
   const [stationName, setStationName] = useState("");
   const [address, setAddress] = useState("");
   const { isAdmin } = useAuth();
+  const [startAddress, setStartAddress] = useState("");
+  const [endAddress, setEndAddress] = useState("");
+  const [mileage, setMileage] = useState("");
 
   // Define legend items
   const legendItems = [
@@ -85,6 +96,18 @@ const FloatingMenu = ({ points, onPointSelect }) => {
     }
   };
 
+  const handleRouteSubmit = async (event) => {
+    event.preventDefault(); // Prevents page refresh or default form action
+    handleRouting(startAddress, endAddress, mileage); // Notify parent component
+    setStartAddress("");
+    setEndAddress("");
+    setMileage("");
+  };
+  const handleChargerToggle = async (event) => {
+    event.preventDefault(); // Prevents page refresh or default form action
+    handleToggle(); // Notify parent component
+  };
+
   return (
     <div className="floating-menu-container">
       {/* Floating search bar with hamburger menu */}
@@ -152,7 +175,11 @@ const FloatingMenu = ({ points, onPointSelect }) => {
 
             <Accordion.Item eventKey="1">
               <Accordion.Header>Filters</Accordion.Header>
-              <Accordion.Body>Filler content for Filters.</Accordion.Body>
+              <Accordion.Body>
+                <button onClick={handleChargerToggle}>
+                  Toggle Charger Display
+                </button>
+              </Accordion.Body>
             </Accordion.Item>
 
             <Accordion.Item eventKey="2">
@@ -173,7 +200,7 @@ const FloatingMenu = ({ points, onPointSelect }) => {
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    placeholder="address"
+                    placeholder="Address"
                     required
                     pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
                     title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
@@ -181,12 +208,46 @@ const FloatingMenu = ({ points, onPointSelect }) => {
                   <button type="submit">Submit</button>
                 </form>
               </Accordion.Body>
-              <Accordion.Body>Filler content for Add Station.</Accordion.Body>
             </Accordion.Item>
 
             <Accordion.Item eventKey="3">
               <Accordion.Header>Trip Planner</Accordion.Header>
-              <Accordion.Body>Filler content for Trip Planner.</Accordion.Body>
+              <Accordion.Body>
+                For Start Address, enter in "s" to use current location.
+              </Accordion.Body>
+              <Accordion.Body>
+                <form onSubmit={handleRouteSubmit}>
+                  <input
+                    name="name"
+                    type="text"
+                    value={startAddress}
+                    onChange={(e) => setStartAddress(e.target.value)}
+                    placeholder="Start Address"
+                    required
+                    pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
+                    title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
+                  />
+                  <input
+                    name="address"
+                    type="text"
+                    value={endAddress}
+                    onChange={(e) => setEndAddress(e.target.value)}
+                    placeholder="Final Address"
+                    required
+                    pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
+                    title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
+                  />
+                  <input
+                    name="name"
+                    type="number"
+                    value={mileage}
+                    onChange={(e) => setMileage(e.target.value)}
+                    placeholder="Mileage of Car"
+                    required
+                  />
+                  <button type="submit">Submit</button>
+                </form>
+              </Accordion.Body>
             </Accordion.Item>
           </Accordion>
 
