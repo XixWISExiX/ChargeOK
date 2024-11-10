@@ -35,7 +35,7 @@ const GetUserLocation = ({ onLocationFound }) => {
       // Default Location Icon
       // markerRef.current = L.marker(ev.latlng).addTo(map);
 
-      // Temporary circle icon
+      // Green Circle Icon for User Location
       markerRef.current = L.circleMarker(ev.latlng, {
         color: "green", // Border color
         fillColor: "green", // Fill color

@@ -79,6 +79,36 @@
   z-index: 999;
   padding: 10px 0;
   box-sizing: border-box; /* Ensure padding is included in the width */
+  max-height: 70vh; /* Adjust the height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Firefox scrollbar for dropdown-menu */
+.dropdown-menu {
+  scrollbar-color: #fff #000000; /* Thumb and track colors */
+}
+
+/* Internet Explorer and Edge scrollbar */
+.dropdown-menu {
+  -ms-overflow-style: scrollbar;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /* Accordion items inside the dropdown */
@@ -194,6 +224,10 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   z-index: 1000;
+}
+
+.add-down-padding {
+  padding-bottom: 0.2rem; /* Adjust the value as needed */
 }
 
 /* Responsive adjustments */

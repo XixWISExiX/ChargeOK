@@ -1,0 +1,10 @@
+.icon-header {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center; /* Centers items horizontally */
+  align-items: center; /* Centers items vertically */
+}
+
+.add-bottom-padding {
+  padding-bottom: 5px;
+}
