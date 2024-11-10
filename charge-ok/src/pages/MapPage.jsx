@@ -10,6 +10,7 @@ import getRouteWithChargers from "./functions/routing.js";
 import RoutingMachine from "./RoutingMachine";
 import GetUserLocation from "./GetUserLocation";
 import { useAuth } from "../Auth";
+import getCoord from "./functions/getCoord.js";
 
 // Set up the custom icon for Leaflet markers
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -45,9 +46,10 @@ const FullScreenMap = () => {
   const [userCoordinates, setUserCoordinates] = useState(null); // State to store user coordinates
   const [route, setRoute] = useState([]); // Array of coordinates for the route
   // const [isAdmin, setIsAdmin] = useState(false);
-  const { isAdmin, setIsAdmin } = useAuth();
+  // const { isAdmin, setIsAdmin } = useAuth();
   const markerRefs = useRef([]); // Store references to the markers
   const { userId } = useAuth();
+  const [pointDisplay, setPointDisplay] = useState(true);
 
   // Function to handle point selection from FloatingMenu
   const handlePointSelect = (point) => {
@@ -94,24 +96,43 @@ const FullScreenMap = () => {
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // const start = userCoordinates || [-97.444273, 35.205785]; // Use userCoordinates or fallback to default
-    const start = [-97.444273, 35.205785];
-    console.log("Your location", userCoordinates);
-    // const start = userCoordinates;
-    // console.log("you location", start);
-    const end = [-97.513828, 35.463418];
-    const milesLeft = 30;
+    // // const start = [-97.444273, 35.205785];
+    // console.log("Your location", userCoordinates);
+    // // const start = userCoordinates;
+    // // console.log("you location", start);
+    // // const end = [-97.513828, 35.463418];
+    // const end = [-97.953854, 35.550881];
+    // const milesLeft = 30;
 
-    // const route = getRouteWithChargers(start, end, milesLeft);
-    // console.log(route);
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  }, [userId, userCoordinates]); // Run only once when the userId Is obtained
+  // }, []); // Run only once when the component mounts
+  // }, [userCoordinates]); // This effect runs every time userCoordinates changes
+
+  const handleChargerToggle = async () => {
+    setPointDisplay(!pointDisplay);
+  };
+
+  const handleRoutingSubmit = async (startAddress, endAddress, mileage) => {
+    let start;
+    if (startAddress === "s") {
+      start = userCoordinates;
+    } else {
+      const startObj = await getCoord(startAddress);
+      start = [startObj.longitude, startObj.latitude];
+    }
+    const endObj = await getCoord(endAddress);
+    const end = [endObj.longitude, endObj.latitude];
+    const milesLeft = mileage;
 
     const fetchRoute = async () => {
       try {
         const route = await getRouteWithChargers(start, end, milesLeft);
-        console.log("1", route); // Now you will see the resolved route data
+        // console.log("1", route); // Now you will see the resolved route data
         // Check if the expected data is available before accessing it
         if (route) {
           const routeList = route.data.routes[0].geometry.coordinates; // Extract coordinates
-          console.log("2", routeList); // Logs the coordinates
+          console.log("Route List", routeList); // Logs the coordinates
 
           setRoute(routeList); // Store the route data
         } else {
@@ -124,33 +145,7 @@ const FullScreenMap = () => {
 
     // Call the async function to fetch the route
     fetchRoute();
-
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    // Load the route with the provided coordinates
-    // setRoute([
-    //   [-97.513828, 35.463418],
-    //   [-97.51316, 35.463428],
-    //   [-97.513043, 35.462204],
-    //   [-97.501835, 35.461892],
-    //   [-97.501393, 35.460226],
-    //   [-97.495739, 35.462264],
-    //   [-97.486259, 35.444517],
-    //   [-97.486427, 35.425299],
-    //   [-97.495091, 35.402436],
-    //   [-97.496003, 35.375947],
-    //   [-97.490179, 35.333634],
-    //   [-97.489985, 35.298582],
-    //   [-97.485752, 35.284603],
-    //   [-97.485534, 35.216419],
-    //   [-97.481148, 35.207827],
-    //   [-97.48056, 35.204556],
-    //   [-97.444267, 35.203878],
-    //   [-97.444273, 35.205785],
-    // ]);
-  }, [userId, userCoordinates]); // Run only once when the userId Is obtained
-  // }, []); // Run only once when the component mounts
-  // }, [userCoordinates]); // This effect runs every time userCoordinates changes
+  };
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
@@ -167,7 +162,12 @@ const FullScreenMap = () => {
       <TopNavbar />
 
       {/* Floating Menu with search functionality */}
-      <FloatingMenu points={points} onPointSelect={handlePointSelect} />
+      <FloatingMenu
+        points={points}
+        onPointSelect={handlePointSelect}
+        handleRouting={handleRoutingSubmit}
+        handleToggle={handleChargerToggle}
+      />
 
       {/* Map Container */}
       <div style={{ flexGrow: 1 }}>
@@ -180,26 +180,31 @@ const FullScreenMap = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; OpenStreetMap contributors"
           />
-
           {/* Loop through points and display markers */}
-          {points.map((point, index) => (
-            <Marker
-              key={index}
-              position={[point.lat, point.lng]}
-              icon={blueIcon}
-              ref={(ref) => (markerRefs.current[index] = ref)} // Store marker references
-            >
-              <Popup>{point.name}</Popup>
-            </Marker>
-          ))}
+          {pointDisplay &&
+            points.map((point, index) => (
+              <Marker
+                key={index}
+                position={[point.lat, point.lng]}
+                icon={blueIcon}
+                ref={(ref) => (markerRefs.current[index] = ref)} // Store marker references
+              >
+                <Popup>{point.name}</Popup>
+              </Marker>
+            ))}
+          <GetUserLocation onLocationFound={handleLocationFound} />
 
           {/* Center the map to the selected point */}
           {selectedPoint && <MapCenterUpdater point={selectedPoint} />}
-
-          <GetUserLocation onLocationFound={handleLocationFound} />
-
           {/* Add the route to the map */}
           {route.length > 0 && <RoutingMachine route={route} />}
+
+          {/* {ligma && selectedPoint && route.length > 0 && (
+            <>
+              <MapCenterUpdater point={selectedPoint} />
+              <RoutingMachine route={route} />
+            </>
+          )} */}
         </MapContainer>
       </div>
     </div>

@@ -47,6 +47,7 @@
 
 /* Transform hamburger into a cross when open */
 .bar.open:nth-child(1) {
+  width: 25px;
   transform: rotate(45deg) translate(5px, 5px);
 }
 
@@ -55,7 +56,8 @@
 }
 
 .bar.open:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  width: 25px;
+  transform: rotate(-45deg) translate(7.5px, -7.5px);
 }
 
 /* Search input styling */

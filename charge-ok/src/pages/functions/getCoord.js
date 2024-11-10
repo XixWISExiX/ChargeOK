@@ -18,8 +18,8 @@ async function getCoord(address) {
       limit: 1,
     };
 
-    console.log("Making request to:", url);
-    console.log("Using API key:", mapbox_api_key.substring(0, 4) + "...");
+    // console.log("Making request to:", url);
+    // console.log("Using API key:", mapbox_api_key.substring(0, 4) + "...");
 
     const response = await axios.get(url, { params });
 
