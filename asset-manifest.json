@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ChargeOK/static/css/main.3edb00d2.css",
-    "main.js": "/ChargeOK/static/js/main.c19e2358.js",
+    "main.js": "/ChargeOK/static/js/main.f5e134b3.js",
     "index.html": "/ChargeOK/index.html",
     "static/media/circle-solid.svg": "/ChargeOK/static/media/circle-solid.b10de36882f16b6ba832bdedb585be83.svg",
     "main.3edb00d2.css.map": "/ChargeOK/static/css/main.3edb00d2.css.map",
-    "main.c19e2358.js.map": "/ChargeOK/static/js/main.c19e2358.js.map"
+    "main.f5e134b3.js.map": "/ChargeOK/static/js/main.f5e134b3.js.map"
   },
   "entrypoints": [
     "static/css/main.3edb00d2.css",
-    "static/js/main.c19e2358.js"
+    "static/js/main.f5e134b3.js"
   ]
 }
