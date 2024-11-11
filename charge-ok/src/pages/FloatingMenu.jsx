@@ -1,11 +1,13 @@
+// Import your icons or images here
+import ChargingStationIcon from "./Media/charging_location_icon.png"; // Example of a custom icon image
+import UserLocationIcon from "./Media/circle-solid.svg"; // Example of another icon image
+
 import React, { useState } from "react";
 import { Accordion } from "react-bootstrap";
 import "./styling/FloatingMenu.css";
 import { useAuth } from "../Auth";
-
-// Import your icons or images here
-import ChargingStationIcon from "./Media/charging_location_icon.png"; // Example of a custom icon image
-import UserLocationIcon from "./Media/circle-solid.svg"; // Example of another icon image
+import coordFunctions from "./functions/getCoord.js";
+const { getCoord, getBestCoord } = coordFunctions;
 
 const FloatingMenu = ({
   mileage,
@@ -16,9 +18,8 @@ const FloatingMenu = ({
   onPointSelect,
   handleRouting,
   handleToggle,
-  // startAddressPipe,
-  // endAddressPipe,
-  // mileagePipe,
+  routeError,
+  setAddStationError,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -89,34 +90,28 @@ const FloatingMenu = ({
 
   const handleStationSubmit = async (event) => {
     event.preventDefault(); // Prevents page refresh or default form action
-    setStationName("");
-    setAddress("");
     try {
+      await getCoord(address);
       await sendFormToBackend({ name: stationName, address: address }); // stores stations in backend
+      setAddStationError(false);
     } catch (error) {
       console.error("Error in submission or fetching charger queue:", error);
+      setAddStationError(true);
     }
+    setStationName("");
+    setAddress("");
   };
 
   const handleRouteSubmit = async (event) => {
     event.preventDefault(); // Prevents page refresh or default form action
-    // handleRouting(startAddress, endAddress, mileage); // Notify parent component
     handleRouting(endAddress); // Notify parent component
-    // setStartAddress("");
     setEndAddress("");
-    // setMileage("");
   };
 
   const handleChargerToggle = async (event) => {
     event.preventDefault(); // Prevents page refresh or default form action
     handleToggle(); // Notify parent component
   };
-
-  // const handleUserTravelInfo = async (event) => {
-  //   event.preventDefault(); // Prevents page refresh or default form action
-  //   localStorage.setItem("mileage", mileage);
-  //   localStorage.setItem("startAddress", startAddress);
-  // };
 
   const handleStartAddressChange = (e) => {
     const newValue = e.target.value;
@@ -224,7 +219,6 @@ const FloatingMenu = ({
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder="Address"
                     required
-                    pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
                     title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
                   />
                   <button type="submit">Submit</button>
@@ -246,8 +240,6 @@ const FloatingMenu = ({
                     onChange={handleStartAddressChange}
                     placeholder="Start Address"
                     required
-                    pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
-                    title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens. Or enter in 's' to use current location."
                   />
                   <input
                     name="address"
@@ -273,6 +265,16 @@ const FloatingMenu = ({
 
             <Accordion.Item eventKey="4">
               <Accordion.Header>Trip Planner</Accordion.Header>
+              {routeError && (
+                <Accordion.Body>
+                  <div className="red-text">
+                    Please Enter in More Reasonable <b>Mileage</b> before Route
+                    Submission or <b>Valid Address</b>. You might also need to{" "}
+                    <b>Wait for your Currenct Location</b> to be loaded in. If
+                    you can't, then you cannot reach your destination.
+                  </div>
+                </Accordion.Body>
+              )}
               <Accordion.Body>
                 Make sure that you have entered in information into{" "}
                 <b>Set Travel Information</b> Category before using this
@@ -280,16 +282,6 @@ const FloatingMenu = ({
               </Accordion.Body>
               <Accordion.Body>
                 <form onSubmit={handleRouteSubmit}>
-                  {/* <input
-                    name="name"
-                    type="text"
-                    value={startAddress}
-                    onChange={(e) => setStartAddress(e.target.value)}
-                    placeholder="Start Address"
-                    required
-                    pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
-                    title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
-                  /> */}
                   <input
                     name="address"
                     type="text"
@@ -297,17 +289,7 @@ const FloatingMenu = ({
                     onChange={(e) => setEndAddress(e.target.value)}
                     placeholder="Final Address"
                     required
-                    pattern="^[a-zA-Z0-9\s,.'-]{3,}$" // A basic pattern for address
-                    title="Address must be at least 3 characters long and can contain letters, numbers, spaces, commas, periods, and hyphens."
                   />
-                  {/* <input
-                    name="name"
-                    type="number"
-                    value={mileage}
-                    onChange={(e) => setMileage(e.target.value)}
-                    placeholder="Mileage of Car"
-                    required
-                  /> */}
                   <button type="submit">Submit</button>
                 </form>
               </Accordion.Body>
