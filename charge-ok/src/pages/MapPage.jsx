@@ -9,6 +9,7 @@ import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 import getRouteWithChargers from "./functions/routing.js";
 import RoutingMachine from "./RoutingMachine";
 import GetUserLocation from "./GetUserLocation";
+import GetFinalLocation from "./GetFinalLocation";
 import { useAuth } from "../Auth";
 import getCoord from "./functions/getCoord.js";
 import "./styling/MapPage.css";
@@ -55,6 +56,9 @@ const FullScreenMap = () => {
     localStorage.getItem("startAddress")
   );
   const [mileage, setMileage] = useState(localStorage.getItem("mileage"));
+  const [endPoint, setEndPoint] = useState(null);
+  const [routeError, setRouteError] = useState(false);
+  const [chargerListJSON, setChargerListJSON] = useState(false);
 
   // Function to handle point selection from FloatingMenu
   const handlePointSelect = (point) => {
@@ -94,6 +98,7 @@ const FullScreenMap = () => {
           name: location.station_name || "Charging Station",
         }));
         setPoints(chargingLocations);
+        setChargerListJSON(jsonData);
       })
       .catch((error) => {
         console.error("Error fetching JSON data:", error);
@@ -116,29 +121,36 @@ const FullScreenMap = () => {
   };
 
   const fetchRoute = async (end) => {
-    // console.log("INside:", end);
-    let start;
-    if (startAddress === "s") {
-      start = userCoordinates;
-    } else {
-      const startObj = await getCoord(startAddress);
-      start = [startObj.longitude, startObj.latitude];
-    }
-    const milesLeft = mileage;
     try {
-      const route = await getRouteWithChargers(start, end, milesLeft);
-      // console.log("1", route); // Now you will see the resolved route data
+      let start;
+      if (startAddress === "s") {
+        start = userCoordinates;
+      } else {
+        const startObj = await getCoord(startAddress);
+        start = [startObj.longitude, startObj.latitude];
+      }
+      const milesLeft = mileage;
+      const route = await getRouteWithChargers(
+        start,
+        end,
+        milesLeft,
+        chargerListJSON
+      );
       // Check if the expected data is available before accessing it
       if (route) {
         const routeList = route.data.routes[0].geometry.coordinates; // Extract coordinates
         console.log("Route List:", routeList); // Logs the coordinates
 
         setRoute(routeList); // Store the route data
+        setEndPoint([end[1], end[0]]);
+        setRouteError(false);
       } else {
         console.error("Route data is incomplete or unavailable.");
+        setRouteError(true);
       }
     } catch (error) {
       console.error("Error fetching route:", error); // Handle any errors
+      setRouteError(true);
     }
   };
 
@@ -164,6 +176,11 @@ const FullScreenMap = () => {
           .leaflet-routing-container {
             display: none !important;
           }
+
+          .leaflet-popup-pane, .leaflet-popup, .leaflet-popup-content-wrapper {
+          z-index: 10000 !important;
+        }
+        
         `}
       </style>
 
@@ -180,7 +197,17 @@ const FullScreenMap = () => {
         onPointSelect={handlePointSelect}
         handleRouting={handleRoutingSubmit}
         handleToggle={handleChargerToggle}
+        routeError={routeError}
       />
+
+      {routeError && (
+        <div className="error-text">
+          Please Enter in More Reasonable <b>Mileage</b> before Route Submission
+          or <b>Valid Address</b>. You might also need to wait for your{" "}
+          <b>Currenct Location</b> to be loaded in. If you can't, then you
+          cannot reach your destination.
+        </div>
+      )}
 
       {/* Map Container */}
       <div style={{ flexGrow: 1 }}>
@@ -214,19 +241,17 @@ const FullScreenMap = () => {
                 </Popup>
               </Marker>
             ))}
-          <GetUserLocation onLocationFound={handleLocationFound} />
+
+          <GetUserLocation
+            onLocationFound={handleLocationFound}
+            startAddress={startAddress}
+          />
+          <GetFinalLocation endPoint={endPoint} />
 
           {/* Center the map to the selected point */}
           {selectedPoint && <MapCenterUpdater point={selectedPoint} />}
           {/* Add the route to the map */}
           {route.length > 0 && <RoutingMachine route={route} />}
-
-          {/* {ligma && selectedPoint && route.length > 0 && (
-            <>
-              <MapCenterUpdater point={selectedPoint} />
-              <RoutingMachine route={route} />
-            </>
-          )} */}
         </MapContainer>
       </div>
     </div>

@@ -12,13 +12,17 @@ const RoutingMachine = ({ route }) => {
   useEffect(() => {
     if (!map || route.length === 0) return; // Don't proceed if no map or route
 
+    map.createPane("route");
+    map.getPane("route").style.zIndex = 5000;
+
     // Add the routing control to the map
     routingControlRef.current = L.Routing.control({
       waypoints: route.map((coord) => L.latLng(coord[1], coord[0])), // Ensure lat/lng are swapped correctly
       routeWhileDragging: true,
       createMarker: () => null, // Disable default markers
       lineOptions: {
-        styles: [{ color: "blue", weight: 6 }],
+        // styles: [{ color: "blue", weight: 6, pane: "route" }],
+        styles: [{ color: "blue", weight: 6 }], // Doesn't have z index priority
       },
       addWaypoints: false, // Disable waypoint editing
       draggableWaypoints: false, // Disable dragging of waypoints

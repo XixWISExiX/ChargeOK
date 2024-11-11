@@ -16,9 +16,7 @@ const FloatingMenu = ({
   onPointSelect,
   handleRouting,
   handleToggle,
-  // startAddressPipe,
-  // endAddressPipe,
-  // mileagePipe,
+  routeError,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -273,6 +271,16 @@ const FloatingMenu = ({
 
             <Accordion.Item eventKey="4">
               <Accordion.Header>Trip Planner</Accordion.Header>
+              {routeError && (
+                <Accordion.Body>
+                  <div className="red-text">
+                    Please Enter in More Reasonable <b>Mileage</b> before Route
+                    Submission or <b>Valid Address</b>. You might also need to
+                    wait for your <b>Currenct Location</b> to be loaded in. If
+                    you can't, then you cannot reach your destination.
+                  </div>
+                </Accordion.Body>
+              )}
               <Accordion.Body>
                 Make sure that you have entered in information into{" "}
                 <b>Set Travel Information</b> Category before using this
