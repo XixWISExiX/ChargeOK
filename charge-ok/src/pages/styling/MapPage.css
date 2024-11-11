@@ -8,3 +8,9 @@
 .add-bottom-padding {
   padding-bottom: 5px;
 }
+
+.error-text {
+  color: black;
+  background-color: darkred;
+  text-align: center;
+}

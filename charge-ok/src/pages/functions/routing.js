@@ -69,21 +69,11 @@ function pointAlongRouteSumsDistance(line, cutoff) {
   return idx;
 }
 
-async function getClosestStation(point) {
+async function getClosestStation(point, jsonData) {
   // Get All fuel stations
   const fetchFuelStations = async () => {
-    try {
-      const response = await fetch("./ev_chargers.json"); // Fetch from public directory
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const jsonData = await response.json();
-      const fuelStations = jsonData.fuel_stations; // Access fuel_stations here
-      return fuelStations; // Return the fuel stations
-    } catch (error) {
-      console.error("Error fetching JSON data:", error);
-      return null; // or handle the error as needed
-    }
+    const fuelStations = jsonData.fuel_stations; // Access fuel_stations here
+    return fuelStations; // Return the fuel stations
   };
 
   const stations = await fetchFuelStations(); // Call the async function and await the result
@@ -105,14 +95,21 @@ async function getClosestStation(point) {
   return closest;
 }
 
-async function getRouteWithChargers(start, dest, maxDist) {
+async function getRouteWithChargers(start, dest, maxDist, jsonData) {
   let path = await route([start, dest]);
   path = path.data.routes[0].geometry.coordinates;
   let chargers = [];
   let idx = pointAlongRouteSumsDistance(path, maxDist);
 
+  let prevIdx = -1;
   while (idx !== path.length) {
-    let charger = await getClosestStation(path[idx]);
+    if (prevIdx === idx) {
+      console.log("break", idx);
+      return null; // Trip condition is not met
+    }
+    console.log("done?", idx);
+    prevIdx = idx;
+    let charger = await getClosestStation(path[idx], jsonData);
     let chargerPoint = [charger.longitude, charger.latitude];
     chargers.push(chargerPoint);
 

@@ -9,13 +9,16 @@ import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 import getRouteWithChargers from "./functions/routing.js";
 import RoutingMachine from "./RoutingMachine";
 import GetUserLocation from "./GetUserLocation";
+import GetFinalLocation from "./GetFinalLocation";
 import { useAuth } from "../Auth";
-import getCoord from "./functions/getCoord.js";
 import "./styling/MapPage.css";
 
 // Set up the custom icon for Leaflet markers
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+import coordFunctions from "./functions/getCoord.js";
+const { getCoord, getBestCoord } = coordFunctions;
 
 // import jsonData from "./front-side-data/ev_chargers.json";
 
@@ -46,8 +49,6 @@ const FullScreenMap = () => {
   const [selectedPoint, setSelectedPoint] = useState(null); // Track selected point for popup
   const [userCoordinates, setUserCoordinates] = useState(null); // State to store user coordinates
   const [route, setRoute] = useState([]); // Array of coordinates for the route
-  // const [isAdmin, setIsAdmin] = useState(false);
-  // const { isAdmin, setIsAdmin } = useAuth();
   const markerRefs = useRef([]); // Store references to the markers
   const { userId } = useAuth();
   const [pointDisplay, setPointDisplay] = useState(true);
@@ -55,6 +56,10 @@ const FullScreenMap = () => {
     localStorage.getItem("startAddress")
   );
   const [mileage, setMileage] = useState(localStorage.getItem("mileage"));
+  const [endPoint, setEndPoint] = useState(null);
+  const [routeError, setRouteError] = useState(false);
+  const [chargerListJSON, setChargerListJSON] = useState(false);
+  const [addStationError, setAddStationError] = useState(false);
 
   // Function to handle point selection from FloatingMenu
   const handlePointSelect = (point) => {
@@ -94,6 +99,7 @@ const FullScreenMap = () => {
           name: location.station_name || "Charging Station",
         }));
         setPoints(chargingLocations);
+        setChargerListJSON(jsonData);
       })
       .catch((error) => {
         console.error("Error fetching JSON data:", error);
@@ -116,35 +122,45 @@ const FullScreenMap = () => {
   };
 
   const fetchRoute = async (end) => {
-    // console.log("INside:", end);
-    let start;
-    if (startAddress === "s") {
-      start = userCoordinates;
-    } else {
-      const startObj = await getCoord(startAddress);
-      start = [startObj.longitude, startObj.latitude];
-    }
-    const milesLeft = mileage;
     try {
-      const route = await getRouteWithChargers(start, end, milesLeft);
-      // console.log("1", route); // Now you will see the resolved route data
+      let start;
+      if (startAddress === "s") {
+        start = userCoordinates;
+      } else {
+        const startObj = await getCoord(startAddress);
+        start = [startObj.longitude, startObj.latitude];
+      }
+      const milesLeft = mileage;
+      const route = await getRouteWithChargers(
+        start,
+        end,
+        milesLeft,
+        chargerListJSON
+      );
       // Check if the expected data is available before accessing it
       if (route) {
         const routeList = route.data.routes[0].geometry.coordinates; // Extract coordinates
         console.log("Route List:", routeList); // Logs the coordinates
 
         setRoute(routeList); // Store the route data
+        setEndPoint([end[1], end[0]]);
+        setRouteError(false);
       } else {
         console.error("Route data is incomplete or unavailable.");
+        setRouteError(true);
       }
     } catch (error) {
       console.error("Error fetching route:", error); // Handle any errors
+      setRouteError(true);
     }
   };
 
   // const handleRoutingSubmit = async (startAddress, endAddress, mileage) => {
   const handleRoutingSubmit = async (endAddress) => {
-    const endObj = await getCoord(endAddress);
+    const startObj = await getCoord(startAddress);
+    const start = [startObj.latitude, startObj.longitude];
+
+    const endObj = await getBestCoord(endAddress, start);
     const end = [endObj.longitude, endObj.latitude];
     fetchRoute(end);
   };
@@ -156,6 +172,30 @@ const FullScreenMap = () => {
     }
   };
 
+  useEffect(() => {
+    if (addStationError) {
+      // Set a timeout to hide the error after 5 seconds
+      const timer = setTimeout(() => {
+        setAddStationError(false); // Hide the error message
+      }, 10000);
+
+      // Cleanup timeout if the component unmounts or if the error changes before 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [addStationError]);
+
+  useEffect(() => {
+    if (addStationError) {
+      // Set a timeout to hide the error after 5 seconds
+      const timer = setTimeout(() => {
+        setRouteError(false); // Hide the error message
+      }, 10000);
+
+      // Cleanup timeout if the component unmounts or if the error changes before 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [routeError]);
+
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       {/* Add inline CSS to hide the directions panel */}
@@ -164,6 +204,11 @@ const FullScreenMap = () => {
           .leaflet-routing-container {
             display: none !important;
           }
+
+          .leaflet-popup-pane, .leaflet-popup, .leaflet-popup-content-wrapper {
+          z-index: 10000 !important;
+        }
+        
         `}
       </style>
 
@@ -180,7 +225,24 @@ const FullScreenMap = () => {
         onPointSelect={handlePointSelect}
         handleRouting={handleRoutingSubmit}
         handleToggle={handleChargerToggle}
+        routeError={routeError}
+        setAddStationError={setAddStationError}
       />
+
+      {addStationError && (
+        <div className="error-text">
+          Please Submit A Correct Address when Adding a Station.
+        </div>
+      )}
+
+      {routeError && (
+        <div className="error-text">
+          Please Enter in More Reasonable <b>Mileage</b> before Route Submission
+          or <b>Valid Address</b>. You might also need to{" "}
+          <b>Wait for your Currenct Location</b> to be loaded in. If you can't,
+          then you cannot reach your destination.
+        </div>
+      )}
 
       {/* Map Container */}
       <div style={{ flexGrow: 1 }}>
@@ -214,19 +276,17 @@ const FullScreenMap = () => {
                 </Popup>
               </Marker>
             ))}
-          <GetUserLocation onLocationFound={handleLocationFound} />
+
+          <GetUserLocation
+            onLocationFound={handleLocationFound}
+            startAddress={startAddress}
+          />
+          <GetFinalLocation endPoint={endPoint} />
 
           {/* Center the map to the selected point */}
           {selectedPoint && <MapCenterUpdater point={selectedPoint} />}
           {/* Add the route to the map */}
           {route.length > 0 && <RoutingMachine route={route} />}
-
-          {/* {ligma && selectedPoint && route.length > 0 && (
-            <>
-              <MapCenterUpdater point={selectedPoint} />
-              <RoutingMachine route={route} />
-            </>
-          )} */}
         </MapContainer>
       </div>
     </div>
