@@ -11,12 +11,14 @@ import RoutingMachine from "./RoutingMachine";
 import GetUserLocation from "./GetUserLocation";
 import GetFinalLocation from "./GetFinalLocation";
 import { useAuth } from "../Auth";
-import getCoord from "./functions/getCoord.js";
 import "./styling/MapPage.css";
 
 // Set up the custom icon for Leaflet markers
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+import coordFunctions from "./functions/getCoord.js";
+const { getCoord, getBestCoord } = coordFunctions;
 
 // import jsonData from "./front-side-data/ev_chargers.json";
 
@@ -47,8 +49,6 @@ const FullScreenMap = () => {
   const [selectedPoint, setSelectedPoint] = useState(null); // Track selected point for popup
   const [userCoordinates, setUserCoordinates] = useState(null); // State to store user coordinates
   const [route, setRoute] = useState([]); // Array of coordinates for the route
-  // const [isAdmin, setIsAdmin] = useState(false);
-  // const { isAdmin, setIsAdmin } = useAuth();
   const markerRefs = useRef([]); // Store references to the markers
   const { userId } = useAuth();
   const [pointDisplay, setPointDisplay] = useState(true);
@@ -59,6 +59,7 @@ const FullScreenMap = () => {
   const [endPoint, setEndPoint] = useState(null);
   const [routeError, setRouteError] = useState(false);
   const [chargerListJSON, setChargerListJSON] = useState(false);
+  const [addStationError, setAddStationError] = useState(false);
 
   // Function to handle point selection from FloatingMenu
   const handlePointSelect = (point) => {
@@ -107,11 +108,13 @@ const FullScreenMap = () => {
     if (myStartAddress === null) {
       localStorage.setItem("s");
     } // Sets start address to user location by default
+    // setStartAddress(myStartAddress);
 
     const myMileage = localStorage.getItem("mileage");
     if (myMileage === null) {
       localStorage.setItem(10000);
     } // Sets mileage to 10000 by default (doesn't look at charging stations)
+    // setMileage(myMileage);
   }, [userId, userCoordinates]); // Run only once when the userId Is obtained or user coordinates change
   // }, []); // Run only once when the component mounts
   // }, [userCoordinates]); // This effect runs every time userCoordinates changes
@@ -156,7 +159,10 @@ const FullScreenMap = () => {
 
   // const handleRoutingSubmit = async (startAddress, endAddress, mileage) => {
   const handleRoutingSubmit = async (endAddress) => {
-    const endObj = await getCoord(endAddress);
+    const startObj = await getCoord(startAddress);
+    const start = [startObj.latitude, startObj.longitude];
+
+    const endObj = await getBestCoord(endAddress, start);
     const end = [endObj.longitude, endObj.latitude];
     fetchRoute(end);
   };
@@ -167,6 +173,30 @@ const FullScreenMap = () => {
       fetchRoute(end);
     }
   };
+
+  useEffect(() => {
+    if (addStationError) {
+      // Set a timeout to hide the error after 5 seconds
+      const timer = setTimeout(() => {
+        setAddStationError(false); // Hide the error message
+      }, 10000);
+
+      // Cleanup timeout if the component unmounts or if the error changes before 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [addStationError]);
+
+  useEffect(() => {
+    if (addStationError) {
+      // Set a timeout to hide the error after 5 seconds
+      const timer = setTimeout(() => {
+        setRouteError(false); // Hide the error message
+      }, 10000);
+
+      // Cleanup timeout if the component unmounts or if the error changes before 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [routeError]);
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
@@ -198,14 +228,21 @@ const FullScreenMap = () => {
         handleRouting={handleRoutingSubmit}
         handleToggle={handleChargerToggle}
         routeError={routeError}
+        setAddStationError={setAddStationError}
       />
+
+      {addStationError && (
+        <div className="error-text">
+          Please Submit A Correct Address when Adding a Station.
+        </div>
+      )}
 
       {routeError && (
         <div className="error-text">
           Please Enter in More Reasonable <b>Mileage</b> before Route Submission
-          or <b>Valid Address</b>. You might also need to wait for your{" "}
-          <b>Currenct Location</b> to be loaded in. If you can't, then you
-          cannot reach your destination.
+          or <b>Valid Address</b>. You might also need to{" "}
+          <b>Wait for your Currenct Location</b> to be loaded in. If you can't,
+          then you cannot reach your destination.
         </div>
       )}
 
