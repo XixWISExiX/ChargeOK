@@ -104,11 +104,8 @@ const FloatingMenu = ({
 
   const handleRouteSubmit = async (event) => {
     event.preventDefault(); // Prevents page refresh or default form action
-    // handleRouting(startAddress, endAddress, mileage); // Notify parent component
     handleRouting(endAddress); // Notify parent component
-    // setStartAddress("");
     setEndAddress("");
-    // setMileage("");
   };
 
   const handleChargerToggle = async (event) => {

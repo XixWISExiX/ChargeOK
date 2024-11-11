@@ -101,13 +101,15 @@ async function getRouteWithChargers(start, dest, maxDist, jsonData) {
   let chargers = [];
   let idx = pointAlongRouteSumsDistance(path, maxDist);
 
-  let prevCharger;
+  let prevIdx = -1;
   while (idx !== path.length) {
-    if (prevCharger === charger) {
-      let err = 1 / 0;
+    if (prevIdx === idx) {
+      console.log("break", idx);
+      return null; // Trip condition is not met
     }
+    console.log("done?", idx);
+    prevIdx = idx;
     let charger = await getClosestStation(path[idx], jsonData);
-    prevCharger = charger;
     let chargerPoint = [charger.longitude, charger.latitude];
     chargers.push(chargerPoint);
 
