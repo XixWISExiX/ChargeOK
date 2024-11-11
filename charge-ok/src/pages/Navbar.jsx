@@ -20,7 +20,8 @@ import { useAuth } from "../Auth";
 import axios from "axios";
 import "./styling/Navbar.css";
 import { useLocation } from "react-router-dom";
-import getCoord from "./functions/getCoord.js";
+import coordFunctions from "./functions/getCoord.js";
+const { getCoord, getBestCoord } = coordFunctions;
 
 const TopNavbar = () => {
   const location = useLocation();
