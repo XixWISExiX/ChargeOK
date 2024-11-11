@@ -105,14 +105,16 @@ const FullScreenMap = () => {
         console.error("Error fetching JSON data:", error);
       });
     const myStartAddress = localStorage.getItem("startAddress");
-    if (myStartAddress === null) {
-      localStorage.setItem("s");
+    if (myStartAddress === null || myStartAddress === undefined) {
+      localStorage.setItem("startAddress", "s");
     } // Sets start address to user location by default
+    setStartAddress(localStorage.getItem("startAddress"));
 
     const myMileage = localStorage.getItem("mileage");
-    if (myMileage === null) {
-      localStorage.setItem(10000);
+    if (myMileage === null || myMileage === undefined) {
+      localStorage.setItem("mileage", 10000);
     } // Sets mileage to 10000 by default (doesn't look at charging stations)
+    setMileage(localStorage.getItem("mileage"));
   }, [userId, userCoordinates]); // Run only once when the userId Is obtained or user coordinates change
   // }, []); // Run only once when the component mounts
   // }, [userCoordinates]); // This effect runs every time userCoordinates changes
