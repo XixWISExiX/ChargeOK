@@ -2,14 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet.locatecontrol";
-import getCoord from "./functions/getCoord.js";
+import coordFunctions from "./functions/getCoord.js";
+const { getCoord, getBestCoord } = coordFunctions;
 
 // Component to add user location
 const GetUserLocation = ({ onLocationFound, startAddress }) => {
   const map = useMap();
   const markerRef = useRef(null);
-  const [coordinates, setCoordinates] = useState(null); // State to store coordinates
-  const [circle, setCircle] = useState(null);
+  // const [coordinates, setCoordinates] = useState(null); // State to store coordinates
+  const circleRef = useRef(null); // Ref for the circle marker
 
   useEffect(() => {
     if (startAddress === "s") {
@@ -28,7 +29,7 @@ const GetUserLocation = ({ onLocationFound, startAddress }) => {
         .addTo(map);
       map.once("locationfound", function (ev) {
         const coords = [ev.latlng.lng, ev.latlng.lat];
-        setCoordinates(coords);
+        // setCoordinates(coords);
 
         if (onLocationFound) {
           onLocationFound(coords);
@@ -37,8 +38,8 @@ const GetUserLocation = ({ onLocationFound, startAddress }) => {
         // Default Location Icon
         // markerRef.current = L.marker(ev.latlng).addTo(map);
 
-        if (circle) {
-          map.removeLayer(circle);
+        if (circleRef.current) {
+          map.removeLayer(circleRef.current);
         }
 
         // Green Circle Icon for User Location
@@ -51,7 +52,8 @@ const GetUserLocation = ({ onLocationFound, startAddress }) => {
           radius: 8, // Radius of the circle
           pane: "userLocationMarker",
         }).addTo(map);
-        setCircle(markerRef.current);
+        // setCircle(markerRef.current);
+        circleRef.current = markerRef.current; // Update circle ref
       });
 
       map.on("locationerror", function (err) {
@@ -69,25 +71,29 @@ const GetUserLocation = ({ onLocationFound, startAddress }) => {
         map.off("locationfound");
         map.off("locationerror");
       };
-    } else {
+    } else if (startAddress) {
       const fetchStartingAddressInfo = async () => {
-        if (startAddress) {
-          if (circle) {
-            map.removeLayer(circle);
-          }
-          const coords = await getCoord(startAddress);
-          const correctCoords = [coords.latitude, coords.longitude];
-          map.createPane("userLocationMarker");
-          map.getPane("userLocationMarker").style.zIndex = 8000;
-          const marker = L.circleMarker(correctCoords, {
-            color: "blue", // Border color
-            fillColor: "green", // Fill color
-            fillOpacity: 1, // Opacity of the fill
-            radius: 8, // Radius of the circle
-            pane: "userLocationMarker",
-          }).addTo(map);
-          setCircle(marker);
+        const coords = await getCoord(startAddress);
+        if (onLocationFound) {
+          onLocationFound(coords);
         }
+        const correctCoords = [coords.latitude, coords.longitude];
+        map.createPane("userLocationMarker");
+        map.getPane("userLocationMarker").style.zIndex = 8000;
+        const marker = L.circleMarker(correctCoords, {
+          color: "blue", // Border color
+          fillColor: "green", // Fill color
+          fillOpacity: 1, // Opacity of the fill
+          radius: 8, // Radius of the circle
+          pane: "userLocationMarker",
+        }).addTo(map);
+
+        if (circleRef.current) {
+          console.log("Eraser:");
+          map.removeLayer(circleRef.current);
+        }
+        console.log("Marker:", marker);
+        circleRef.current = marker; // Update circle ref
       };
 
       fetchStartingAddressInfo();

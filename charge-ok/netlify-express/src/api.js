@@ -61,7 +61,6 @@ router.post("/add-ev-charger", async (req, res) => {
   try {
     const dataIntroLayer = JSON.parse(req.body.toString());
     const data = JSON.parse(dataIntroLayer.body);
-    console.log("AHHHHH ", data);
 
     const name = data.name;
     const latitude = data.coordinates.latitude;
@@ -75,7 +74,6 @@ router.post("/add-ev-charger", async (req, res) => {
 
     const jsonData = JSON.stringify(chargersJSON);
     fs.writeFileSync("./data/ev_chargers.json", jsonData);
-    // fs.writeFileSync("./data/ev_chargers.json", chargersJSON);
 
     res.status(200).json("Charger queue updated successfully!");
   } catch (err) {
@@ -117,7 +115,7 @@ router.post("/remove-from-charger-queue", async (req, res) => {
 
     // Remove data to the charger queue
     chargerQueueJSON = chargerQueueJSON.filter(
-      (item) => item.name !== data.name || item.address !== data.address
+      (item) => !(item.name === data.name && item.address === data.address)
     );
 
     console.log("Updated JSON:", chargerQueueJSON);

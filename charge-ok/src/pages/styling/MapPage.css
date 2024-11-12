@@ -11,6 +11,13 @@
 
 .error-text {
   color: black;
-  background-color: darkred;
+  background-color: rgb(160, 49, 49);
   text-align: center;
+  /* z-index: 1000; */
+}
+
+.error-floating-menu {
+  /* margin-top: -10px; */
+  top: -70px;
+  position: relative;
 }

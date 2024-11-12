@@ -115,8 +115,8 @@ const FullScreenMap = () => {
       localStorage.setItem("mileage", 10000);
     } // Sets mileage to 10000 by default (doesn't look at charging stations)
     setMileage(localStorage.getItem("mileage"));
-  }, [userId, userCoordinates]); // Run only once when the userId Is obtained or user coordinates change
-  // }, []); // Run only once when the component mounts
+    // }, [userId, userCoordinates]); // Run only once when the userId Is obtained or user coordinates change
+  }, []); // Run only once when the component mounts
   // }, [userCoordinates]); // This effect runs every time userCoordinates changes
 
   const handleChargerToggle = async () => {
@@ -176,7 +176,7 @@ const FullScreenMap = () => {
 
   useEffect(() => {
     if (addStationError) {
-      // Set a timeout to hide the error after 5 seconds
+      // Set a timeout to hide the error after 10 seconds
       const timer = setTimeout(() => {
         setAddStationError(false); // Hide the error message
       }, 10000);
@@ -187,8 +187,8 @@ const FullScreenMap = () => {
   }, [addStationError]);
 
   useEffect(() => {
-    if (addStationError) {
-      // Set a timeout to hide the error after 5 seconds
+    if (routeError) {
+      // Set a timeout to hide the error after 10 seconds
       const timer = setTimeout(() => {
         setRouteError(false); // Hide the error message
       }, 10000);
@@ -217,20 +217,6 @@ const FullScreenMap = () => {
       {/* Navbar */}
       <TopNavbar />
 
-      {/* Floating Menu with search functionality */}
-      <FloatingMenu
-        mileage={mileage}
-        setMileage={setMileage}
-        startAddress={startAddress}
-        setStartAddress={setStartAddress}
-        points={points}
-        onPointSelect={handlePointSelect}
-        handleRouting={handleRoutingSubmit}
-        handleToggle={handleChargerToggle}
-        routeError={routeError}
-        setAddStationError={setAddStationError}
-      />
-
       {addStationError && (
         <div className="error-text">
           Please Submit A Correct Address when Adding a Station.
@@ -243,6 +229,38 @@ const FullScreenMap = () => {
           or <b>Valid Address</b>. You might also need to{" "}
           <b>Wait for your Currenct Location</b> to be loaded in. If you can't,
           then you cannot reach your destination.
+        </div>
+      )}
+
+      {/* Floating Menu with search functionality */}
+      {!routeError && !addStationError && (
+        <FloatingMenu
+          mileage={mileage}
+          setMileage={setMileage}
+          startAddress={startAddress}
+          setStartAddress={setStartAddress}
+          points={points}
+          onPointSelect={handlePointSelect}
+          handleRouting={handleRoutingSubmit}
+          handleToggle={handleChargerToggle}
+          routeError={routeError}
+          setAddStationError={setAddStationError}
+        />
+      )}
+      {(routeError || addStationError) && (
+        <div className="error-floating-menu">
+          <FloatingMenu
+            mileage={mileage}
+            setMileage={setMileage}
+            startAddress={startAddress}
+            setStartAddress={setStartAddress}
+            points={points}
+            onPointSelect={handlePointSelect}
+            handleRouting={handleRoutingSubmit}
+            handleToggle={handleChargerToggle}
+            routeError={routeError}
+            setAddStationError={setAddStationError}
+          />
         </div>
       )}
 
