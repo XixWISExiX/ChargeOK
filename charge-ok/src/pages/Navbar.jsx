@@ -181,14 +181,15 @@ const TopNavbar = (setRerender) => {
         }
       );
       if (response.ok) {
-        setRerender(true);
         console.log("Request processed");
       } else {
         console.error("Error:", response.statusText);
       }
+      setRerender(true);
       fetchInbox();
     } catch (error) {
       console.error("Error fetching inbox requests:", error);
+      setRerender(true);
     }
 
     // Gets rid of the request after it's processed
