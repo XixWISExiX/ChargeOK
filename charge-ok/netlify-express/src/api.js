@@ -8,6 +8,8 @@ const adminListJSON = require("../data/admin_list.json");
 
 let chargerQueueJSON = require("../data/charger_queue.json");
 let chargersJSON = require("../data/ev_chargers.json");
+const coordService = require("../helper-functions/getCoord");
+const routingService = require("../helper-functions/routing");
 
 process.env.SILENCE_EMPTY_LAMBDA_WARNING = "true";
 
@@ -61,7 +63,6 @@ router.post("/add-ev-charger", async (req, res) => {
   try {
     const dataIntroLayer = JSON.parse(req.body.toString());
     const data = JSON.parse(dataIntroLayer.body);
-    console.log("AHHHHH ", data);
 
     const name = data.name;
     const latitude = data.coordinates.latitude;
@@ -75,7 +76,6 @@ router.post("/add-ev-charger", async (req, res) => {
 
     const jsonData = JSON.stringify(chargersJSON);
     fs.writeFileSync("./data/ev_chargers.json", jsonData);
-    // fs.writeFileSync("./data/ev_chargers.json", chargersJSON);
 
     res.status(200).json("Charger queue updated successfully!");
   } catch (err) {
@@ -117,7 +117,7 @@ router.post("/remove-from-charger-queue", async (req, res) => {
 
     // Remove data to the charger queue
     chargerQueueJSON = chargerQueueJSON.filter(
-      (item) => item.name !== data.name || item.address !== data.address
+      (item) => !(item.name === data.name && item.address === data.address)
     );
 
     console.log("Updated JSON:", chargerQueueJSON);
@@ -138,6 +138,44 @@ router.post("/remove-from-charger-queue", async (req, res) => {
 router.get("/get-charger-queue", (req, res) => {
   try {
     res.status(200).json(chargerQueueJSON);
+  } catch (err) {
+    console.error("Error reading or parsing file:", err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: err.message }); // Return an error response
+  }
+});
+
+router.post("/get-route", (req, res) => {
+  try {
+    const data = JSON.parse(req.body.toString());
+    console.log("Route Data:", data[0], data[1], data[2]);
+    routingService
+      .getRouteWithChargers(data[0], data[1], data[2], chargersJSON)
+      .then((response) => {
+        try {
+          res.status(200).json(response.data);
+        } catch {
+          res.status(200).json(null);
+        }
+        // Process the response here
+      });
+  } catch (err) {
+    console.error("Error reading or parsing file:", err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: err.message }); // Return an error response
+  }
+});
+
+router.post("/get-coord", (req, res) => {
+  try {
+    const data = JSON.parse(req.body.toString());
+    coordService.getCoord(data).then((response) => {
+      console.log("Get coord result:", response);
+      res.status(200).json(response);
+      // Process the response here
+    });
   } catch (err) {
     console.error("Error reading or parsing file:", err);
     res

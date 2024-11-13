@@ -2,7 +2,10 @@
 
 /* Main container for the floating menu */
 .floating-menu-container {
-  position: fixed;
+  /* position: fixed; */
+  /* position: relative; */
+  z-index: 900;
+  position: absolute;
   top: 80px;
   left: 20px;
   width: 90%;
@@ -10,7 +13,6 @@
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
   transition: width 0.3s ease, left 0.3s ease;
   margin-left: 30px; /* Added left margin */
 }

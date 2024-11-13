@@ -23,7 +23,7 @@ import { useLocation } from "react-router-dom";
 import coordFunctions from "./functions/getCoord.js";
 const { getCoord, getBestCoord } = coordFunctions;
 
-const TopNavbar = () => {
+const TopNavbar = ({ setRerender }) => {
   const location = useLocation();
   const isMapPage = location.pathname === "/map";
 
@@ -190,6 +190,7 @@ const TopNavbar = () => {
       console.error("Error fetching inbox requests:", error);
     }
 
+    setRerender(true);
     // Gets rid of the request after it's processed
     await handleRejectRequest(name, address);
   };
