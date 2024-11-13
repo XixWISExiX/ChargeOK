@@ -16,8 +16,14 @@
   /* z-index: 1000; */
 }
 
-.error-floating-menu {
-  /* margin-top: -10px; */
-  top: -70px;
-  position: relative;
+.error-floating-menu-route {
+  top: 130px;
+}
+
+.error-floating-menu-station {
+  top: 105px;
+}
+
+.error-floating-menu-all {
+  top: 155px;
 }

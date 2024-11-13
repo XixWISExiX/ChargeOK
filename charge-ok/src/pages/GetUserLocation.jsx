@@ -6,7 +6,7 @@ import coordFunctions from "./functions/getCoord.js";
 const { getCoord, getBestCoord } = coordFunctions;
 
 // Component to add user location
-const GetUserLocation = ({ onLocationFound, startAddress }) => {
+const GetUserLocation = ({ onLocationFound, startAddress, setRouteError }) => {
   const map = useMap();
   const markerRef = useRef(null);
   // const [coordinates, setCoordinates] = useState(null); // State to store coordinates
@@ -73,27 +73,30 @@ const GetUserLocation = ({ onLocationFound, startAddress }) => {
       };
     } else if (startAddress) {
       const fetchStartingAddressInfo = async () => {
-        const coords = await getCoord(startAddress);
-        if (onLocationFound) {
-          onLocationFound(coords);
-        }
-        const correctCoords = [coords.latitude, coords.longitude];
-        map.createPane("userLocationMarker");
-        map.getPane("userLocationMarker").style.zIndex = 8000;
-        const marker = L.circleMarker(correctCoords, {
-          color: "blue", // Border color
-          fillColor: "green", // Fill color
-          fillOpacity: 1, // Opacity of the fill
-          radius: 8, // Radius of the circle
-          pane: "userLocationMarker",
-        }).addTo(map);
+        try {
+          const coords = await getCoord(startAddress);
+          if (onLocationFound) {
+            onLocationFound(coords);
+          }
+          const correctCoords = [coords.latitude, coords.longitude];
+          map.createPane("userLocationMarker");
+          map.getPane("userLocationMarker").style.zIndex = 8000;
+          const marker = L.circleMarker(correctCoords, {
+            color: "blue", // Border color
+            fillColor: "green", // Fill color
+            fillOpacity: 1, // Opacity of the fill
+            radius: 8, // Radius of the circle
+            pane: "userLocationMarker",
+          }).addTo(map);
 
-        if (circleRef.current) {
-          console.log("Eraser:");
-          map.removeLayer(circleRef.current);
+          if (circleRef.current) {
+            map.removeLayer(circleRef.current);
+          }
+          circleRef.current = marker; // Update circle ref
+          setRouteError(false);
+        } catch {
+          setRouteError(true);
         }
-        console.log("Marker:", marker);
-        circleRef.current = marker; // Update circle ref
       };
 
       fetchStartingAddressInfo();

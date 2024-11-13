@@ -60,6 +60,7 @@ const FullScreenMap = () => {
   const [routeError, setRouteError] = useState(false);
   const [chargerListJSON, setChargerListJSON] = useState(false);
   const [addStationError, setAddStationError] = useState(false);
+  const floatingMenuRef = useRef(null); // Create a ref for FloatingMenu
 
   // Function to handle point selection from FloatingMenu
   const handlePointSelect = (point) => {
@@ -133,15 +134,11 @@ const FullScreenMap = () => {
         start = [startObj.longitude, startObj.latitude];
       }
       const milesLeft = mileage;
-      const route = await getRouteWithChargers(
-        start,
-        end,
-        milesLeft,
-        chargerListJSON
-      );
+      const route = await getRouteWithChargers(start, end, milesLeft);
       // Check if the expected data is available before accessing it
       if (route) {
-        const routeList = route.data.routes[0].geometry.coordinates; // Extract coordinates
+        // if (route == null) throw Error;
+        const routeList = route.routes[0].geometry.coordinates; // Extract coordinates
         console.log("Route List:", routeList); // Logs the coordinates
 
         setRoute(routeList); // Store the route data
@@ -159,12 +156,12 @@ const FullScreenMap = () => {
 
   // const handleRoutingSubmit = async (startAddress, endAddress, mileage) => {
   const handleRoutingSubmit = async (endAddress) => {
-    const startObj = await getCoord(startAddress);
-    const start = [startObj.latitude, startObj.longitude];
-
-    const endObj = await getBestCoord(endAddress, start);
-    const end = [endObj.longitude, endObj.latitude];
-    fetchRoute(end);
+    try {
+      const end = await getCoord(endAddress);
+      fetchRoute([end.longitude, end.latitude]);
+    } catch {
+      setRouteError(true);
+    }
   };
 
   const handleChargerRoute = async (pointLatitude, pointLongitude) => {
@@ -197,6 +194,25 @@ const FullScreenMap = () => {
       return () => clearTimeout(timer);
     }
   }, [routeError]);
+
+  useEffect(() => {
+    if (routeError && addStationError) {
+      floatingMenuRef.current.classList.add("error-floating-menu-all");
+    } else if (routeError) {
+      floatingMenuRef.current.classList.add("error-floating-menu-route");
+    } else if (addStationError) {
+      floatingMenuRef.current.classList.add("error-floating-menu-station");
+    }
+
+    if (!routeError) {
+      floatingMenuRef.current.classList.remove("error-floating-menu-route");
+      floatingMenuRef.current.classList.remove("error-floating-menu-all");
+    }
+    if (!addStationError) {
+      floatingMenuRef.current.classList.remove("error-floating-menu-station");
+      floatingMenuRef.current.classList.remove("error-floating-menu-all");
+    }
+  }, [routeError, addStationError]); // Only run when errors change
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
@@ -233,7 +249,7 @@ const FullScreenMap = () => {
       )}
 
       {/* Floating Menu with search functionality */}
-      {!routeError && !addStationError && (
+      {/* {!routeError && !addStationError && (
         <FloatingMenu
           mileage={mileage}
           setMileage={setMileage}
@@ -262,7 +278,22 @@ const FullScreenMap = () => {
             setAddStationError={setAddStationError}
           />
         </div>
-      )}
+      )} */}
+
+      <FloatingMenu
+        ref={floatingMenuRef}
+        mileage={mileage}
+        setMileage={setMileage}
+        startAddress={startAddress}
+        setStartAddress={setStartAddress}
+        points={points}
+        onPointSelect={handlePointSelect}
+        handleRouting={handleRoutingSubmit}
+        handleToggle={handleChargerToggle}
+        routeError={routeError}
+        setAddStationError={setAddStationError}
+        addStationError={addStationError}
+      />
 
       {/* Map Container */}
       <div style={{ flexGrow: 1 }}>
@@ -300,6 +331,7 @@ const FullScreenMap = () => {
           <GetUserLocation
             onLocationFound={handleLocationFound}
             startAddress={startAddress}
+            setRouteError={setRouteError}
           />
           <GetFinalLocation endPoint={endPoint} />
 
