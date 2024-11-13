@@ -309,8 +309,7 @@ const FullScreenMap = () => {
             attribution="&copy; OpenStreetMap contributors"
           />
           {/* Loop through points and display markers */}
-          {pointDisplay &&
-            !rerender &&
+          {(pointDisplay || !rerender) &&
             points.map((point, index) => (
               <Marker
                 key={index}
