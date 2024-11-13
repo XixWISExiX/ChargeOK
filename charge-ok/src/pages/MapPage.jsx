@@ -30,14 +30,14 @@ let blueIcon = L.icon({
 });
 
 // Component to update map center
-const MapCenterUpdater = ({ point }) => {
+const MapCenterUpdater = ({ point, rerender }) => {
   const map = useMap();
 
   useEffect(() => {
     if (point) {
       map.setView([point.lat, point.lng], 13);
     }
-  }, [point, map]);
+  }, [point, map, rerender]);
 
   return null;
 };
@@ -337,7 +337,9 @@ const FullScreenMap = () => {
           <GetFinalLocation endPoint={endPoint} />
 
           {/* Center the map to the selected point */}
-          {selectedPoint && <MapCenterUpdater point={selectedPoint} />}
+          {selectedPoint && (
+            <MapCenterUpdater point={selectedPoint} rerender={rerender} />
+          )}
           {/* Add the route to the map */}
           {route.length > 0 && <RoutingMachine route={route} />}
         </MapContainer>
