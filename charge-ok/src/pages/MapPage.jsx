@@ -60,6 +60,7 @@ const FullScreenMap = () => {
   const [routeError, setRouteError] = useState(false);
   const [chargerListJSON, setChargerListJSON] = useState(false);
   const [addStationError, setAddStationError] = useState(false);
+  const [rerender, setRerender] = useState(false);
   const floatingMenuRef = useRef(null); // Create a ref for FloatingMenu
 
   // Function to handle point selection from FloatingMenu
@@ -117,7 +118,7 @@ const FullScreenMap = () => {
     } // Sets mileage to 10000 by default (doesn't look at charging stations)
     setMileage(localStorage.getItem("mileage"));
     // }, [userId, userCoordinates]); // Run only once when the userId Is obtained or user coordinates change
-  }, []); // Run only once when the component mounts
+  }, [rerender]); // Run only once when the component mounts
   // }, [userCoordinates]); // This effect runs every time userCoordinates changes
 
   const handleChargerToggle = async () => {
@@ -231,7 +232,7 @@ const FullScreenMap = () => {
       </style>
 
       {/* Navbar */}
-      <TopNavbar />
+      <TopNavbar setRerender={setRerender} />
 
       {addStationError && (
         <div className="error-text">

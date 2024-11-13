@@ -23,7 +23,7 @@ import { useLocation } from "react-router-dom";
 import coordFunctions from "./functions/getCoord.js";
 const { getCoord, getBestCoord } = coordFunctions;
 
-const TopNavbar = () => {
+const TopNavbar = (setRerender) => {
   const location = useLocation();
   const isMapPage = location.pathname === "/map";
 
@@ -181,6 +181,7 @@ const TopNavbar = () => {
         }
       );
       if (response.ok) {
+        setRerender(true);
         console.log("Request processed");
       } else {
         console.error("Error:", response.statusText);
