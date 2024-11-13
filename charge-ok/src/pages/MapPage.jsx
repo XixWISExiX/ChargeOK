@@ -30,14 +30,14 @@ let blueIcon = L.icon({
 });
 
 // Component to update map center
-const MapCenterUpdater = ({ point, rerender }) => {
+const MapCenterUpdater = ({ point }) => {
   const map = useMap();
 
   useEffect(() => {
     if (point) {
       map.setView([point.lat, point.lng], 13);
     }
-  }, [point, map, rerender]);
+  }, [point, map]);
 
   return null;
 };
@@ -118,6 +118,7 @@ const FullScreenMap = () => {
     } // Sets mileage to 10000 by default (doesn't look at charging stations)
     setMileage(localStorage.getItem("mileage"));
     // }, [userId, userCoordinates]); // Run only once when the userId Is obtained or user coordinates change
+    setRerender(false);
   }, [rerender]); // Run only once when the component mounts
   // }, [userCoordinates]); // This effect runs every time userCoordinates changes
 
@@ -309,6 +310,7 @@ const FullScreenMap = () => {
           />
           {/* Loop through points and display markers */}
           {pointDisplay &&
+            !rerender &&
             points.map((point, index) => (
               <Marker
                 key={index}
@@ -337,9 +339,7 @@ const FullScreenMap = () => {
           <GetFinalLocation endPoint={endPoint} />
 
           {/* Center the map to the selected point */}
-          {selectedPoint && (
-            <MapCenterUpdater point={selectedPoint} rerender={rerender} />
-          )}
+          {selectedPoint && <MapCenterUpdater point={selectedPoint} />}
           {/* Add the route to the map */}
           {route.length > 0 && <RoutingMachine route={route} />}
         </MapContainer>
