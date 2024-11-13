@@ -12,7 +12,7 @@
 [functions]
   node_bundler = "none"  # This line disables the default bundler
   directory = "netlify-express/functions"
-  included_files = ["netlify-express/data/*.json"]
+  included_files = ["netlify-express/data/*.json", "netlify-express/helper-functions/*"]
 
 [build.environment]
   NODE_VERSION = "18"  # Set this to the version of Node.js you're using
